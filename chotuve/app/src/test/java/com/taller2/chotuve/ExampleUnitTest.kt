@@ -1,4 +1,4 @@
-package com.example.chotuve
+package com.taller2.chotuve
 
 import org.junit.Test
 

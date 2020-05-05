@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Chotuve</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="elegir_video">Elegir</string>
+    <string name="subir_video">Subir</string>
 </resources>

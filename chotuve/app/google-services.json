@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "932566387372-qvu5bo92ep9g208n0gmbgoek423qqt9v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taller2.chotuve",
+            "certificate_hash": "c79ecdc676f771796851917e82aee4d2c96fc7d5"
+          }
+        },
+        {
           "client_id": "932566387372-i48mj6cv82qv9in1cge0acn3d8cgmdq1.apps.googleusercontent.com",
           "client_type": 3
         }

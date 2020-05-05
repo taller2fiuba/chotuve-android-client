@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_main.*
 import org.w3c.dom.Text
 
 const val EXTRA_MESSAGE = "com.taller2.chotuve.MESSAGE"
@@ -92,6 +93,7 @@ class MainActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
                 }
+            txtUrlDescarga.text = "Espere. Cargando video..."
         } catch (e: Exception) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }

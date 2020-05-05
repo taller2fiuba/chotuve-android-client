@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "932566387372",
+    "firebase_url": "https://chotuve-a8587.firebaseio.com",
+    "project_id": "chotuve-a8587",
+    "storage_bucket": "chotuve-a8587.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932566387372:android:ed3b0304091a151e71ed09",
+        "android_client_info": {
+          "package_name": "com.taller2.chotuve"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932566387372-i48mj6cv82qv9in1cge0acn3d8cgmdq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3RQW5QfrON3hm-ciCySM3dun2J3-GbZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932566387372-i48mj6cv82qv9in1cge0acn3d8cgmdq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,23 +1,24 @@
 package com.taller2.chotuve
 
 import android.content.Intent
-import android.database.Cursor
+import android.icu.lang.UCharacter.GraphemeClusterBreak
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.gms.tasks.Task
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_main.*
-import org.w3c.dom.Text
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 const val EXTRA_MESSAGE = "com.taller2.chotuve.MESSAGE"
 
@@ -76,7 +77,8 @@ class MainActivity : AppCompatActivity() {
     fun clickSubirVideo(view: View) {
         // TODO mejorar validaciones: sacar errores luego de solucionados, tener en cuenta errores devueltos por el server, usar alguna libreria (EasyValidation por ej)
         var titulo = findViewById<View>(R.id.titulo) as TextInputLayout
-        if (titulo.editText!!.text.toString() == "") {
+        var tituloString = titulo.editText!!.text.toString()
+        if (tituloString == "") {
             titulo.error = "No puede estar vacio"
             return;
         }
@@ -96,11 +98,25 @@ class MainActivity : AppCompatActivity() {
                     val txtUrlDescarga = findViewById<View>(R.id.txtUrlDescarga) as TextView
 
                     // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
-                    taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                        downloadUri: Uri? ->
-                        txtUrlDescarga.text = downloadUri.toString()
+                    taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->
+                        val call = AppServerService.create().crearVideo(Video(tituloString, downloadUri.toString()))
+                        call.enqueue(
+
+                            override fun onResponse(call: Call<Video>?, response: Response<Video>?) {
+                                val responseCode = response!!.code()!!
+                                if (responseCode == 201) {
+                                    txtUrlDescarga.text = ""
+                                    Toast.makeText(this, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
+                                } else {
+                                    Toast.makeText(this, "Error del server", Toast.LENGTH_LONG).show()
+                                }
+                            }
+                            override fun onFailure(call: Call<Video>?, t: Throwable?) {
+                                Toast.makeText(this, "Error que no se que es, de retrofit", Toast.LENGTH_LONG).show()
+                            }
+                        })
                     }
-                    Toast.makeText(this, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
+
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()

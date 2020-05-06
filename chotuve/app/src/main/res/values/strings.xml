@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Chotuve</string>
-    <string name="elegir_video">Elegir</string>
+    <string name="elegir_video">Elegir video</string>
     <string name="subir_video">Subir</string>
+    <string name="video_subir_titulo_hint">Titulo</string>
+    <string name="video_label">Video</string>
 </resources>

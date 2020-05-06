@@ -6,40 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="87dp"
-        android:layout_height="49dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titulo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:onClick="clickElegirVideo"
-        android:text="@string/elegir_video"
-        app:layout_constraintEnd_toStartOf="@+id/txtUriElegida"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/video_subir_titulo_hint"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorLink="@color/colorSecondary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/txtUriElegida"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+    <Button
+        android:id="@+id/botonElegir"
+        android:layout_width="382dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:onClick="clickElegirVideo"
+        android:text="@string/elegir_video"
+        app:layout_constraintEnd_toEndOf="@+id/titulo"
+        app:layout_constraintStart_toStartOf="@+id/titulo"
+        app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
     <Button
         android:id="@+id/btnSubir"
         android:layout_width="87dp"
         android:layout_height="49dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:onClick="clickSubirVideo"
         android:text="@string/subir_video"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUriElegida" />
 
     <TextView
         android:id="@+id/txtUrlDescarga"
@@ -49,4 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSubir" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

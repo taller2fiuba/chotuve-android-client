@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -73,19 +74,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clickSubirVideo(view: View) {
+        var titulo = findViewById<View>(R.id.titulo) as TextInputLayout
+        if (titulo.editText!!.text.toString() == "") {
+            titulo.error = "No puede estar vacio"
+            return;
+        }
         if (uri == null) {
-            Toast.makeText(this, "Elija un video", Toast.LENGTH_SHORT).show()
+            var botonElegir = findViewById<View>(R.id.botonElegir) as Button
+            botonElegir.setFocusableInTouchMode(true)
+            botonElegir.requestFocus()
+            botonElegir.error = "Eligí un video"
             return;
         }
         var mUri = uri!!
         var mReference = mStorage.child(getFilenameFromUri(mUri))
         try {
-            // Esto es asincrónico (obvio (?))
+            // La subida del video asincrónica
             mReference.putFile(mUri)
                 .addOnSuccessListener { taskSnapshot ->
                     val txtUrlDescarga = findViewById<View>(R.id.txtUrlDescarga) as TextView
 
-                    // Esto también es asincrónico (wtf?)
+                    // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                     taskSnapshot.storage.downloadUrl.addOnSuccessListener {
                         downloadUri: Uri? ->
                         txtUrlDescarga.text = downloadUri.toString()

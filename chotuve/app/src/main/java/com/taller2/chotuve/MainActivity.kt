@@ -96,27 +96,25 @@ class MainActivity : AppCompatActivity() {
             mReference.putFile(mUri)
                 .addOnSuccessListener { taskSnapshot ->
                     val txtUrlDescarga = findViewById<View>(R.id.txtUrlDescarga) as TextView
-
+                    var context = this
                     // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                     taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->
                         val call = AppServerService.create().crearVideo(Video(tituloString, downloadUri.toString()))
-                        call.enqueue(
-
-                            override fun onResponse(call: Call<Video>?, response: Response<Video>?) {
+                        call.enqueue(object : Callback<ResponseBody> {
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                                 val responseCode = response!!.code()!!
                                 if (responseCode == 201) {
                                     txtUrlDescarga.text = ""
-                                    Toast.makeText(this, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
                                 } else {
-                                    Toast.makeText(this, "Error del server", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
                                 }
                             }
-                            override fun onFailure(call: Call<Video>?, t: Throwable?) {
-                                Toast.makeText(this, "Error que no se que es, de retrofit", Toast.LENGTH_LONG).show()
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                Toast.makeText(context, "Error que no se que es, de retrofit", Toast.LENGTH_LONG).show()
                             }
                         })
                     }
-
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()

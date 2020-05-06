@@ -1,5 +1,6 @@
 package com.taller2.chotuve
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.lang.UCharacter.GraphemeClusterBreak
 import android.net.Uri
@@ -41,10 +42,10 @@ class MainActivity : AppCompatActivity() {
             val cursor = getContentResolver().query(uri, null, null, null, null)
             try {
                 if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
                 }
             } finally {
-                cursor!!.close();
+                cursor!!.close()
             }
         }
 
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             result = uri.getPath();
             val cut = result!!.lastIndexOf('/')
             if (cut != -1) {
-                result = result.substring(cut + 1);
+                result = result.substring(cut + 1)
             }
         }
         return result
@@ -114,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Toast.makeText(context, "Error que no se que es, de retrofit", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                             }
                         })
                     }

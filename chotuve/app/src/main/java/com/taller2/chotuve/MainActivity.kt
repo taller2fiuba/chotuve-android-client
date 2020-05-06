@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             uri = data!!.data
+            var botonElegir = findViewById<View>(R.id.botonElegir) as Button
+            botonElegir.visibility = View.GONE;
             val txtUriElegida = findViewById<View>(R.id.txtUriElegida) as TextView
             txtUriElegida.text = getFilenameFromUri(uri!!)
         }

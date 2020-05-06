@@ -86,9 +86,9 @@ class MainActivity : AppCompatActivity() {
         }
         if (uri == null) {
             var botonElegir = findViewById<View>(R.id.botonElegir) as Button
-            botonElegir.setFocusableInTouchMode(true)
+            botonElegir.isFocusableInTouchMode = true
             botonElegir.requestFocus()
-            botonElegir.error = "Eligí un video"
+            botonElegir.error = "Elegí un video"
             return;
         }
         var mUri = uri!!

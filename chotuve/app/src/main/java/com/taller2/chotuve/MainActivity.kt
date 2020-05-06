@@ -5,6 +5,7 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -107,6 +108,8 @@ class MainActivity : AppCompatActivity() {
                                     txtUrlDescarga.text = ""
                                     Toast.makeText(context, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
                                 } else {
+                                    // TODO: Manejar errores desde el app server.
+                                    Log.d("retrofit", response.errorBody()!!.string())
                                     Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
                                 }
                             }

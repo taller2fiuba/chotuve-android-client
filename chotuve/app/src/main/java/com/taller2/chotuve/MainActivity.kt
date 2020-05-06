@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clickSubirVideo(view: View) {
+        // TODO mejorar validaciones: sacar errores luego de solucionados, tener en cuenta errores devueltos por el server, usar alguna libreria (EasyValidation por ej)
         var titulo = findViewById<View>(R.id.titulo) as TextInputLayout
         if (titulo.editText!!.text.toString() == "") {
             titulo.error = "No puede estar vacio"

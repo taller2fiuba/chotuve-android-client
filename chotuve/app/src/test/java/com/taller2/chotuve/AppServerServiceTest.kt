@@ -1,6 +1,5 @@
 package com.taller2.chotuve
 
-import com.google.gson.Gson
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Test

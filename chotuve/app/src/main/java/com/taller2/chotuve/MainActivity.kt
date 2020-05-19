@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.registro_de_usuario.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,10 +30,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.registro_de_usuario)
 
         mStorage = FirebaseStorage.getInstance().reference;
     }
+
+    fun clickSiguiente(view: View) {
+        setContentView(R.layout.registro_de_usuario_paso_2)
+    }
+
+    // cosas de subir video, tienen que ir a otra actividad
 
     private fun getFilenameFromUri(uri: Uri) : String {
         // https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
@@ -60,6 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             uri = data!!.data
             var botonElegir = findViewById<View>(R.id.botonElegir) as Button
@@ -93,11 +100,11 @@ class MainActivity : AppCompatActivity() {
         }
         var mUri = uri!!
         var mReference = mStorage.child(getFilenameFromUri(mUri))
+        val txtUrlDescarga = findViewById<View>(R.id.txtUrlDescarga) as TextView
         try {
             // La subida del video asincrónica
             mReference.putFile(mUri)
                 .addOnSuccessListener { taskSnapshot ->
-                    val txtUrlDescarga = findViewById<View>(R.id.txtUrlDescarga) as TextView
                     var context = this
                     // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                     taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->

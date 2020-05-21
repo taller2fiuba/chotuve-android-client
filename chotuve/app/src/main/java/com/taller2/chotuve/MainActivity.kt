@@ -26,41 +26,11 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // si hay token guardado (ya estoy logeado) hacer intent a subir video
-        setContentView(R.layout.registro_de_usuario)
+        // solo si no hay token guardado
+        startActivity(Intent(this, RegistrarmeActivity::class.java))
+        // else
+        setContentView(R.layout.muro_de_videos)
     }
 
-    fun clickRegistrarse(view: View) {
-        var email = (findViewById<View>(R.id.email) as TextInputLayout)
-        var contraseña = (findViewById<View>(R.id.contraseña) as TextInputLayout)
-        var repetirContraseña = (findViewById<View>(R.id.repetir_contraseña) as TextInputLayout)
-        var emailTexto = email.editText!!.text.toString()
-        var contraseñaTexto = contraseña.editText!!.text.toString()
-        var repetirContraseñaTexto = repetirContraseña.editText!!.text.toString()
-        // TODO codigo de valdiacion repetido con titulo en subir video, mejorar validaciones
-        if (emailTexto == "") {
-            email.error = "No puede estar vacio"
-            return;
-        }
-        if (contraseñaTexto == "") {
-            contraseña.error = "No puede estar vacio"
-            return;
-        }
-        if (repetirContraseñaTexto == "") {
-            repetirContraseña.error = "No puede estar vacio"
-            return;
-        }
-        if (repetirContraseñaTexto != contraseñaTexto) {
-            repetirContraseña.error = "No era igual a la contraseña"
-            repetirContraseña.editText!!.setText("")
-            return;
-        }
-        // registrarme en el app server
-        // guardar token de respuesta
-        startActivity(Intent(this, SubirVideoActivity::class.java))
-    }
 
-    fun clickIniciarSesion(view: View) {
-        startActivity(Intent(this, IniciarSesionActivity::class.java))
-    }
 }

@@ -5,6 +5,7 @@
     <string name="ingresar_titulo">Solo te falta ingresar tu usuario y contraseña para disfrutar del mejor contenido</string>
     <string name="ya_estas_registrado">¿Ya estas registrado en Chotube?</string>
     <string name="no_tenes_cuenta">¿No tenes cuenta en Chotube?</string>
+    <string name="proximamente">Proximamente</string>
 
 
     <string name="email_hint">email</string>

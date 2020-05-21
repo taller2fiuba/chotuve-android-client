@@ -28,7 +28,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/registrate_titulo"
+        android:text="@string/ingresar_titulo"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,30 +80,6 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/repetir_contraseña"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/repetir_contraseña_hint"
-        app:endIconMode="password_toggle"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contraseña">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-            android:textColorLink="@color/colorSecondary"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
         android:id="@+id/btnSiguiente"
         android:layout_width="wrap_content"
@@ -111,13 +87,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:onClick="clickRegistrarse"
-        android:text="@string/registrarme_btn"
+        android:onClick="clickIniciarSesion"
+        android:text="@string/ingresar_btn"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repetir_contraseña" />
+        app:layout_constraintTop_toBottomOf="@+id/contraseña" />
 
     <TextView
         android:id="@+id/textView4"
@@ -125,20 +101,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/ya_estas_registrado"
+        android:text="@string/no_tenes_cuenta"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSiguiente" />
 
     <TextView
-        android:id="@+id/inicia_sesion"
+        android:id="@+id/registrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:clickable="true"
-        android:onClick="clickIniciarSesion"
-        android:text="@string/ingresar_btn"
+        android:onClick="clickRegistrarme"
+        android:text="@string/registrarme_btn"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"

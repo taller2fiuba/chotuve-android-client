@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Chotuve</string>
     <string name="bienvenido_a_chotuve">Bienvenido a Chotuve</string>
-    <string name="registrate">Registrate para acceder al contenido de la app de videos más popular de la Fiuba</string>
+    <string name="registrate_titulo">Registrate para acceder al contenido de la app de videos más popular de la Fiuba</string>
+    <string name="ingresar_titulo">Solo te falta ingresar tu usuario y contraseña para disfrutar del mejor contenido</string>
+    <string name="ya_estas_registrado">¿Ya estas registrado en Chotube?</string>
+    <string name="no_tenes_cuenta">¿No tenes cuenta en Chotube?</string>
+
 
     <string name="email_hint">email</string>
     <string name="contraseña_hint">contraseña</string>
@@ -10,8 +14,8 @@
 
     <string name="video_label">Video</string>
 
-    <string name="siguiente">siguiente</string>
-    <string name="registrarme_btn">registrarme</string>
+    <string name="registrarme_btn"><u>Registrarme</u></string>
+    <string name="ingresar_btn"><u>Ingresar</u></string>
     <string name="elegir_video">Elegir video</string>
     <string name="subir_video">Subir</string>
 </resources>

@@ -2,7 +2,6 @@ package com.taller2.chotuve
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.res.Resources
 import android.icu.lang.UCharacter.GraphemeClusterBreak
 import android.net.Uri
 import android.os.Bundle
@@ -23,21 +22,20 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainActivity : AppCompatActivity() {
+class IniciarSesionActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // si hay token guardado (ya estoy logeado) hacer intent a subir video
-        setContentView(R.layout.registro_de_usuario)
+        // si hay token guardado y algo me trajo aca tendria que eliminar ese token
+        setContentView(R.layout.iniciar_sesion)
     }
 
-    fun clickRegistrarse(view: View) {
+    fun clickIniciarSesion(view: View) {
         var email = (findViewById<View>(R.id.email) as TextInputLayout)
         var contraseña = (findViewById<View>(R.id.contraseña) as TextInputLayout)
-        var repetirContraseña = (findViewById<View>(R.id.repetir_contraseña) as TextInputLayout)
         var emailTexto = email.editText!!.text.toString()
         var contraseñaTexto = contraseña.editText!!.text.toString()
-        var repetirContraseñaTexto = repetirContraseña.editText!!.text.toString()
-        // TODO codigo de valdiacion repetido con titulo en subir video, mejorar validaciones
+        // TODO codigo de validacion repetido, mejorar validaciones
         if (emailTexto == "") {
             email.error = "No puede estar vacio"
             return;
@@ -46,21 +44,12 @@ class MainActivity : AppCompatActivity() {
             contraseña.error = "No puede estar vacio"
             return;
         }
-        if (repetirContraseñaTexto == "") {
-            repetirContraseña.error = "No puede estar vacio"
-            return;
-        }
-        if (repetirContraseñaTexto != contraseñaTexto) {
-            repetirContraseña.error = "No era igual a la contraseña"
-            repetirContraseña.editText!!.setText("")
-            return;
-        }
-        // registrarme en el app server
+        // logearme en el app server
         // guardar token de respuesta
         startActivity(Intent(this, SubirVideoActivity::class.java))
     }
 
-    fun clickIniciarSesion(view: View) {
-        startActivity(Intent(this, IniciarSesionActivity::class.java))
+    fun clickRegistrarme(view: View) {
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }

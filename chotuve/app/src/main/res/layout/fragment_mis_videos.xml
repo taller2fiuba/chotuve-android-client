@@ -11,4 +11,12 @@
         android:text="Videos proximamente"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline2" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/subir_video_boton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:contentDescription="video"
+        android:src="@drawable/ic_file_upload_black_24dp"/>
 </FrameLayout>

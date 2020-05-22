@@ -7,6 +7,11 @@
     <string name="no_tenes_cuenta">¿No tenes cuenta en Chotube?</string>
     <string name="proximamente">Proximamente</string>
 
+    <string name="principal_menu">Principal</string>
+    <string name="mis_videos_menu">Mis videos</string>
+    <string name="notificaciones_menu">Notificaciones</string>
+    <string name="chats_menu">Chats</string>
+    <string name="perfil_menu">Perfil</string>
 
     <string name="email_hint">email</string>
     <string name="contraseña_hint">contraseña</string>

@@ -2,12 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/principal_menu"
-        android:enabled="true"
-        android:icon="@drawable/icon_1"
-        android:title="@string/text_label_1"/>
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/principal_menu"/>
+
     <item
-        android:id="@+id/mis_videos_menu"
-        android:enabled="true"
-        android:icon="@drawable/icon_2"
-        android:title="@string/text_label_2"/>
+        android:id="@+id/notificaciones_menu"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/notificaciones_menu"/>
+
+    <item
+        android:id="@+id/chats_menu"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="@string/chats_menu"/>
+
+    <item
+        android:id="@+id/perfil_menu"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="@string/perfil_menu"/>
 </menu>

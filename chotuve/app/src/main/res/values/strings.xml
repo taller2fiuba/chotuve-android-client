@@ -13,6 +13,9 @@
     <string name="chats_menu">Chats</string>
     <string name="perfil_menu">Perfil</string>
 
+    <string name="perfil_videos_menu">Videos</string>
+    <string name="perfil_informacion_menu">Información</string>
+
     <string name="email_hint">email</string>
     <string name="contraseña_hint">contraseña</string>
     <string name="repetir_contraseña_hint">repetir contraseña</string>

@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.taller2.chotuve.modelo.CallbackRegistro
+import com.taller2.chotuve.modelo.Modelo
 import kotlinx.android.synthetic.main.registro_de_usuario.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -27,7 +29,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // si hay token guardado (ya estoy logeado) hacer intent a subir video
-        setContentView(R.layout.registro_de_usuario)
+        if (Modelo.instance.estaLogueado())
+            startActivity(Intent(this, SubirVideoActivity::class.java))
+        else
+            setContentView(R.layout.registro_de_usuario)
     }
 
     fun clickRegistrarse(view: View) {
@@ -55,9 +60,31 @@ class MainActivity : AppCompatActivity() {
             repetirContraseña.editText!!.setText("")
             return;
         }
+
         // registrarme en el app server
-        // guardar token de respuesta
-        startActivity(Intent(this, SubirVideoActivity::class.java))
+        val context = this
+        Modelo.instance.registrarUsuario(emailTexto, contraseñaTexto, object : CallbackRegistro {
+            override fun onExito() {
+                startActivity(Intent(context, SubirVideoActivity::class.java))
+            }
+
+            override fun onYaEstaRegistrado() {
+                Toast.makeText(context,
+                    "Ya hay un usuario registrado con ese e-mail, ¿iniciar sesión?",
+                    Toast.LENGTH_LONG).show()
+            }
+
+            override fun onErrorRed(mensaje: String?) {
+                var detalle = ""
+                if (mensaje != null)
+                    detalle = "(" + mensaje!! + ")"
+
+                Toast.makeText(context,
+                    "Se produjo un error de red. Vuelva a intentar más tarde." + detalle,
+                    Toast.LENGTH_LONG).show()
+            }
+        })
+        // guardar token de respuesta [No hace falta - se hace dentro del modelo]
     }
 
     fun clickIniciarSesion(view: View) {

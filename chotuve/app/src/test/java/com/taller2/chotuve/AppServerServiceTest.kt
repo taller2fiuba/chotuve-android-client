@@ -1,6 +1,7 @@
 package com.taller2.chotuve
 
-import org.json.JSONObject
+import com.taller2.chotuve.modelo.AppServerService
+import com.taller2.chotuve.modelo.data.Video
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -18,7 +19,12 @@ class AppServerServiceTest {
     @Test
     fun appServerCrearVideo() {
         // habría que ver la manera de mockear esto
-        val response = AppServerService.create().crearVideo(Video("test android", "https://android/test")).execute()
+        val response = AppServerService.create().crearVideo(
+            Video(
+                "test android",
+                "https://android/test"
+            )
+        ).execute()
         val code = response.code()
 
         assertEquals(201,code )
@@ -27,7 +33,12 @@ class AppServerServiceTest {
     @Test
     fun appServerNoCrearVideo() {
         // habría que ver la manera de mockear esto
-        val response = AppServerService.create().crearVideo(Video( "", "https://android/test")).execute()
+        val response = AppServerService.create().crearVideo(
+            Video(
+                "",
+                "https://android/test"
+            )
+        ).execute()
         val errorJson = response.errorBody()!!.string()
         // no se como parsear
         println(errorJson)

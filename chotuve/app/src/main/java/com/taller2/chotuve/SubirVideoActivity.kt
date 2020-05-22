@@ -1,8 +1,6 @@
 package com.taller2.chotuve
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -15,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.registro_de_usuario.*
+import com.taller2.chotuve.modelo.AppServerService
+import com.taller2.chotuve.modelo.data.Video
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -100,7 +99,12 @@ class SubirVideoActivity : AppCompatActivity() {
                     var context = this
                     // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                     taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->
-                        val call = AppServerService.create().crearVideo(Video(tituloString, downloadUri.toString()))
+                        val call = AppServerService.create().crearVideo(
+                            Video(
+                                tituloString,
+                                downloadUri.toString()
+                            )
+                        )
                         call.enqueue(object : Callback<ResponseBody> {
                             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                                 val responseCode = response!!.code()!!

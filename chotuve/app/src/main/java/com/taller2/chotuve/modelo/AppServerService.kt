@@ -1,5 +1,6 @@
 package com.taller2.chotuve.modelo
 
+import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Video
 import okhttp3.ResponseBody
@@ -37,4 +38,7 @@ interface AppServerService {
 
     @POST("/usuario")
     fun registrarUsuario(@Body infoRegistro: InfoRegistro) : Call<ResponseBody>
+
+    @POST("/usuario/sesion")
+    fun iniciarSesion(@Body infoInicioSesion: InfoInicioSesion) : Call<ResponseBody>
 }

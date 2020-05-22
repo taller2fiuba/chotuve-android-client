@@ -1,6 +1,7 @@
 package com.taller2.chotuve.modelo
 
 import android.util.Log
+import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import org.json.JSONObject;
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import okhttp3.ResponseBody
@@ -51,6 +52,43 @@ class Modelo private constructor () {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("modelo", "Error: " + t.message)
                     callbackRegistro.onErrorRed(t.message)
+                }
+            }
+        )
+    }
+
+    fun iniciarSesion(email: String, clave: String, callbackInicioSesion: CallbackInicioSesion) {
+        Log.d("modelo", "Iniciando sesión de usuario " + email)
+        appServerService.iniciarSesion(
+            InfoInicioSesion(
+                email,
+                clave
+            )
+        ).enqueue(
+            object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("modelo", "Respuesta obtenida: " + response.code())
+                    if (response.code() == 200) {
+                        val json = JSONObject(response.body()!!.string())
+                        if (!json.has("auth_token")) {
+                            Log.d("modelo", "No hay auth_token")
+                            callbackInicioSesion.onErrorRed("Error desconocido: no hay auth_token")
+                        } else {
+                            Log.d("modelo", "Token obtenido")
+                            userToken = json.getString("auth_token")
+                            callbackInicioSesion.onExito()
+                        }
+                    } else if (response.code() == 400) {
+                        Log.d("modelo", "Usuario ya registrado")
+                        callbackInicioSesion.onUsuarioOClaveIncorrecta()
+                    } else {
+                        Log.d("modelo", "Error desconocido " + response.code())
+                        callbackInicioSesion.onErrorRed("Error desconocido: " + response.code())
+                    }
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("modelo", "Error: " + t.message)
+                    callbackInicioSesion.onErrorRed(t.message)
                 }
             }
         )

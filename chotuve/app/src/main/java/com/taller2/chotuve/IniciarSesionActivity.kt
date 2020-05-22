@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.taller2.chotuve.modelo.CallbackInicioSesion
+import com.taller2.chotuve.modelo.Modelo
 import kotlinx.android.synthetic.main.registro_de_usuario.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -26,8 +28,12 @@ class IniciarSesionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // si hay token guardado y algo me trajo aca tendria que eliminar ese token
-        setContentView(R.layout.iniciar_sesion)
+        if (Modelo.instance.estaLogueado()) {
+            startActivity(Intent(this, SubirVideoActivity::class.java))
+        } else {
+            // si hay token guardado y algo me trajo aca tendria que eliminar ese token
+            setContentView(R.layout.iniciar_sesion)
+        }
     }
 
     fun clickIniciarSesion(view: View) {
@@ -44,9 +50,27 @@ class IniciarSesionActivity : AppCompatActivity() {
             contraseña.error = "No puede estar vacio"
             return;
         }
+        val context = this
         // logearme en el app server
-        // guardar token de respuesta
-        startActivity(Intent(this, SubirVideoActivity::class.java))
+        Modelo.instance.iniciarSesion(emailTexto, contraseñaTexto, object : CallbackInicioSesion {
+            override fun onExito() {
+                startActivity(Intent(context, SubirVideoActivity::class.java))
+            }
+
+            override fun onUsuarioOClaveIncorrecta() {
+                Toast.makeText(context, "Usuario o e-mail incorrecto", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onEmailNoRegistrado() {
+                Toast.makeText(context, "No se encontró el usuario. ¿Registrarse?", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onErrorRed(mensaje: String?) {
+                Toast.makeText(context, "Se produjo un error de red, intente nuevamente más tarde", Toast.LENGTH_LONG).show()
+            }
+        })
+
+        // guardar token de respuesta [No hace falta, queda en el modelo]
     }
 
     fun clickRegistrarme(view: View) {

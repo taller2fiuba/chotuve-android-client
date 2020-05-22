@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.home)
 
         navegacion = findViewById(R.id.navegacion)
-        navegacion.selectedItemId = R.id.principal_menu
         navegacion.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.principal_menu -> {
@@ -44,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        navegacion.selectedItemId = R.id.principal_menu
     }
 
     private fun openFragment(fragment: Fragment) {

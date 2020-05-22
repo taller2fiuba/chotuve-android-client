@@ -5,13 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-
 
 class MisVideosFragment : Fragment() {
     companion object {
@@ -26,19 +21,8 @@ class MisVideosFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_mis_videos, container, false)  as View
         val fab = view.findViewById(R.id.subir_video_boton) as FloatingActionButton
         fab.setOnClickListener { view ->
-            val intent = Intent()
-            intent.type = "video/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Seleccionar video"), 0)
+            startActivity(Intent(activity, SubirVideoActivity::class.java))
         }
         return view
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            startActivity(Intent(activity, SubirVideoActivity::class.java))
-        }
-    }
-
 }

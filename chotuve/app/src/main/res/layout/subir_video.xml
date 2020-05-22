@@ -41,25 +41,15 @@
         app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
     <Button
-        android:id="@+id/botonElegir"
-        android:layout_width="382dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="16dp"
-        android:onClick="clickElegirVideo"
-        android:text="@string/elegir_video"
-        app:layout_constraintEnd_toEndOf="@+id/titulo"
-        app:layout_constraintStart_toStartOf="@+id/titulo"
-        app:layout_constraintTop_toBottomOf="@+id/titulo" />
-
-    <Button
         android:id="@+id/btnSubir"
         android:layout_width="87dp"
         android:layout_height="49dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:onClick="clickSubirVideo"
         android:text="@string/subir_video"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUriElegida" />
 

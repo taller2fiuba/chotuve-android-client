@@ -20,29 +20,25 @@ import retrofit2.Response
 
 
 class SubirVideoActivity : AppCompatActivity() {
-    lateinit var mStorage : StorageReference
-    var uri = null as Uri?
+    private lateinit var mStorage : StorageReference
+    private var uri = null as Uri?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.subir_video)
-
         mStorage = FirebaseStorage.getInstance().reference;
-    }
 
-    fun clickElegirVideo(view: View) {
         val intent = Intent()
-        intent.setType("video/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
+        intent.type = "video/*"
+        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Seleccionar video"), 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
+            setContentView(R.layout.subir_video)
+
             uri = data!!.data
-            var botonElegir = findViewById<View>(R.id.botonElegir) as Button
-            botonElegir.visibility = View.GONE;
             val txtUriElegida = findViewById<View>(R.id.txtUriElegida) as TextView
             txtUriElegida.text = getFilenameFromUri(uri!!)
         }
@@ -52,7 +48,7 @@ class SubirVideoActivity : AppCompatActivity() {
         // https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
         var result = null as String?
         if (uri.scheme.equals("content")) {
-            val cursor = getContentResolver().query(uri, null, null, null, null)
+            val cursor = contentResolver.query(uri, null, null, null, null)
             try {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
@@ -63,11 +59,9 @@ class SubirVideoActivity : AppCompatActivity() {
         }
 
         if (result == null) {
-            result = uri.getPath();
+            result = uri.path
             val cut = result!!.lastIndexOf('/')
-            if (cut != -1) {
-                result = result.substring(cut + 1)
-            }
+            if (cut != -1) result = result.substring(cut + 1)
         }
         return result
     }
@@ -78,13 +72,6 @@ class SubirVideoActivity : AppCompatActivity() {
         var tituloString = titulo.editText!!.text.toString()
         if (tituloString == "") {
             titulo.error = "No puede estar vacio"
-            return;
-        }
-        if (uri == null) {
-            var botonElegir = findViewById<View>(R.id.botonElegir) as Button
-            botonElegir.isFocusableInTouchMode = true
-            botonElegir.requestFocus()
-            botonElegir.error = "Elegí un video"
             return;
         }
         var mUri = uri!!

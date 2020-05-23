@@ -1,28 +1,13 @@
 package com.taller2.chotuve
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak
-import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.taller2.chotuve.modelo.CallbackInicioSesion
 import com.taller2.chotuve.modelo.Modelo
-import kotlinx.android.synthetic.main.registro_de_usuario.*
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 
 class IniciarSesionActivity : AppCompatActivity() {
 
@@ -54,7 +39,7 @@ class IniciarSesionActivity : AppCompatActivity() {
         // logearme en el app server
         Modelo.instance.iniciarSesion(emailTexto, contraseñaTexto, object : CallbackInicioSesion {
             override fun onExito() {
-                startActivity(Intent(context, SubirVideoActivity::class.java))
+                startActivity(Intent(context, MainActivity::class.java))
             }
 
             override fun onUsuarioOClaveIncorrecta() {
@@ -74,6 +59,6 @@ class IniciarSesionActivity : AppCompatActivity() {
     }
 
     fun clickRegistrarme(view: View) {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, RegistrarmeActivity::class.java))
     }
 }

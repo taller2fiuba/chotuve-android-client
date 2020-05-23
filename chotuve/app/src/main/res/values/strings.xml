@@ -5,7 +5,16 @@
     <string name="ingresar_titulo">Solo te falta ingresar tu usuario y contraseña para disfrutar del mejor contenido</string>
     <string name="ya_estas_registrado">¿Ya estas registrado en Chotube?</string>
     <string name="no_tenes_cuenta">¿No tenes cuenta en Chotube?</string>
+    <string name="proximamente">Proximamente</string>
 
+    <string name="principal_menu">Principal</string>
+    <string name="mis_videos_menu">Mis videos</string>
+    <string name="notificaciones_menu">Notificaciones</string>
+    <string name="chats_menu">Chats</string>
+    <string name="perfil_menu">Perfil</string>
+
+    <string name="perfil_videos_menu">Videos</string>
+    <string name="perfil_informacion_menu">Información</string>
 
     <string name="email_hint">email</string>
     <string name="contraseña_hint">contraseña</string>

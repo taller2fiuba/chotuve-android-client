@@ -7,10 +7,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface AppServerService {
 
@@ -31,7 +28,7 @@ interface AppServerService {
     fun ping(): Call<ResponseBody>
 
     @POST("/video")
-    fun crearVideo(@Body video: Video) : Call<ResponseBody>
+    fun crearVideo(@Header("Authorization") auth: String, @Body video: Video) : Call<ResponseBody>
 
     @GET("/usuario/{id_usuario}")
     fun obtenerPerfilUsuario(@Path("id_usuario") uid : Int)

@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.taller2.chotuve.modelo.CallbackRegistro
+import com.taller2.chotuve.modelo.Modelo
 import kotlinx.android.synthetic.main.registro_de_usuario.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -23,12 +25,15 @@ import retrofit2.Response
 
 
 class RegistrarmeActivity : AppCompatActivity() {
+    private val modelo = Modelo.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // si hay token guardado
-        // startActivity(Intent(this, MainActivity::class.java))
-        setContentView(R.layout.registro_de_usuario)
+        if (modelo.estaLogueado())
+            startActivity(Intent(this, MainActivity::class.java))
+        else
+            setContentView(R.layout.registro_de_usuario)
     }
 
     fun clickRegistrarse(view: View) {
@@ -56,9 +61,23 @@ class RegistrarmeActivity : AppCompatActivity() {
             repetirContraseña.editText!!.setText("")
             return;
         }
-        // registrarme en el app server
-        // guardar token de respuesta
-        startActivity(Intent(this, MainActivity::class.java))
+        var contexto = this
+        modelo.registrarUsuario(emailTexto, contraseñaTexto, object : CallbackRegistro {
+            override fun onExito() {
+                startActivity(Intent(contexto, MainActivity::class.java))
+            }
+
+            override fun onYaEstaRegistrado() {
+                // Ya está registrado
+                email.error = "Este e-mail ya está en uso."
+            }
+
+            override fun onErrorRed(mensaje: String?) {
+                // Reintentar
+                Toast.makeText(contexto, "Error de red. Reintente. $mensaje", Toast.LENGTH_LONG).show()
+            }
+        })
+
     }
 
     fun clickIniciarSesion(view: View) {

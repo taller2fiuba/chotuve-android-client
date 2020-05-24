@@ -100,6 +100,7 @@ class SubirVideoActivity : AppCompatActivity() {
         modelo.subirVideo(tituloString, urlDescargaVideo, object : CallbackSubirVideo {
             override fun onExito(url: String) {
                 Log.d("vista", "Subido con éxito: terminando actividad")
+                setResult(RESULT_OK)
                 finish()
             }
 

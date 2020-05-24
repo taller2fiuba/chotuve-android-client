@@ -107,7 +107,7 @@ class Modelo private constructor () {
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     val responseCode = response.code()
-                    if (responseCode == 200) {
+                    if (responseCode == 201) {
                         Log.d("modelo", "Subido al app server")
                         callbackSubirVideo.onExito(url)
                     } else {

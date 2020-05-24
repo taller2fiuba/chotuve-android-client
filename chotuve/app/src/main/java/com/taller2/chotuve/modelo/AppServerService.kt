@@ -13,7 +13,8 @@ interface AppServerService {
 
     // factory method
     companion object {
-        private const val BASE_URL: String = "http://10.0.2.2:28080/" /*"https://chotuve-app-server.herokuapp.com/"*/
+        // private const val BASE_URL: String = "http://10.0.2.2:28080/"
+        private const val BASE_URL: String = "https://chotuve-app-server.herokuapp.com/"
 
         fun create(): AppServerService {
             // Usé retrofit como librería para request http

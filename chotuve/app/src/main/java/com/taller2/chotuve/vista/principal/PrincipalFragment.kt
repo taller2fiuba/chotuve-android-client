@@ -1,17 +1,19 @@
-package com.taller2.chotuve
+package com.taller2.chotuve.vista.principal
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.taller2.chotuve.R
 
 /**
  * A simple [Fragment] subclass.
  */
-class MiInformacionFragment : Fragment() {
+class PrincipalFragment : Fragment() {
     companion object {
-        fun newInstance(): MiInformacionFragment = MiInformacionFragment()
+        fun newInstance(): PrincipalFragment =
+            PrincipalFragment()
     }
 
     override fun onCreateView(
@@ -19,7 +21,7 @@ class MiInformacionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mi_informacion, container, false)
+        return inflater.inflate(R.layout.fragment_principal, container, false)
     }
 
 }

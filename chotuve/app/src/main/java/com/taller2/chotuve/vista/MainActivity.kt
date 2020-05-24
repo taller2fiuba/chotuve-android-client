@@ -1,11 +1,17 @@
-package com.taller2.chotuve
+package com.taller2.chotuve.vista
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.taller2.chotuve.vista.perfil.PerfilFragment
+import com.taller2.chotuve.vista.principal.PrincipalFragment
+import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Modelo
+import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
+import com.taller2.chotuve.vista.chats.ChatsFragment
+import com.taller2.chotuve.vista.notificaciones.NotificacionesFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,12 +29,14 @@ class MainActivity : AppCompatActivity() {
         navegacion.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.principal_menu -> {
-                    val fragment = PrincipalFragment.newInstance()
+                    val fragment =
+                        PrincipalFragment.newInstance()
                     openFragment(fragment)
                     true
                 }
                 R.id.notificaciones_menu -> {
-                    val fragment = NotificacionesFragment.newInstance()
+                    val fragment =
+                        NotificacionesFragment.newInstance()
                     openFragment(fragment)
                     true
                 }
@@ -38,7 +46,8 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.perfil_menu -> {
-                    val fragment = PerfilFragment.newInstance()
+                    val fragment =
+                        PerfilFragment.newInstance()
                     openFragment(fragment)
                     true
                 }

@@ -1,13 +1,11 @@
-package com.taller2.chotuve
+package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
 import android.media.MediaMetadataRetriever
-import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.format.DateUtils
 import android.util.Log
@@ -18,13 +16,9 @@ import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.CallbackSubirVideo
 import com.taller2.chotuve.modelo.Modelo
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.File
 
 
 class SubirVideoActivity : AppCompatActivity() {

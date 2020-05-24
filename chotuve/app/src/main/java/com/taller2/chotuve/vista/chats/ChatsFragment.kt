@@ -1,17 +1,19 @@
-package com.taller2.chotuve
+package com.taller2.chotuve.vista.chats
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.taller2.chotuve.R
 
 /**
  * A simple [Fragment] subclass.
  */
-class NotificacionesFragment : Fragment() {
+class ChatsFragment : Fragment() {
     companion object {
-        fun newInstance(): NotificacionesFragment = NotificacionesFragment()
+        fun newInstance(): ChatsFragment =
+            ChatsFragment()
     }
 
     override fun onCreateView(
@@ -19,7 +21,7 @@ class NotificacionesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notificaciones, container, false)
+        return inflater.inflate(R.layout.fragment_chats, container, false)
     }
 
 }

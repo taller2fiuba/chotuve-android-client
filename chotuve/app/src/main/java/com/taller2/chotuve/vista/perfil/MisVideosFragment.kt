@@ -1,4 +1,4 @@
-package com.taller2.chotuve
+package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.taller2.chotuve.R
 
 class MisVideosFragment : Fragment() {
     companion object {
-        fun newInstance(): MisVideosFragment = MisVideosFragment()
+        fun newInstance(): MisVideosFragment =
+            MisVideosFragment()
     }
 
     override fun onCreateView(

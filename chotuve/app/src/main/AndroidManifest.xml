@@ -13,18 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".vista.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IniciarSesionActivity">
+        <activity android:name=".vista.autenticacion.IniciarSesionActivity">
         </activity>
-        <activity android:name=".SubirVideoActivity">
+        <activity android:name=".vista.perfil.SubirVideoActivity">
         </activity>
-        <activity android:name=".RegistrarmeActivity">
+        <activity android:name=".vista.autenticacion.RegistrarmeActivity">
         </activity>
         <meta-data
             android:name="preloaded_fonts"

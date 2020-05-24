@@ -10,65 +10,54 @@ import com.taller2.chotuve.vista.MainActivity
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.CallbackRegistro
 import com.taller2.chotuve.modelo.Modelo
+import com.taller2.chotuve.modelo.interactor.InteractorRegistrarme
+import com.taller2.chotuve.presentador.PresentadorRegistrarme
+import kotlinx.android.synthetic.main.registro_de_usuario.*
 
 
-class RegistrarmeActivity : AppCompatActivity() {
-    private val modelo = Modelo.instance
+class RegistrarmeActivity : AppCompatActivity(), VistaRegistrarme {
+    private val presentador = PresentadorRegistrarme(this, InteractorRegistrarme())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // si hay token guardado
-        if (modelo.estaLogueado())
-            startActivity(Intent(this, MainActivity::class.java))
-        else
-            setContentView(R.layout.registro_de_usuario)
+        setContentView(R.layout.registro_de_usuario)
+
+        presentador.onCreate()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
     }
 
     fun clickRegistrarse(view: View) {
-        var email = (findViewById<View>(R.id.email) as TextInputLayout)
-        var contraseña = (findViewById<View>(R.id.contraseña) as TextInputLayout)
-        var repetirContraseña = (findViewById<View>(R.id.repetir_contraseña) as TextInputLayout)
-        var emailTexto = email.editText!!.text.toString()
-        var contraseñaTexto = contraseña.editText!!.text.toString()
-        var repetirContraseñaTexto = repetirContraseña.editText!!.text.toString()
-        // TODO codigo de valdiacion repetido con titulo en subir video, mejorar validaciones
-        if (emailTexto == "") {
-            email.error = "No puede estar vacio"
-            return;
-        }
-        if (contraseñaTexto == "") {
-            contraseña.error = "No puede estar vacio"
-            return;
-        }
-        if (repetirContraseñaTexto == "") {
-            repetirContraseña.error = "No puede estar vacio"
-            return;
-        }
-        if (repetirContraseñaTexto != contraseñaTexto) {
-            repetirContraseña.error = "No era igual a la contraseña"
-            repetirContraseña.editText!!.setText("")
-            return;
-        }
-        var contexto = this
-        modelo.registrarUsuario(emailTexto, contraseñaTexto, object : CallbackRegistro {
-            override fun onExito() {
-                startActivity(Intent(contexto, MainActivity::class.java))
-            }
+        val usuario = email.editText?.text?.toString()
+        val clave = contraseña.editText?.text?.toString()
+        val repetirClave = repetir_contraseña.editText?.text?.toString()
 
-            override fun onYaEstaRegistrado() {
-                // Ya está registrado
-                email.error = "Este e-mail ya está en uso."
-            }
-
-            override fun onErrorRed(mensaje: String?) {
-                // Reintentar
-                Toast.makeText(contexto, "Error de red. Reintente. $mensaje", Toast.LENGTH_LONG).show()
-            }
-        })
-
+        when {
+            usuario.isNullOrEmpty() -> email.error = "No puede estar vacío"
+            clave.isNullOrEmpty() -> contraseña.error = "No puede estar vacío"
+            clave != repetirClave -> repetir_contraseña.error = "Las contraseñas no coinciden"
+            else -> presentador.registrarme(usuario, clave)
+        }
     }
 
     fun clickIniciarSesion(view: View) {
         startActivity(Intent(this, IniciarSesionActivity::class.java))
+    }
+
+    override fun setUsuarioYaExiste() {
+        email.error = "Este e-mail ya está en uso."
+    }
+
+    override fun setErrorRed() {
+        Toast.makeText(this,
+            "Se produjo un error de red. Intente nuevamente más tarde.",
+            Toast.LENGTH_LONG).show()
+    }
+
+    override fun irAPantallaPrincipal() {
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }

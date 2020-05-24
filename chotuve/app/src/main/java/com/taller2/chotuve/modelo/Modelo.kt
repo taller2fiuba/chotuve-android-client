@@ -101,37 +101,25 @@ class Modelo private constructor () {
         )
     }
 
-    fun subirVideo(context: Context, titulo: String, uri: Uri, callbackSubirVideo: CallbackSubirVideo) {
-        Log.d("modelo", "Subiendo video $titulo con nombre " + getFilenameFromUri(context, uri))
-        val firebaseFileReference = firebaseStorage.child(getFilenameFromUri(context, uri))
-        firebaseFileReference.putFile(uri)
-            .addOnSuccessListener { taskSnapshot ->
-                Log.d("modelo", "Subido a firebase")
-                taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->
-                    Log.d("modelo", "Subiendo al app server")
-                    appServerService.crearVideo("Bearer $userToken", Video(titulo, downloadUri.toString()))
-                        .enqueue(object : Callback<ResponseBody> {
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                val responseCode = response.code()
-                                if (responseCode == 200) {
-                                    Log.d("modelo", "Subido al app server")
-                                    callbackSubirVideo.onExito(downloadUri.toString())
-                                } else {
-                                    Log.d("modelo", "Error: " + response.body()!!.string())
-                                    callbackSubirVideo.onErrorRed(response.body()!!.string())
-                                }
-                            }
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Log.d("modelo", "Error al contactar al app server: " + t.message)
-                                callbackSubirVideo.onErrorRed(t.message)
-                            }
-                        })
+    fun subirVideo(titulo: String, url: String, callbackSubirVideo: CallbackSubirVideo) {
+        Log.d("modelo", "Subiendo video $titulo con url $url")
+        appServerService.crearVideo("Bearer $userToken", Video(titulo, url))
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    val responseCode = response.code()
+                    if (responseCode == 200) {
+                        Log.d("modelo", "Subido al app server")
+                        callbackSubirVideo.onExito(url)
+                    } else {
+                        Log.d("modelo", "Error: " + response.body()!!.string())
+                        callbackSubirVideo.onErrorRed(response.body()!!.string())
+                    }
                 }
-            }
-            .addOnFailureListener { e ->
-                Log.d("modelo", "Error al contactar a Firebase: " + e.message)
-                callbackSubirVideo.onErrorRed(e.message)
-            }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("modelo", "Error al contactar al app server: " + t.message)
+                    callbackSubirVideo.onErrorRed(t.message)
+                }
+            })
     }
 
     // TODO: Esto debería estar en algun paquete `util` o algo así.

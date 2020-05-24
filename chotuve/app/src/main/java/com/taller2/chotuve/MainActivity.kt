@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (!Modelo.instance.estaLogueado())
             startActivity(Intent(this, RegistrarmeActivity::class.java))
-        else
-            setContentView(R.layout.home)
+
+        setContentView(R.layout.home)
 
         navegacion = findViewById(R.id.navegacion)
         navegacion.setOnNavigationItemSelectedListener { menuItem ->

@@ -25,6 +25,5 @@
 
     <string name="registrarme_btn"><u>Registrarme</u></string>
     <string name="ingresar_btn"><u>Ingresar</u></string>
-    <string name="elegir_video">Elegir video</string>
-    <string name="subir_video">Subir</string>
+    <string name="crear_btn">Crear</string>
 </resources>

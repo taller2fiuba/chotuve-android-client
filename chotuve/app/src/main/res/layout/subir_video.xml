@@ -7,19 +7,56 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/portada_video"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/duracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:alpha="0.7"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
+        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Overline"
+        android:textColor="@color/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/portada_video"
+        app:layout_constraintEnd_toEndOf="@+id/portada_video" />
+
+    <ProgressBar
+        android:id="@+id/subir_video_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progressTint="@color/colorSecondary"
+        app:layout_constraintEnd_toEndOf="@+id/portada_video"
+        app:layout_constraintStart_toStartOf="@+id/portada_video"
+        app:layout_constraintTop_toBottomOf="@+id/portada_video" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titulo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/video_subir_titulo_hint"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/portada_video">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -29,39 +66,30 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <TextView
-        android:id="@+id/txtUriElegida"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo" />
-
     <Button
-        android:id="@+id/btnSubir"
+        android:id="@+id/boton_crear"
         android:layout_width="87dp"
         android:layout_height="49dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:onClick="clickSubirVideo"
-        android:text="@string/subir_video"
+        android:onClick="clickCrearVideo"
+        android:text="@string/crear_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUriElegida" />
+        app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
-    <TextView
-        android:id="@+id/txtUrlDescarga"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/creando_video_barra_progreso"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorSecondary"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubir" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

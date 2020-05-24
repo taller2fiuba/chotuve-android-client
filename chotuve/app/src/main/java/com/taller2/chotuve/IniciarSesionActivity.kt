@@ -10,10 +10,11 @@ import com.taller2.chotuve.modelo.CallbackInicioSesion
 import com.taller2.chotuve.modelo.Modelo
 
 class IniciarSesionActivity : AppCompatActivity() {
+    private val modelo = Modelo.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Modelo.instance.estaLogueado()) {
+        if (modelo.estaLogueado()) {
             startActivity(Intent(this, SubirVideoActivity::class.java))
         } else {
             // si hay token guardado y algo me trajo aca tendria que eliminar ese token
@@ -37,7 +38,7 @@ class IniciarSesionActivity : AppCompatActivity() {
         }
         val context = this
         // logearme en el app server
-        Modelo.instance.iniciarSesion(emailTexto, contraseñaTexto, object : CallbackInicioSesion {
+        modelo.iniciarSesion(emailTexto, contraseñaTexto, object : CallbackInicioSesion {
             override fun onExito() {
                 startActivity(Intent(context, MainActivity::class.java))
             }

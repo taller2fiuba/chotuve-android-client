@@ -26,8 +26,8 @@ class IniciarSesionActivity : AppCompatActivity(), VistaIniciarSesion {
     }
 
     fun clickIniciarSesion(view: View) {
-        val usuario = email.editText?.text.toString()
-        val clave = contraseña.editText?.text.toString()
+        val usuario = email.editText?.text?.toString()
+        val clave = contraseña.editText?.text?.toString()
         when {
             usuario.isNullOrEmpty() -> email.error = "No puede estar vacío"
             clave.isNullOrEmpty() -> contraseña.error = "No puede estar vacío"

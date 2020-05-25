@@ -20,22 +20,26 @@ class Modelo private constructor() {
 
     private val appContext = Chotuve.context
     private val preferences = appContext.getSharedPreferences(appContext.packageName, Context.MODE_PRIVATE)
-    private val appServerService = AppServerService.create()
 
     private var userToken: String? = preferences.getString("token", null)
-        set(token: String?) {
+        set(token) {
             with (preferences.edit()) {
                 putString("token", token)
                 commit()
             }
             field = token
+
+            // Actualizar el cliente
+            chotuveClient = AppServerService.create(userToken)
         }
+
+    private var chotuveClient = AppServerService.create(userToken)
 
     fun estaLogueado() : Boolean = userToken != null
 
     fun registrarUsuario(email: String, clave: String, callbackRegistro: CallbackRegistro) {
-        Log.d("modelo", "Registrando usuario " + email)
-        appServerService.registrarUsuario(
+        Log.d("modelo", "Registrando usuario $email")
+        chotuveClient.registrarUsuario(
             InfoRegistro(
                 email,
                 clave
@@ -72,7 +76,7 @@ class Modelo private constructor() {
 
     fun iniciarSesion(email: String, clave: String, callbackInicioSesion: CallbackInicioSesion) {
         Log.d("modelo", "Iniciando sesión de usuario " + email)
-        appServerService.iniciarSesion(
+        chotuveClient.iniciarSesion(
             InfoInicioSesion(
                 email,
                 clave
@@ -109,7 +113,7 @@ class Modelo private constructor() {
 
     fun subirVideo(titulo: String, url: String, callbackSubirVideo: CallbackSubirVideo) {
         Log.d("modelo", "Subiendo video $titulo con url $url")
-        appServerService.crearVideo("Bearer $userToken", Video(titulo, url))
+        chotuveClient.crearVideo(Video(titulo, url))
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     val responseCode = response.code()

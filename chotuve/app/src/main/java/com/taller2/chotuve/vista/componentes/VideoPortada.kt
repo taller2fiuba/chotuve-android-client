@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.taller2.chotuve.R
+import com.taller2.chotuve.util.obtenerDuracionVideo
 
 class VideoPortada(context: Context, attrs: AttributeSet) :  ConstraintLayout(context, attrs) {
     private var portada: ImageView
@@ -25,17 +26,7 @@ class VideoPortada(context: Context, attrs: AttributeSet) :  ConstraintLayout(co
     fun setUri(uri: Uri) {
         Glide.with(this).load(uri).into(portada)
 
-        val duracionString = obtenerDuracion(uri)
+        val duracionString = DateUtils.formatElapsedTime(obtenerDuracionVideo(uri) / 1000)
         duracion.text = duracionString
-    }
-
-    private fun obtenerDuracion(videoUri: Uri) : String {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(context, videoUri)
-        val duracion = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toLong() / 1000
-        val duracionString = DateUtils.formatElapsedTime(duracion)
-
-        retriever.release()
-        return duracionString
     }
 }

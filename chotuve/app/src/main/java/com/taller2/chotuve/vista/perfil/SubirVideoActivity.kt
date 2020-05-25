@@ -1,33 +1,24 @@
 package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.CallbackSubirVideo
-import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.componentes.VideoPortada
+import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
+import com.taller2.chotuve.presentador.PresentadorSubirVideo
+
+import kotlinx.android.synthetic.main.subir_video.*
 
 
-class SubirVideoActivity : AppCompatActivity() {
-    private val modelo = Modelo.instance
-    private lateinit var mStorage : StorageReference
-    private var uri = null as Uri?
-    private lateinit var urlDescargaVideo : String
-    private lateinit var botonCrearVideo : Button
+class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
+    private val presentador = PresentadorSubirVideo(this, InteractorSubirVideo())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mStorage = FirebaseStorage.getInstance().reference;
 
         val intent = Intent()
         intent.type = "video/*"
@@ -35,93 +26,64 @@ class SubirVideoActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Seleccionar video"), 0)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             setContentView(R.layout.subir_video)
-            botonCrearVideo = findViewById<View>(R.id.boton_crear) as Button
-            botonCrearVideo.isEnabled = false
 
-            uri = data!!.data
+            val uri = data!!.data!!
             val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
-            portadaVideo.setUri(uri!!)
+            portadaVideo.setUri(uri)
 
-            subirVideoAFirebase(uri!!)
+            presentador.elegirVideo(uri)
         }
-    }
-
-    private fun obtenerNombreDeArchivo(uri: Uri) : String {
-        var result = null as String?
-        if (uri.scheme.equals("content")) {
-            val cursor = contentResolver.query(uri, null, null, null, null)
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            } finally {
-                cursor!!.close()
-            }
-        }
-
-        if (result == null) {
-            result = uri.path
-            val cut = result!!.lastIndexOf('/')
-            if (cut != -1) result = result.substring(cut + 1)
-        }
-        return result
     }
 
     fun clickCrearVideo(view: View) {
-        // TODO mejorar validaciones: sacar errores luego de solucionados, tener en cuenta errores devueltos por el server, usar alguna libreria (EasyValidation por ej)
-        var titulo = findViewById<View>(R.id.titulo) as TextInputLayout
-        var tituloString = titulo.editText!!.text.toString()
-        if (tituloString == "") {
-            titulo.error = "No puede estar vacio"
-            return;
+        val tituloVideo = titulo.editText?.text?.toString()
+        when {
+            tituloVideo.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
+            else -> presentador.crearVideo(tituloVideo)
         }
-
-        var context = this
-        var spinnerCreando = findViewById<View>(R.id.creando_video_barra_progreso) as ProgressBar
-        spinnerCreando.visibility = View.VISIBLE
-        botonCrearVideo.isEnabled = false
-        modelo.subirVideo(tituloString, urlDescargaVideo, object : CallbackSubirVideo {
-            override fun onExito(url: String) {
-                Log.d("vista", "Subido con éxito: terminando actividad")
-                setResult(RESULT_OK)
-                finish()
-            }
-
-            override fun onErrorRed(mensaje: String?) {
-                Log.d("vista", "Error del server ($mensaje)")
-                spinnerCreando.visibility = View.INVISIBLE
-                botonCrearVideo.isEnabled = true
-                Toast.makeText(context, "Error del server ($mensaje)", Toast.LENGTH_LONG).show()
-            }
-        })
     }
 
-    private fun subirVideoAFirebase(uri: Uri) {
-        var mReference = mStorage.child(obtenerNombreDeArchivo(uri))
-        try {
-            val barraProgreso = findViewById<View>(R.id.subir_video_progress_bar) as ProgressBar
-            // La subida del video asincrónica
-            mReference.putFile(uri)
-                .addOnSuccessListener { taskSnapshot ->
-                    // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
-                    taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->
-                        urlDescargaVideo = downloadUri.toString()
-                        botonCrearVideo.isEnabled = true
-                    }
-                }
-                .addOnProgressListener { taskSnapshot ->
-                    val progress = (100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount
-                    barraProgreso.progress = progress.toInt();
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                }
-        } catch (e: Exception) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
-        }
+    override fun habilitarBotonSubidaAppServer() {
+        boton_crear.isEnabled = true
+    }
+
+    override fun deshabilitarBotonSubidaAppServer() {
+        boton_crear.isEnabled = false
+    }
+
+    override fun mostrarProgresoSubidaAppServer() {
+        creando_video_barra_progreso.visibility = View.VISIBLE
+    }
+
+    override fun ocultarProgresoSubidaAppServer() {
+        creando_video_barra_progreso.visibility = View.GONE
+    }
+
+    override fun setProgresoSubidaFirebase(porcentaje: Int) {
+        subir_video_progress_bar.progress = porcentaje
+    }
+
+    override fun setTituloVacio() {
+        titulo.error = "No puede estar vacío"
+    }
+
+    override fun setErrorRed() {
+        Log.d("vista", "Error del server")
+        Toast.makeText(this, "Error del server", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onSubidaAppServerExitosa() {
+        Log.d("vista", "Subido con éxito: terminando actividad")
+        setResult(RESULT_OK)
+        finish()
     }
 }

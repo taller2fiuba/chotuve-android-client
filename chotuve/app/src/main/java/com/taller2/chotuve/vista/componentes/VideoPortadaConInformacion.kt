@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.taller2.chotuve.R
 
-
 class VideoPortadaConInformacion(context: Context, attrs: AttributeSet) :  ConstraintLayout(context, attrs) {
     private var portada: VideoPortada
     private var titulo: TextView
@@ -21,8 +20,8 @@ class VideoPortadaConInformacion(context: Context, attrs: AttributeSet) :  Const
         autorYCreacion = findViewById<View>(R.id.autor_y_creacion) as TextView
     }
 
-    fun setInformacionVideo(uri: Uri, titulo: String, autor: String, creacion: String) {
-        portada.setUri(uri, 20)
+    fun setInformacionVideo(uri: Uri, duracion: Long, titulo: String, autor: String, creacion: String) {
+        portada.setUri(uri, duracion)
         this.titulo.text = titulo
         autorYCreacion.text = context.getString(R.string.autor_y_creacion, autor, creacion)
         // TODO pasar a formato hace X años/meses/semanas/horas/minutos

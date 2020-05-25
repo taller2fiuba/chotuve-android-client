@@ -11,9 +11,9 @@ class PresentadorSubirVideo (private val vistaSubirVideo: VistaSubirVideo,
 
     }
 
-    fun elegirVideo(uri: Uri) {
+    fun elegirVideo(uri: Uri, duracion: Long) {
         vistaSubirVideo.deshabilitarBotonSubidaAppServer()
-        interactorSubirVideo.subirVideoAFirebase(uri, object : InteractorSubirVideo.CallbackSubirVideo {
+        interactorSubirVideo.subirVideoAFirebase(uri, duracion, object : InteractorSubirVideo.CallbackSubirVideo {
             override fun onSubidaExitosa() {
                 vistaSubirVideo.setProgresoSubidaFirebase(100)
                 vistaSubirVideo.habilitarBotonSubidaAppServer()

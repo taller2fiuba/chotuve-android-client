@@ -2,16 +2,19 @@ package com.taller2.chotuve.vista.principal
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
+import com.taller2.chotuve.presentador.PresentadorPrincipal
 import com.taller2.chotuve.vista.componentes.VideoPortadaConInformacion
-import java.time.LocalDate
-import java.time.LocalDateTime
 
-class PrincipalFragment : Fragment() {
+class PrincipalFragment : Fragment(), VistaPrincipal {
+    private val presentador = PresentadorPrincipal(this, InteractorPrincipal())
     companion object {
         fun newInstance(): PrincipalFragment =
             PrincipalFragment()
@@ -22,11 +25,28 @@ class PrincipalFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_principal, container, false)
-        val video = view.findViewById<View>(R.id.video) as VideoPortadaConInformacion
-        val uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/chotuve-a8587.appspot.com/o/VID-20200426-WA0000.mp4?alt=media&token=f1ef2901-3f9f-4e1c-9b6f-519c4297b6c1")
-        video.setInformacionVideo(uri, "el titulo", "yo papa", "28/02/2018")
+        presentador.obtenerVideo()
         return view
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
+    override fun mostrarVideo(uri: Uri, duracion: Long, titulo: String, autor: String, creacion: String) {
+        val videoPortada = view!!.findViewById<View>(R.id.video) as VideoPortadaConInformacion
+
+        videoPortada.setInformacionVideo(uri, duracion, titulo, autor, creacion)
+    }
+
+    override fun setErrorRed() {
+        Log.d("vista", "Error del server")
+        Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
+    }
+
+    override fun mostrarCargandoVideo() {
+        Toast.makeText(context, "cargando", Toast.LENGTH_LONG).show()
     }
 
 }

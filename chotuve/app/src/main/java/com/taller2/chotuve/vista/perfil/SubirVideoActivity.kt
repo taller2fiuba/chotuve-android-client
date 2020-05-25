@@ -40,7 +40,7 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
             val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
             portadaVideo.setUri(uri, obtenerDuracionVideo(uri) / 1000)
 
-            presentador.elegirVideo(uri)
+            presentador.elegirVideo(uri, duracion)
         }
     }
 

@@ -18,7 +18,7 @@ class InteractorSubirVideo {
     private lateinit var urlDescargaVideo: String
 
     fun subirVideoAFirebase(uri: Uri, callbackSubirVideo: CallbackSubirVideo) {
-        var fileReference = firebaseStorage.child(obtenerNombreDeArchivo(uri))
+        val fileReference = firebaseStorage.child(obtenerNombreDeArchivo(uri))
 
         fileReference.putFile(uri)
             .addOnSuccessListener { taskSnapshot ->

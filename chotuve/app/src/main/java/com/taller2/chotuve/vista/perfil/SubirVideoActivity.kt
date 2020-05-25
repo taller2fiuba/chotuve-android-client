@@ -1,24 +1,21 @@
 package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import android.provider.OpenableColumns
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.CallbackSubirVideo
 import com.taller2.chotuve.modelo.Modelo
+import com.taller2.chotuve.vista.componentes.VideoPortada
 
 
 class SubirVideoActivity : AppCompatActivity() {
@@ -46,12 +43,8 @@ class SubirVideoActivity : AppCompatActivity() {
             botonCrearVideo.isEnabled = false
 
             uri = data!!.data
-            val portadaVideo = findViewById<View>(R.id.portada_video) as ImageView
-            Glide.with(this).load(uri!!).into(portadaVideo)
-
-            val duracionTextView = findViewById<View>(R.id.duracion) as TextView
-            val duracion = obtenerDuracion(uri!!)
-            duracionTextView.text = duracion
+            val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
+            portadaVideo.setUri(uri!!)
 
             subirVideoAFirebase(uri!!)
         }
@@ -130,15 +123,5 @@ class SubirVideoActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun obtenerDuracion(videoUri: Uri) : String {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(this, videoUri)
-        val duracion = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toLong() / 1000
-        val duracionString = DateUtils.formatElapsedTime(duracion)
-
-        retriever.release()
-        return duracionString
     }
 }

@@ -1,11 +1,8 @@
 package com.taller2.chotuve.modelo
 
-import android.app.Application
 import android.content.Context
-import android.net.Uri
-import android.provider.OpenableColumns
 import android.util.Log
-import com.google.firebase.storage.FirebaseStorage
+import com.taller2.chotuve.Chotuve
 import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import org.json.JSONObject;
 import com.taller2.chotuve.modelo.data.InfoRegistro
@@ -15,15 +12,24 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Call
 
-class Modelo private constructor () {
+class Modelo private constructor() {
     // Singleton
     companion object {
         val instance = Modelo()
     }
 
+    private val appContext = Chotuve.context
+    private val preferences = appContext.getSharedPreferences(appContext.packageName, Context.MODE_PRIVATE)
     private val appServerService = AppServerService.create()
-    private val firebaseStorage = FirebaseStorage.getInstance().reference
-    private var userToken: String? = null;
+
+    private var userToken: String? = preferences.getString("token", null)
+        set(token: String?) {
+            with (preferences.edit()) {
+                putString("token", token)
+                commit()
+            }
+            field = token
+        }
 
     fun estaLogueado() : Boolean = userToken != null
 
@@ -120,30 +126,5 @@ class Modelo private constructor () {
                     callbackSubirVideo.onErrorRed(t.message)
                 }
             })
-    }
-
-    // TODO: Esto debería estar en algun paquete `util` o algo así.
-    fun getFilenameFromUri(context: Context, uri: Uri) : String {
-        // https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
-        var result = null as String?
-        if (uri.scheme.equals("content")) {
-            val cursor = context.contentResolver.query(uri, null, null, null, null)
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            } finally {
-                cursor!!.close()
-            }
-        }
-
-        if (result == null) {
-            result = uri.getPath();
-            val cut = result!!.lastIndexOf('/')
-            if (cut != -1) {
-                result = result.substring(cut + 1)
-            }
-        }
-        return result
     }
 }

@@ -10,7 +10,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.vista.componentes.VideoPortada
 import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
 import com.taller2.chotuve.presentador.PresentadorSubirVideo
-
+import com.taller2.chotuve.util.obtenerDuracionVideo
 import kotlinx.android.synthetic.main.subir_video.*
 
 
@@ -38,7 +38,7 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
 
             val uri = data!!.data!!
             val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
-            portadaVideo.setUri(uri)
+            portadaVideo.setUri(uri, obtenerDuracionVideo(uri) / 1000)
 
             presentador.elegirVideo(uri)
         }

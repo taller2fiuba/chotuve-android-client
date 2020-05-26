@@ -121,29 +121,4 @@ class Modelo private constructor () {
                 }
             })
     }
-
-    // TODO: Esto debería estar en algun paquete `util` o algo así.
-    fun getFilenameFromUri(context: Context, uri: Uri) : String {
-        // https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
-        var result = null as String?
-        if (uri.scheme.equals("content")) {
-            val cursor = context.contentResolver.query(uri, null, null, null, null)
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            } finally {
-                cursor!!.close()
-            }
-        }
-
-        if (result == null) {
-            result = uri.getPath();
-            val cut = result!!.lastIndexOf('/')
-            if (cut != -1) {
-                result = result.substring(cut + 1)
-            }
-        }
-        return result
-    }
 }

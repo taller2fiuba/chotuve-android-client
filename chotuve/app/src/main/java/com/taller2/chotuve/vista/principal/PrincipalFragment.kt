@@ -1,15 +1,15 @@
 package com.taller2.chotuve.vista.principal
 
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
@@ -41,9 +41,16 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
 
     override fun mostrarVideo(uri: Uri, duracion: Long, titulo: String, autor: String, creacion: String) {
         ocultarCargandoVideo()
-        val videoPortada = view!!.findViewById<View>(R.id.video) as VideoPortadaConInformacion
-
+        val linearLayout = view!!.findViewById<View>(R.id.linear_layout) as LinearLayout
+        linearLayout.visibility = View.VISIBLE
+        val videoPortada = VideoPortadaConInformacion(context!!)
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        videoPortada.layoutParams = params
         videoPortada.setInformacionVideo(uri, duracion, titulo, autor, creacion)
+        linearLayout.addView(videoPortada)
     }
 
     override fun setErrorRed() {
@@ -52,12 +59,12 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
     }
 
     override fun mostrarCargandoVideo() {
-        val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ProgressBar
+        val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
         cargando.visibility = View.VISIBLE
     }
 
     fun ocultarCargandoVideo() {
-        val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ProgressBar
+        val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
         cargando.visibility = View.GONE
     }
 

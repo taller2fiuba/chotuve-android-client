@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.taller2.chotuve.R
 
-class VideoPortadaConInformacion(context: Context, attrs: AttributeSet) :  ConstraintLayout(context, attrs) {
+class VideoPortadaConInformacion(context: Context) :  ConstraintLayout(context) {
     private var portada: VideoPortada
     private var titulo: TextView
     private var autorYCreacion: TextView

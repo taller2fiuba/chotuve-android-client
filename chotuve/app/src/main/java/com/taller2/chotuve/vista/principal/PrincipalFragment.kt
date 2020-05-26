@@ -31,7 +31,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presentador.obtenerVideo()
+        presentador.obtenerVideos()
     }
 
     override fun onDestroy() {
@@ -39,17 +39,20 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         presentador.onDestroy()
     }
 
-    override fun mostrarVideo(video: Video) {
+    override fun mostrarVideos(videos: List<Video>) {
         ocultarCargandoVideo()
         val linearLayout = view!!.findViewById<View>(R.id.linear_layout) as LinearLayout
         linearLayout.visibility = View.VISIBLE
-        val videoPortada = VideoPortadaConInformacion(context!!, video)
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        videoPortada.layoutParams = params
-        linearLayout.addView(videoPortada)
+        videos.forEach { video: Video ->
+            val videoPortada = VideoPortadaConInformacion(context!!, video)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(0, 0, 0, 48)
+            videoPortada.layoutParams = params
+            linearLayout.addView(videoPortada)
+        }
     }
 
     override fun setErrorRed() {

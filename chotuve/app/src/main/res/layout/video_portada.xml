@@ -26,6 +26,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Overline"
         android:textColor="@color/colorOnPrimary"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/portada"
         app:layout_constraintEnd_toEndOf="@+id/portada" />
 

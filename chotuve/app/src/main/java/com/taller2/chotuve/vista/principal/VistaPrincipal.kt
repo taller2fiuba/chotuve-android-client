@@ -4,6 +4,6 @@ import com.taller2.chotuve.modelo.Video
 
 interface VistaPrincipal {
     fun mostrarCargandoVideo()
-    fun mostrarVideo(video: Video)
+    fun mostrarVideos(videos: List<Video>)
     fun setErrorRed()
 }

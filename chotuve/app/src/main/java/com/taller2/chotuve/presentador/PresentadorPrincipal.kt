@@ -11,11 +11,11 @@ class PresentadorPrincipal (private val vista: VistaPrincipal,
 
     }
 
-    fun obtenerVideo() {
+    fun obtenerVideos() {
         vista.mostrarCargandoVideo()
-        interactor.obtenerVideo(object : InteractorPrincipal.CallbackObtenerVideo {
-            override fun onObtenerExitoso(video: Video) {
-                vista.mostrarVideo(video)
+        interactor.obtenerVideos(object : InteractorPrincipal.CallbackObtenerVideo {
+            override fun onObtenerExitoso(videos: List<Video>) {
+                vista.mostrarVideos(videos)
             }
             override fun onErrorRed(mensaje: String?) {
                 vista.setErrorRed()

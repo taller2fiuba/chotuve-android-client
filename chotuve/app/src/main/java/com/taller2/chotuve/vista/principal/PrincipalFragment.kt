@@ -1,6 +1,5 @@
 package com.taller2.chotuve.vista.principal
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
 import com.taller2.chotuve.vista.componentes.VideoPortadaConInformacion
@@ -39,17 +39,16 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         presentador.onDestroy()
     }
 
-    override fun mostrarVideo(uri: Uri, duracion: Long, titulo: String, autor: String, creacion: String) {
+    override fun mostrarVideo(video: Video) {
         ocultarCargandoVideo()
         val linearLayout = view!!.findViewById<View>(R.id.linear_layout) as LinearLayout
         linearLayout.visibility = View.VISIBLE
-        val videoPortada = VideoPortadaConInformacion(context!!)
+        val videoPortada = VideoPortadaConInformacion(context!!, video)
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         videoPortada.layoutParams = params
-        videoPortada.setInformacionVideo(uri, duracion, titulo, autor, creacion)
         linearLayout.addView(videoPortada)
     }
 

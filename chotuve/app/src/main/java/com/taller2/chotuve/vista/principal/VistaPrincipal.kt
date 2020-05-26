@@ -1,9 +1,9 @@
 package com.taller2.chotuve.vista.principal
 
-import android.net.Uri
+import com.taller2.chotuve.modelo.Video
 
 interface VistaPrincipal {
     fun mostrarCargandoVideo()
-    fun mostrarVideo(uri: Uri, duracion: Long, titulo: String, autor: String, creacion: String)
+    fun mostrarVideo(video: Video)
     fun setErrorRed()
 }

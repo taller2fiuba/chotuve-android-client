@@ -11,9 +11,9 @@ class PresentadorPrincipal (private val vista: VistaPrincipal,
 
     }
 
-    fun obtenerVideos() {
+    fun obtenerVideos(offset: Int) {
         vista.mostrarCargandoVideo()
-        interactor.obtenerVideos(object : InteractorPrincipal.CallbackObtenerVideo {
+        interactor.obtenerVideos(offset, object : InteractorPrincipal.CallbackObtenerVideo {
             override fun onObtenerExitoso(videos: List<Video>) {
                 vista.mostrarVideos(videos)
             }

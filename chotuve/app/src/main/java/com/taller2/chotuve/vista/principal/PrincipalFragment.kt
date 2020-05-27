@@ -5,18 +5,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
-import com.taller2.chotuve.vista.componentes.VideoPortadaConInformacion
+import com.taller2.chotuve.vista.adaptadores.EndlessRecyclerViewScrollListener
+import com.taller2.chotuve.vista.adaptadores.VideosAdapter
+
 
 class PrincipalFragment : Fragment(), VistaPrincipal {
     private val presentador = PresentadorPrincipal(this, InteractorPrincipal())
+
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
+    private lateinit var adapter: VideosAdapter
+    private lateinit var videosView: RecyclerView
+
     companion object {
         fun newInstance(): PrincipalFragment =
             PrincipalFragment()
@@ -31,7 +39,8 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presentador.obtenerVideos()
+        configurarRecyclerView()
+        presentador.obtenerVideos(0)
     }
 
     override fun onDestroy() {
@@ -39,20 +48,26 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         presentador.onDestroy()
     }
 
+    fun configurarRecyclerView() {
+        videosView = view!!.findViewById<View>(R.id.videos_recycler_view) as RecyclerView
+        val linearLayoutManager = LinearLayoutManager(context)
+        videosView.layoutManager = linearLayoutManager
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            override fun onLoadMore(offset: Int, totalItemsCount: Int, view: RecyclerView?) {
+                // Se llama cuando hay que agregar nuevos videos a la vista
+                presentador.obtenerVideos(offset)
+            }
+        }
+        adapter = VideosAdapter()
+        videosView.adapter = adapter
+        videosView.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
+    }
+
     override fun mostrarVideos(videos: List<Video>) {
         ocultarCargandoVideo()
-        val linearLayout = view!!.findViewById<View>(R.id.linear_layout) as LinearLayout
-        linearLayout.visibility = View.VISIBLE
-        videos.forEach { video: Video ->
-            val videoPortada = VideoPortadaConInformacion(context!!, video)
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(0, 0, 0, 48)
-            videoPortada.layoutParams = params
-            linearLayout.addView(videoPortada)
-        }
+        videosView.visibility = View.VISIBLE
+        adapter.addAll(videos)
     }
 
     override fun setErrorRed() {

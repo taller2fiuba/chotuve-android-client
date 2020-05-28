@@ -15,8 +15,8 @@ import retrofit2.http.*
 interface AppServerService {
     // factory method
     companion object {
-        // private const val BASE_URL: String = "http://10.0.2.2:28080/"
-        private const val BASE_URL: String = "https://chotuve-app-server.herokuapp.com/"
+        private const val BASE_URL: String = "http://10.0.2.2:28080/"
+        // private const val BASE_URL: String = "https://chotuve-app-server.herokuapp.com/"
 
         fun create(userToken: String? = null): AppServerService {
             val retrofit = Retrofit.Builder()

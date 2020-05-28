@@ -1,29 +1,17 @@
 package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
-import android.media.MediaMetadataRetriever
-import android.net.Uri
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
-import android.provider.OpenableColumns
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.CallbackSubirVideo
-import com.taller2.chotuve.modelo.Modelo
+import com.taller2.chotuve.vista.componentes.VideoPortada
 import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
 import com.taller2.chotuve.presentador.PresentadorSubirVideo
 import com.taller2.chotuve.util.obtenerDuracionVideo
 import kotlinx.android.synthetic.main.subir_video.*
-import java.util.*
 
 
 class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
@@ -49,9 +37,11 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
             setContentView(R.layout.subir_video)
 
             val uri = data!!.data!!
-            Glide.with(this).load(uri).into(portada_video)
-            duracion.text = DateUtils.formatElapsedTime(obtenerDuracionVideo(uri) / 1000)
-            presentador.elegirVideo(uri)
+            val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
+            val duracion = obtenerDuracionVideo(uri) / 1000
+            portadaVideo.setUri(uri, duracion)
+
+            presentador.elegirVideo(uri, duracion)
         }
     }
 

@@ -7,31 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".vista.MainActivity">
 
-    <ImageView
+    <com.taller2.chotuve.vista.componentes.VideoPortada
         android:id="@+id/portada_video"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/duracion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:alpha="0.7"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimary"
-        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Overline"
-        android:textColor="@color/colorOnPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/portada_video"
-        app:layout_constraintEnd_toEndOf="@+id/portada_video" />
 
     <ProgressBar
         android:id="@+id/subir_video_progress_bar"

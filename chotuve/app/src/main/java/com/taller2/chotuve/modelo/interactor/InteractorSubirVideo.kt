@@ -2,7 +2,7 @@ package com.taller2.chotuve.modelo.interactor
 
 import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
-import com.taller2.chotuve.modelo.CallbackSubirVideo
+import com.google.firebase.storage.StorageMetadata
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.util.obtenerNombreDeArchivo
 
@@ -17,10 +17,13 @@ class InteractorSubirVideo {
     private val firebaseStorage = FirebaseStorage.getInstance().reference
     private lateinit var urlDescargaVideo: String
 
-    fun subirVideoAFirebase(uri: Uri, callbackSubirVideo: CallbackSubirVideo) {
-        val fileReference = firebaseStorage.child(obtenerNombreDeArchivo(uri))
+    fun subirVideoAFirebase(uri: Uri, duracion: Long, callbackSubirVideo: CallbackSubirVideo) {
+        var fileReference = firebaseStorage.child("videos/" + obtenerNombreDeArchivo(uri))
+        var metadata = StorageMetadata.Builder()
+            .setCustomMetadata("duracion", duracion.toString())
+            .build()
 
-        fileReference.putFile(uri)
+        fileReference.putFile(uri, metadata)
             .addOnSuccessListener { taskSnapshot ->
                 // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                 taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->

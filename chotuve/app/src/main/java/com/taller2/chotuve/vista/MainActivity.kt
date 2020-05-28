@@ -22,39 +22,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (!Modelo.instance.estaLogueado())
             startActivity(Intent(this, RegistrarmeActivity::class.java))
+        else {
+            setContentView(R.layout.home)
 
-        setContentView(R.layout.home)
-
-        navegacion = findViewById(R.id.navegacion)
-        navegacion.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.principal_menu -> {
-                    val fragment =
-                        PrincipalFragment.newInstance()
-                    openFragment(fragment)
-                    true
+            navegacion = findViewById(R.id.navegacion)
+            navegacion.setOnNavigationItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.principal_menu -> {
+                        val fragment =
+                            PrincipalFragment.newInstance()
+                        openFragment(fragment)
+                        true
+                    }
+                    R.id.notificaciones_menu -> {
+                        val fragment =
+                            NotificacionesFragment.newInstance()
+                        openFragment(fragment)
+                        true
+                    }
+                    R.id.chats_menu -> {
+                        val fragment = ChatsFragment.newInstance()
+                        openFragment(fragment)
+                        true
+                    }
+                    R.id.perfil_menu -> {
+                        val fragment =
+                            PerfilFragment.newInstance()
+                        openFragment(fragment)
+                        true
+                    }
+                    else -> false
                 }
-                R.id.notificaciones_menu -> {
-                    val fragment =
-                        NotificacionesFragment.newInstance()
-                    openFragment(fragment)
-                    true
-                }
-                R.id.chats_menu -> {
-                    val fragment = ChatsFragment.newInstance()
-                    openFragment(fragment)
-                    true
-                }
-                R.id.perfil_menu -> {
-                    val fragment =
-                        PerfilFragment.newInstance()
-                    openFragment(fragment)
-                    true
-                }
-                else -> false
             }
+            navegacion.selectedItemId = R.id.principal_menu
         }
-        navegacion.selectedItemId = R.id.principal_menu
     }
 
     private fun openFragment(fragment: Fragment) {

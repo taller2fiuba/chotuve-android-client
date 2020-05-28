@@ -6,6 +6,7 @@
     <string name="ya_estas_registrado">¿Ya estas registrado en Chotube?</string>
     <string name="no_tenes_cuenta">¿No tenes cuenta en Chotube?</string>
     <string name="proximamente">Proximamente</string>
+    <string name="autor_y_creacion">%1$s %2$s</string>
 
     <string name="principal_menu">Principal</string>
     <string name="mis_videos_menu">Mis videos</string>

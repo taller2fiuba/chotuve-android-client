@@ -7,34 +7,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
-import com.taller2.chotuve.vista.componentes.VideoPortadaConInformacion
+import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
 
-
-// Note that we specify the custom ViewHolder which gives us access to our views
-class VideosAdapter : RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
+class VideosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var videos: MutableList<Video> = mutableListOf()
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var videoPortada: VideoPortadaConInformacion = itemView.findViewById<View>(R.id.video_portada_con_informacion) as VideoPortadaConInformacion
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder {
+    ): RecyclerView.ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val videoView: View = inflater.inflate(R.layout.video_portada_con_informacion_list, parent, false)
-        return ViewHolder(videoView)
+        val videoView: View = inflater.inflate(R.layout.video_portada_con_titulo_y_autor, parent, false)
+        return VideoPortadaConTituloYAutor(videoView)
     }
 
     override fun onBindViewHolder(
-        viewHolder: ViewHolder,
+        viewHolder: RecyclerView.ViewHolder,
         position: Int
     ) {
         val video: Video = videos[position]
-        val videoPortada = viewHolder.videoPortada
-        videoPortada.setVideo(video)
+        val portadaVideo = viewHolder as VideoPortadaConTituloYAutor
+        portadaVideo.setVideo(video)
     }
 
     override fun getItemCount(): Int {

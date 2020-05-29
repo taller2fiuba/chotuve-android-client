@@ -14,14 +14,14 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
-import com.taller2.chotuve.vista.adaptadores.EndlessRecyclerViewScrollListener
+import com.taller2.chotuve.vista.adaptadores.ScrollInfinitoListener
 import com.taller2.chotuve.vista.adaptadores.VideosAdapter
 
 
 class PrincipalFragment : Fragment(), VistaPrincipal {
     private val presentador = PresentadorPrincipal(this, InteractorPrincipal())
 
-    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var scrollInfinitoListener: ScrollInfinitoListener
     private lateinit var adapter: VideosAdapter
     private lateinit var videosView: RecyclerView
 
@@ -53,7 +53,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         videosView = view!!.findViewById<View>(R.id.videos_recycler_view) as RecyclerView
         val linearLayoutManager = LinearLayoutManager(context)
         videosView.layoutManager = linearLayoutManager
-        scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+        scrollInfinitoListener = object : ScrollInfinitoListener(linearLayoutManager) {
             override fun onLoadMore(pagina: Int, totalItemsCount: Int, view: RecyclerView?) {
                 // Se llama cuando hay que agregar nuevos videos a la vista
                 videosView.post {
@@ -64,7 +64,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         }
         adapter = VideosAdapter()
         videosView.adapter = adapter
-        videosView.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
+        videosView.addOnScrollListener(scrollInfinitoListener as ScrollInfinitoListener)
     }
 
     override fun mostrarVideos(videos: List<Video>) {

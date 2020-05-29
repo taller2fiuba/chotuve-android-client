@@ -23,7 +23,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
 
     // la pagina inicial
     private val startingPageIndex = 0
-    var mLayoutManager: RecyclerView.LayoutManager
+    private var mLayoutManager: RecyclerView.LayoutManager
 
     constructor(layoutManager: LinearLayoutManager) {
         mLayoutManager = layoutManager
@@ -31,12 +31,12 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
 
     constructor(layoutManager: GridLayoutManager) {
         mLayoutManager = layoutManager
-        visibleThreshold = visibleThreshold * layoutManager.spanCount
+        visibleThreshold *= layoutManager.spanCount
     }
 
     constructor(layoutManager: StaggeredGridLayoutManager) {
         mLayoutManager = layoutManager
-        visibleThreshold = visibleThreshold * layoutManager.spanCount
+        visibleThreshold *= layoutManager.spanCount
     }
 
     fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
@@ -82,7 +82,8 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         // If it’s still loading, we check to see if the dataset count has
         // changed, if so we conclude it has finished loading and update the current page
         // number and total item count.
-        if (loading && totalItemCount > previousTotalItemCount) {
+        // +1 por el cargando
+        if (loading && totalItemCount > previousTotalItemCount + 1) {
             loading = false
             previousTotalItemCount = totalItemCount
         }
@@ -93,8 +94,8 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         // threshold should reflect how many total columns there are too
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
             currentPage++
-            onLoadMore(currentPage, totalItemCount, view)
             loading = true
+            onLoadMore(currentPage, totalItemCount, view)
         }
     }
 

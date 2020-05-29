@@ -21,7 +21,7 @@ import com.taller2.chotuve.vista.adaptadores.VideosAdapter
 class PrincipalFragment : Fragment(), VistaPrincipal {
     private val presentador = PresentadorPrincipal(this, InteractorPrincipal())
 
-    private var scrollListener: EndlessRecyclerViewScrollListener? = null
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var adapter: VideosAdapter
     private lateinit var videosView: RecyclerView
 
@@ -40,6 +40,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configurarRecyclerView()
+        mostrarCargandoVideos()
         presentador.obtenerVideos(0)
     }
 
@@ -52,11 +53,13 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         videosView = view!!.findViewById<View>(R.id.videos_recycler_view) as RecyclerView
         val linearLayoutManager = LinearLayoutManager(context)
         videosView.layoutManager = linearLayoutManager
-        // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            override fun onLoadMore(offset: Int, totalItemsCount: Int, view: RecyclerView?) {
+            override fun onLoadMore(pagina: Int, totalItemsCount: Int, view: RecyclerView?) {
                 // Se llama cuando hay que agregar nuevos videos a la vista
-                presentador.obtenerVideos(offset)
+                videosView.post {
+                    adapter.agregarCargando()
+                }
+                presentador.obtenerVideos(pagina)
             }
         }
         adapter = VideosAdapter()
@@ -65,7 +68,8 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
     }
 
     override fun mostrarVideos(videos: List<Video>) {
-        ocultarCargandoVideo()
+        ocultarCargandoVideos()
+        adapter.sacarCargando()
         videosView.visibility = View.VISIBLE
         adapter.addAll(videos)
     }
@@ -75,12 +79,12 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
     }
 
-    override fun mostrarCargandoVideo() {
+    fun mostrarCargandoVideos() {
         val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
         cargando.visibility = View.VISIBLE
     }
 
-    fun ocultarCargandoVideo() {
+    fun ocultarCargandoVideos() {
         val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
         cargando.visibility = View.GONE
     }

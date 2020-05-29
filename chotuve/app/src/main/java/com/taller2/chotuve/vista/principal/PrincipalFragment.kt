@@ -82,13 +82,17 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
     }
 
     fun mostrarCargandoVideos() {
-        val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
-        cargando.visibility = View.VISIBLE
+        if (view != null) {
+            val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
+            cargando.visibility = View.VISIBLE
+        }
     }
 
     fun ocultarCargandoVideos() {
-        val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
-        cargando.visibility = View.GONE
+        if (view != null) {
+            val cargando = view!!.findViewById<View>(R.id.cargando_video_barra_progreso) as ConstraintLayout
+            cargando.visibility = View.GONE
+        }
     }
 
 }

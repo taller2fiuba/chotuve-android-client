@@ -5,18 +5,28 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.taller2.chotuve.vista.perfil.PerfilFragment
-import com.taller2.chotuve.vista.principal.PrincipalFragment
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
 import com.taller2.chotuve.vista.chats.ChatsFragment
 import com.taller2.chotuve.vista.notificaciones.NotificacionesFragment
+import com.taller2.chotuve.vista.perfil.PerfilFragment
+import com.taller2.chotuve.vista.principal.PrincipalFragment
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var navegacion : BottomNavigationView
+    val FRAGMENT_PRINCIPAL_TAG =  "FRAGMENT_PRINCIPAL_TAG"
+    val FRAGMENT_CHATS_TAG =  "FRAGMENT_CHATS_TAG"
+    val FRAGMENT_NOTIFICACIONES_TAG =  "FRAGMENT_NOTIFICACIONES_TAG"
+    val FRAGMENT_PERFIL_TAG =  "FRAGMENT_PERFIL_TAG"
+
+    private lateinit var navegacion : BottomNavigationView
+    private val principalFragment: Fragment = PrincipalFragment.newInstance()
+    private val chatsFragment: Fragment = ChatsFragment.newInstance()
+    private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
+    private val perfilFragment: Fragment = PerfilFragment.newInstance()
+    private var fragmentActivo : Fragment = principalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,44 +35,42 @@ class MainActivity : AppCompatActivity() {
         else {
             setContentView(R.layout.home)
 
+            supportFragmentManager.beginTransaction().add(R.id.container_navegacion, principalFragment, FRAGMENT_PRINCIPAL_TAG).commit()
+
             navegacion = findViewById(R.id.navegacion)
             navegacion.setOnNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.principal_menu -> {
-                        val fragment =
-                            PrincipalFragment.newInstance()
-                        openFragment(fragment)
-                        true
-                    }
-                    R.id.notificaciones_menu -> {
-                        val fragment =
-                            NotificacionesFragment.newInstance()
-                        openFragment(fragment)
+                        openFragment(FRAGMENT_PRINCIPAL_TAG, principalFragment)
                         true
                     }
                     R.id.chats_menu -> {
-                        val fragment = ChatsFragment.newInstance()
-                        openFragment(fragment)
+                        openFragment(FRAGMENT_CHATS_TAG, chatsFragment)
+                        true
+                    }
+                    R.id.notificaciones_menu -> {
+                        openFragment(FRAGMENT_NOTIFICACIONES_TAG, notificacionesFragment)
                         true
                     }
                     R.id.perfil_menu -> {
-                        val fragment =
-                            PerfilFragment.newInstance()
-                        openFragment(fragment)
+                        openFragment(FRAGMENT_PERFIL_TAG, perfilFragment)
                         true
                     }
                     else -> false
                 }
             }
-            navegacion.selectedItemId = R.id.principal_menu
         }
     }
 
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_navegacion, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+    private fun openFragment(tag: String, fragment: Fragment) {
+        var fragmentoSeleccionado = supportFragmentManager.findFragmentByTag(tag)
+        val transicion = supportFragmentManager.beginTransaction().hide(fragmentActivo)
+        if (fragmentoSeleccionado == null) {
+            transicion.add(R.id.container_navegacion, fragment, tag).commit()
+        } else {
+            transicion.show(fragment).commit()
+        }
+        fragmentActivo = fragment
     }
 
 

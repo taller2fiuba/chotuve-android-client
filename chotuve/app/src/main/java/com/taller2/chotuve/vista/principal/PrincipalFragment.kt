@@ -57,6 +57,8 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
             override fun onLoadMore(pagina: Int, totalItemsCount: Int, view: RecyclerView?) {
                 // Se llama cuando hay que agregar nuevos videos a la vista
                 videosView.post {
+                    // esto hace que el cargando se ejecute justo despues de que esta funcion termine
+                    // ahora no se puede agregar porque no podes agregar items al mismo tiempo que scrolleas
                     adapter.agregarCargando()
                 }
                 presentador.obtenerVideos(pagina)

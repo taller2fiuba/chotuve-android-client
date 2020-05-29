@@ -14,8 +14,8 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
-import com.taller2.chotuve.vista.adaptadores.ScrollInfinitoListener
-import com.taller2.chotuve.vista.adaptadores.VideosAdapter
+import com.taller2.chotuve.vista.scrollinfinito.ScrollInfinitoListener
+import com.taller2.chotuve.vista.scrollinfinito.VideosAdapter
 
 
 class PrincipalFragment : Fragment(), VistaPrincipal {

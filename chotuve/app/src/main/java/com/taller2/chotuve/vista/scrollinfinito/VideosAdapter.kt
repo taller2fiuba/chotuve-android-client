@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.adaptadores
+package com.taller2.chotuve.vista.scrollinfinito
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
-import com.taller2.chotuve.vista.componentes.CargandoViewHolder
 import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
 
 class VideosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -33,7 +32,10 @@ class VideosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             CARGANDO -> {
                 val viewLoading: View =
                     inflater.inflate(R.layout.cargando_view_holder, parent, false)
-                viewHolder = CargandoViewHolder(viewLoading)
+                viewHolder =
+                    CargandoViewHolder(
+                        viewLoading
+                    )
             }
         }
         return viewHolder!!

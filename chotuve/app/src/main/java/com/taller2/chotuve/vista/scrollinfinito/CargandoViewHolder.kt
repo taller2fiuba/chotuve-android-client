@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.componentes
+package com.taller2.chotuve.vista.scrollinfinito
 
 import android.view.View
 import android.widget.ImageButton

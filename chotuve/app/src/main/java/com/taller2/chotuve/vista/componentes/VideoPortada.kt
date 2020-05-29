@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
 
 class VideoPortada(context: Context, attrs: AttributeSet) :  ConstraintLayout(context, attrs) {
@@ -22,7 +23,12 @@ class VideoPortada(context: Context, attrs: AttributeSet) :  ConstraintLayout(co
     }
 
     fun setUri(uri: Uri, duracion: Long) {
-        Glide.with(this).load(uri).into(portada)
+        Glide
+            .with(context)
+            .load(uri)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .centerCrop()
+            .into(portada)
 
         val duracionString = DateUtils.formatElapsedTime(duracion)
         this.duracion.text = duracionString

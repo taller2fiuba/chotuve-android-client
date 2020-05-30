@@ -95,4 +95,8 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         }
     }
 
+    fun scrollTop() {
+        videosView.smoothScrollToPosition(0)
+    }
+
 }

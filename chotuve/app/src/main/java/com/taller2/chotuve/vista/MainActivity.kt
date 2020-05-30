@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemReselectedListener
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
@@ -62,6 +63,11 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     else -> false
+                }
+            }
+            navegacion.setOnNavigationItemReselectedListener {
+                if (fragmentActivo == principalFragment) {
+                    (fragmentActivo as PrincipalFragment).scrollTop()
                 }
             }
         }

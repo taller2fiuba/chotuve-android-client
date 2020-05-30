@@ -17,13 +17,10 @@ class InteractorSubirVideo {
     private val firebaseStorage = FirebaseStorage.getInstance().reference
     private lateinit var urlDescargaVideo: String
 
-    fun subirVideoAFirebase(uri: Uri, duracion: Long, callbackSubirVideo: CallbackSubirVideo) {
+    fun subirVideoAFirebase(uri: Uri, callbackSubirVideo: CallbackSubirVideo) {
         var fileReference = firebaseStorage.child("videos/" + obtenerNombreDeArchivo(uri))
-        var metadata = StorageMetadata.Builder()
-            .setCustomMetadata("duracion", duracion.toString())
-            .build()
 
-        fileReference.putFile(uri, metadata)
+        fileReference.putFile(uri)
             .addOnSuccessListener { taskSnapshot ->
                 // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                 taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->

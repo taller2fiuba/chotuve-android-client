@@ -29,10 +29,10 @@ class PresentadorSubirVideo (private val vistaSubirVideo: VistaSubirVideo,
         })
     }
 
-    fun crearVideo(titulo: String) {
+    fun crearVideo(titulo: String, ubicacion: String, descripcion: String?, visibilidad: String) {
         vistaSubirVideo.deshabilitarBotonSubidaAppServer()
         vistaSubirVideo.mostrarProgresoSubidaAppServer()
-        interactorSubirVideo.crearVideo(titulo, object : InteractorSubirVideo.CallbackCrearVideo {
+        interactorSubirVideo.crearVideo(titulo, ubicacion, descripcion, visibilidad, object : InteractorSubirVideo.CallbackCrearVideo {
             override fun onExito() {
                 vistaSubirVideo.onSubidaAppServerExitosa()
             }

@@ -38,7 +38,7 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             setContentView(R.layout.subir_video)
-            val visibilidades = listOf("Publico", "Privado")
+            val visibilidades = listOf("publico", "privado")
             val adapter = ArrayAdapter(context, R.layout.opcion_list, visibilidades)
             (visibilidad.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
@@ -58,7 +58,7 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
             tituloString.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
             ubicacionString.isNullOrEmpty() -> ubicacion.error = "No puede estar vacío"
             visibilidadString.isNullOrEmpty() -> visibilidad.error = "No puede estar vacío"
-            else -> presentador.crearVideo(tituloString)
+            else -> presentador.crearVideo(tituloString, ubicacionString, descripcionString, visibilidadString)
         }
     }
 

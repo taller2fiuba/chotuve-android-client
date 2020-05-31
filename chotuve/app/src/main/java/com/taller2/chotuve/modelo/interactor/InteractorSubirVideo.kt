@@ -2,8 +2,8 @@ package com.taller2.chotuve.modelo.interactor
 
 import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
-import com.taller2.chotuve.modelo.CallbackCrearVideo
 import com.taller2.chotuve.modelo.Modelo
+import com.taller2.chotuve.util.obtenerDuracionVideo
 import com.taller2.chotuve.util.obtenerNombreDeArchivo
 
 class InteractorSubirVideo {
@@ -21,6 +21,7 @@ class InteractorSubirVideo {
     private val modelo = Modelo.instance
     private val firebaseStorage = FirebaseStorage.getInstance().reference
     private lateinit var urlDescargaVideo: String
+    private lateinit var uri: Uri
 
     fun subirVideoAFirebase(uri: Uri, callbackSubirVideo: CallbackSubirVideo) {
         var fileReference = firebaseStorage.child(obtenerNombreDeArchivo(uri))
@@ -29,6 +30,7 @@ class InteractorSubirVideo {
             .addOnSuccessListener { taskSnapshot ->
                 // Pedir la url de descarga del video recien subido también es asincrónico (wtf?)
                 taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri: Uri? ->
+                    this.uri = uri
                     urlDescargaVideo = downloadUri.toString()
                     callbackSubirVideo.onSubidaExitosa()
                 }
@@ -42,8 +44,8 @@ class InteractorSubirVideo {
             }
     }
 
-    fun crearVideo(titulo: String, callbackCrearVideo: CallbackCrearVideo) {
-        modelo.crearVideo(titulo, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
+    fun crearVideo(titulo: String, ubicacion: String, descripcion: String?, visibilidad: String, callbackCrearVideo: CallbackCrearVideo) {
+        modelo.crearVideo(titulo, obtenerDuracionVideo(uri), ubicacion, descripcion ,visibilidad, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
             override fun onExito(url: String) {
                 callbackCrearVideo.onExito()
             }

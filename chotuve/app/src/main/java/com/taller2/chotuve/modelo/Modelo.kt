@@ -101,9 +101,9 @@ class Modelo private constructor () {
         )
     }
 
-    fun crearVideo(titulo: String, url: String, callbackCrearVideo: CallbackCrearVideo) {
+    fun crearVideo(titulo: String, duracion: Long, ubicacion: String, descripcion: String?, visibilidad: String, url: String, callbackCrearVideo: CallbackCrearVideo) {
         Log.d("modelo", "Subiendo video $titulo con url $url")
-        appServerService.crearVideo("Bearer $userToken", Video(titulo, url))
+        appServerService.crearVideo("Bearer $userToken", Video(titulo, duracion, ubicacion, descripcion ,visibilidad, url))
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     val responseCode = response.code()

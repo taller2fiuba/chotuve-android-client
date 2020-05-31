@@ -23,7 +23,7 @@
     <string name="video_subir_ubicacion_hint">ubicación</string>
     <string name="video_subir_descripcion_hint">descripción (opcional)</string>
     <string name="video_subir_visibilidad_hint">visibilidad</string>
-    <string name="video_subir_visibilidad_helper_text">Publico: todos en Chotube podrán verlo.\nPrivado: solo tus contactos podrán verlo.</string>
+    <string name="video_subir_visibilidad_helper_text">publico: todos en Chotube podrán verlo.\nprivado: solo tus contactos podrán verlo.</string>
 
     <string name="video_label">Video</string>
 

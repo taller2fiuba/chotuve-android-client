@@ -29,22 +29,24 @@ class PresentadorSubirVideo (private val vistaSubirVideo: VistaSubirVideo,
         })
     }
 
-    fun crearVideo(titulo: String) {
+    fun crearVideo(titulo: String, ubicacion: String, descripcion: String?, visibilidad: String) {
         vistaSubirVideo.deshabilitarBotonSubidaAppServer()
         vistaSubirVideo.mostrarProgresoSubidaAppServer()
-        interactorSubirVideo.crearVideo(titulo, object : InteractorSubirVideo.CallbackSubirVideo {
-            override fun onSubidaExitosa() {
+        interactorSubirVideo.crearVideo(titulo, ubicacion, descripcion, visibilidad, object : InteractorSubirVideo.CallbackCrearVideo {
+            override fun onExito() {
                 vistaSubirVideo.onSubidaAppServerExitosa()
             }
 
-            override fun onErrorSubida() {
+            override fun onError() {
+                vistaSubirVideo.ocultarProgresoSubidaAppServer()
+                vistaSubirVideo.habilitarBotonSubidaAppServer()
+                vistaSubirVideo.setError()
+            }
+
+            override fun onErrorRed() {
                 vistaSubirVideo.ocultarProgresoSubidaAppServer()
                 vistaSubirVideo.habilitarBotonSubidaAppServer()
                 vistaSubirVideo.setErrorRed()
-            }
-
-            override fun onActualizarProgreso(progreso: Int) {
-                // No hay actualización de progreso
             }
         })
     }

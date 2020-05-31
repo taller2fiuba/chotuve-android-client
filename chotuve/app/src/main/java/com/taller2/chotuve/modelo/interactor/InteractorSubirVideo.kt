@@ -2,7 +2,7 @@ package com.taller2.chotuve.modelo.interactor
 
 import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
-import com.taller2.chotuve.modelo.CallbackSubirVideo
+import com.taller2.chotuve.modelo.CallbackCrearVideo
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.util.obtenerNombreDeArchivo
 
@@ -11,6 +11,11 @@ class InteractorSubirVideo {
         fun onSubidaExitosa()
         fun onErrorSubida()
         fun onActualizarProgreso(progreso: Int)
+    }
+    interface CallbackCrearVideo {
+        fun onExito()
+        fun onError()
+        fun onErrorRed()
     }
 
     private val modelo = Modelo.instance
@@ -37,14 +42,18 @@ class InteractorSubirVideo {
             }
     }
 
-    fun crearVideo(titulo: String, callbackSubirVideo: CallbackSubirVideo) {
-        modelo.subirVideo(titulo, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackSubirVideo {
+    fun crearVideo(titulo: String, callbackCrearVideo: CallbackCrearVideo) {
+        modelo.crearVideo(titulo, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
             override fun onExito(url: String) {
-                callbackSubirVideo.onSubidaExitosa()
+                callbackCrearVideo.onExito()
+            }
+
+            override fun onError() {
+                callbackCrearVideo.onError()
             }
 
             override fun onErrorRed(mensaje: String?) {
-                callbackSubirVideo.onErrorSubida()
+                callbackCrearVideo.onErrorRed()
             }
         })
     }

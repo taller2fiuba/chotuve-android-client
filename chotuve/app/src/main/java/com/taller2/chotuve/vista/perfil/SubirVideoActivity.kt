@@ -86,9 +86,12 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         titulo.error = "No puede estar vacío"
     }
 
+    override fun setError() {
+        Toast.makeText(this, "Error en el formulario", Toast.LENGTH_LONG).show()
+    }
+
     override fun setErrorRed() {
-        Log.d("vista", "Error del server")
-        Toast.makeText(this, "Error del server", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Error de comunicación", Toast.LENGTH_LONG).show()
     }
 
     override fun onSubidaAppServerExitosa() {

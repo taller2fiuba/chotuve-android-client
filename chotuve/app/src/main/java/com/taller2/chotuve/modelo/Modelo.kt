@@ -101,7 +101,7 @@ class Modelo private constructor () {
         )
     }
 
-    fun subirVideo(titulo: String, url: String, callbackSubirVideo: CallbackSubirVideo) {
+    fun crearVideo(titulo: String, url: String, callbackCrearVideo: CallbackCrearVideo) {
         Log.d("modelo", "Subiendo video $titulo con url $url")
         appServerService.crearVideo("Bearer $userToken", Video(titulo, url))
             .enqueue(object : Callback<ResponseBody> {
@@ -109,15 +109,15 @@ class Modelo private constructor () {
                     val responseCode = response.code()
                     if (responseCode == 201) {
                         Log.d("modelo", "Subido al app server")
-                        callbackSubirVideo.onExito(url)
+                        callbackCrearVideo.onExito(url)
                     } else {
-                        Log.d("modelo", "Error: " + response.body()!!.string())
-                        callbackSubirVideo.onErrorRed(response.body()!!.string())
+                        Log.d("modelo", "Error al subir video")
+                        callbackCrearVideo.onError()
                     }
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("modelo", "Error al contactar al app server: " + t.message)
-                    callbackSubirVideo.onErrorRed(t.message)
+                    callbackCrearVideo.onErrorRed(t.message)
                 }
             })
     }

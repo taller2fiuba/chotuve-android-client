@@ -3,8 +3,8 @@
     <string name="bienvenido_a_chotuve">Bienvenido a Chotuve</string>
     <string name="registrate_titulo">Registrate para acceder al contenido de la app de videos más popular de la Fiuba</string>
     <string name="ingresar_titulo">Solo te falta ingresar tu usuario y contraseña para disfrutar del mejor contenido</string>
-    <string name="ya_estas_registrado">¿Ya estas registrado en Chotube?</string>
-    <string name="no_tenes_cuenta">¿No tenes cuenta en Chotube?</string>
+    <string name="ya_estas_registrado">¿Ya estas registrado en Chotuve?</string>
+    <string name="no_tenes_cuenta">¿No tenes cuenta en Chotuve?</string>
     <string name="proximamente">Proximamente</string>
 
     <string name="principal_menu">Principal</string>
@@ -23,7 +23,7 @@
     <string name="video_subir_ubicacion_hint">ubicación</string>
     <string name="video_subir_descripcion_hint">descripción (opcional)</string>
     <string name="video_subir_visibilidad_hint">visibilidad</string>
-    <string name="video_subir_visibilidad_helper_text">publico: todos en Chotube podrán verlo.\nprivado: solo tus contactos podrán verlo.</string>
+    <string name="video_subir_visibilidad_helper_text">publico: todos en Chotuve podrán verlo.\nprivado: solo tus contactos podrán verlo.</string>
 
     <string name="video_label">Video</string>
 

@@ -1,29 +1,20 @@
 package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
-import android.media.MediaMetadataRetriever
-import android.net.Uri
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
-import android.provider.OpenableColumns
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.taller2.chotuve.Chotuve.Companion.context
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.CallbackSubirVideo
-import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
 import com.taller2.chotuve.presentador.PresentadorSubirVideo
 import com.taller2.chotuve.util.obtenerDuracionVideo
 import kotlinx.android.synthetic.main.subir_video.*
-import java.util.*
 
 
 class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
@@ -47,6 +38,9 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             setContentView(R.layout.subir_video)
+            val visibilidades = listOf("Publico", "Privado")
+            val adapter = ArrayAdapter(context, R.layout.opcion_list, visibilidades)
+            (visibilidad.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
             val uri = data!!.data!!
             Glide.with(this).load(uri).into(portada_video)
@@ -56,10 +50,15 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
     }
 
     fun clickCrearVideo(view: View) {
-        val tituloVideo = titulo.editText?.text?.toString()
+        val tituloString = titulo.editText?.text?.toString()
+        val ubicacionString = ubicacion.editText?.text?.toString()
+        val descripcionString = descripcion.editText?.text?.toString()
+        val visibilidadString = visibilidad.editText?.text?.toString()
         when {
-            tituloVideo.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
-            else -> presentador.crearVideo(tituloVideo)
+            tituloString.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
+            ubicacionString.isNullOrEmpty() -> ubicacion.error = "No puede estar vacío"
+            visibilidadString.isNullOrEmpty() -> visibilidad.error = "No puede estar vacío"
+            else -> presentador.crearVideo(tituloString)
         }
     }
 

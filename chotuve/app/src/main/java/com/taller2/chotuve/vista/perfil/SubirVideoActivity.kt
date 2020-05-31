@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import com.taller2.chotuve.R
 import com.taller2.chotuve.vista.componentes.VideoPortada
+import com.taller2.chotuve.Chotuve.Companion.context
 import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
 import com.taller2.chotuve.presentador.PresentadorSubirVideo
 import com.taller2.chotuve.util.obtenerDuracionVideo
@@ -35,6 +38,9 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             setContentView(R.layout.subir_video)
+            val visibilidades = listOf("publico", "privado")
+            val adapter = ArrayAdapter(context, R.layout.opcion_list, visibilidades)
+            (visibilidad.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
             val uri = data!!.data!!
             val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
@@ -46,10 +52,15 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
     }
 
     fun clickCrearVideo(view: View) {
-        val tituloVideo = titulo.editText?.text?.toString()
+        val tituloString = titulo.editText?.text?.toString()
+        val ubicacionString = ubicacion.editText?.text?.toString()
+        val descripcionString = descripcion.editText?.text?.toString()
+        val visibilidadString = visibilidad.editText?.text?.toString()
         when {
-            tituloVideo.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
-            else -> presentador.crearVideo(tituloVideo)
+            tituloString.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
+            ubicacionString.isNullOrEmpty() -> ubicacion.error = "No puede estar vacío"
+            visibilidadString.isNullOrEmpty() -> visibilidad.error = "No puede estar vacío"
+            else -> presentador.crearVideo(tituloString, ubicacionString, descripcionString, visibilidadString)
         }
     }
 
@@ -77,9 +88,12 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         titulo.error = "No puede estar vacío"
     }
 
+    override fun setError() {
+        Toast.makeText(this, "Error en el formulario", Toast.LENGTH_LONG).show()
+    }
+
     override fun setErrorRed() {
-        Log.d("vista", "Error del server")
-        Toast.makeText(this, "Error del server", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Error de comunicación", Toast.LENGTH_LONG).show()
     }
 
     override fun onSubidaAppServerExitosa() {

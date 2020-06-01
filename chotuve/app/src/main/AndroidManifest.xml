@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".vista.perfil.SubirVideoActivity">
         </activity>
+        <activity android:name=".vista.ver_video.VerVideoActivity">
+        </activity>
         <activity android:name=".vista.autenticacion.RegistrarmeActivity">
         </activity>
         <meta-data

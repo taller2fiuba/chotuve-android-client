@@ -1,5 +1,7 @@
 package com.taller2.chotuve.vista.principal
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +16,12 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
+import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
 import com.taller2.chotuve.vista.scrollinfinito.ScrollInfinitoListener
 import com.taller2.chotuve.vista.scrollinfinito.VideosAdapter
+import com.taller2.chotuve.vista.ver_video.VerVideoActivity
 
+const val URI_KEY = "com.taller2.chotuve.URI_KEY"
 
 class PrincipalFragment : Fragment(), VistaPrincipal {
     private val presentador = PresentadorPrincipal(this, InteractorPrincipal())
@@ -64,7 +69,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
                 presentador.obtenerVideos(pagina)
             }
         }
-        adapter = VideosAdapter()
+        adapter = VideosAdapter(this)
         videosView.adapter = adapter
         videosView.addOnScrollListener(scrollInfinitoListener as ScrollInfinitoListener)
     }
@@ -99,4 +104,9 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         videosView.smoothScrollToPosition(0)
     }
 
+    fun verVideo(uri: Uri) {
+        val intent = Intent(context, VerVideoActivity::class.java)
+        intent.putExtra(URI_KEY, uri.toString())
+        startActivity(intent)
+    }
 }

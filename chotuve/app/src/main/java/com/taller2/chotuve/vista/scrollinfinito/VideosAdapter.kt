@@ -1,5 +1,6 @@
 package com.taller2.chotuve.vista.scrollinfinito
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
+import com.taller2.chotuve.vista.principal.PrincipalFragment
+import com.taller2.chotuve.vista.ver_video.VerVideoActivity
 
-class VideosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class VideosAdapter(val fragment: PrincipalFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIDEO = 0
     private val CARGANDO = 1
 
@@ -50,6 +54,13 @@ class VideosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (getItemViewType(position) == VIDEO) {
             val portadaVideo = viewHolder as VideoPortadaConTituloYAutor
             portadaVideo.setVideo(video!!)
+
+            portadaVideo.setOnClicklistener(object : VideoPortadaConTituloYAutor.Clicklistener {
+                override fun onItemClick(view: View?, position: Int) {
+                    var uri = getItem(position)!!.uri
+                    fragment.verVideo(uri)
+                }
+            })
         }
     }
 

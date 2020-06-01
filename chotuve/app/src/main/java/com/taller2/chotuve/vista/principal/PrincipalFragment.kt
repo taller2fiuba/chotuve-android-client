@@ -21,7 +21,7 @@ import com.taller2.chotuve.vista.scrollinfinito.ScrollInfinitoListener
 import com.taller2.chotuve.vista.scrollinfinito.VideosAdapter
 import com.taller2.chotuve.vista.ver_video.VerVideoActivity
 
-const val URI_KEY = "com.taller2.chotuve.URI_KEY"
+const val ID_KEY = "com.taller2.chotuve.ID_KEY"
 
 class PrincipalFragment : Fragment(), VistaPrincipal {
     private val presentador = PresentadorPrincipal(this, InteractorPrincipal())
@@ -104,9 +104,9 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         videosView.smoothScrollToPosition(0)
     }
 
-    fun verVideo(uri: Uri) {
+    fun verVideo(id: Long) {
         val intent = Intent(context, VerVideoActivity::class.java)
-        intent.putExtra(URI_KEY, uri.toString())
+        intent.putExtra(ID_KEY, id.toString())
         startActivity(intent)
     }
 }

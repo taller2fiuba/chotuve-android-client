@@ -13,7 +13,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
 
 class VideoPortada(context: Context, attrs: AttributeSet) :  ConstraintLayout(context, attrs) {
-    lateinit var uri: Uri
     private var portada: ImageView
     private var duracion: TextView
 
@@ -24,7 +23,6 @@ class VideoPortada(context: Context, attrs: AttributeSet) :  ConstraintLayout(co
     }
 
     fun setUri(uri: Uri, duracion: Long) {
-        this.uri = uri
         Glide
             .with(context)
             .load(uri)

@@ -12,6 +12,7 @@ class VideoPortadaConTituloYAutor(itemView: View) : RecyclerView.ViewHolder(item
     private var portada: VideoPortada = itemView.findViewById<View>(R.id.video_portada) as VideoPortada
     private var titulo: TextView = itemView.findViewById<View>(R.id.titulo) as TextView
     private var autorYCreacion: TextView = itemView.findViewById<View>(R.id.autor_y_creacion) as TextView
+    var id: Long? = null
     private var mClickListener: Clicklistener? = null
 
     init {
@@ -29,13 +30,10 @@ class VideoPortadaConTituloYAutor(itemView: View) : RecyclerView.ViewHolder(item
     }
 
     fun setVideo(video: Video) {
+        id = video.id
         portada.setUri(video.uri, video.duracion)
         titulo.text = video.titulo
         // TODO pasar a formato hace X años/meses/semanas/horas/minutos
         autorYCreacion.text = itemView.context.getString(R.string.autor_y_creacion, video.autor, video.creacion)
-    }
-
-    fun getUri() : Uri {
-        return portada.uri
     }
 }

@@ -57,8 +57,7 @@ class VideosAdapter(val fragment: PrincipalFragment) : RecyclerView.Adapter<Recy
 
             portadaVideo.setOnClicklistener(object : VideoPortadaConTituloYAutor.Clicklistener {
                 override fun onItemClick(view: View?, position: Int) {
-                    var uri = getItem(position)!!.uri
-                    fragment.verVideo(uri)
+                    fragment.verVideo(getItem(position)!!.id)
                 }
             })
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -48,38 +49,12 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
 
         icono_pantalla_completa.setOnClickListener {
             if (pantallaCompleta) {
-                icono_pantalla_completa.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_pantalla_completa_expandir
-                    )
-                )
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                val params = video_reproductor.layoutParams as ConstraintLayout.LayoutParams
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT
-                params.height = (200 * applicationContext.resources
-                    .displayMetrics.density).toInt()
-                video_reproductor.layoutParams = params
-                pantallaCompleta = false
+                sacarReproductorDePantallaCompleta()
             } else {
-                icono_pantalla_completa.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_pantalla_completa_contraer
-                    )
-                )
-                Log.d("vista", "poniendo icono de contraer")
-                window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
                 // esta no es la mejor forma de implementarlo, mejor seria con un fragmento, pero asi es mas facil
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                val params = video_reproductor.layoutParams as ConstraintLayout.LayoutParams
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT
-                params.height = ViewGroup.LayoutParams.MATCH_PARENT
-                video_reproductor.layoutParams = params
-                pantallaCompleta = true
+                ponerReproductorEnPantallaCompleta()
             }
         }
         val id = intent.getStringExtra(ID_KEY)!!.toLong()
@@ -163,5 +138,52 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         val intent = Intent()
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        val currentOrientation = resources.configuration.orientation
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.d("vista", "poniendo en pantalla completa")
+            ponerReproductorEnPantallaCompleta()
+        } else {
+            Log.d("vista", "saliendo de pantalla completa")
+            sacarReproductorDePantallaCompleta()
+        }
+    }
+
+    private fun ponerReproductorEnPantallaCompleta() {
+        icono_pantalla_completa.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.ic_pantalla_completa_contraer
+            )
+        )
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+        val params = video_reproductor.layoutParams as ConstraintLayout.LayoutParams
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT
+        video_reproductor.layoutParams = params
+        pantallaCompleta = true
+    }
+
+    private fun sacarReproductorDePantallaCompleta() {
+        icono_pantalla_completa.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.ic_pantalla_completa_expandir
+            )
+        )
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        val params = video_reproductor.layoutParams as ConstraintLayout.LayoutParams
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        // TODO poner esta altura en la pantalla inicial y en las portadas
+        params.height = (200 * applicationContext.resources
+            .displayMetrics.density).toInt()
+        video_reproductor.layoutParams = params
+        pantallaCompleta = false
     }
 }

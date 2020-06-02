@@ -7,30 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".vista.ver_video.VerVideoActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <ProgressBar
+        android:id="@+id/cargando_video_barra_progreso"
+        android:layout_width="112dp"
+        android:layout_height="73dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="150dp" />
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/video_reproductor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/cargando_video_barra_progreso">
-
-
-        <ProgressBar
-            android:layout_width="112dp"
-            android:layout_height="73dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="150dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="225dp"
+        app:controller_layout_id="@layout/controles_reproductor_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:resize_mode="fill" />
 
     <TextView
-        android:id="@+id/textViewUri"
+        android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="uri"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/video_reproductor"
+        tools:text="titulo" />
+
+    <TextView
+        android:id="@+id/autor_y_creacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo"
+        tools:text="autor 00/00/2018" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -157,7 +157,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         icono_pantalla_completa.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.ic_pantalla_completa_contraer
+                R.drawable.exo_controls_fullscreen_exit
             )
         )
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -174,7 +174,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         icono_pantalla_completa.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.ic_pantalla_completa_expandir
+                R.drawable.exo_controls_fullscreen_enter
             )
         )
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE

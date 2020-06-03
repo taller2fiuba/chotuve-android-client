@@ -28,7 +28,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:resize_mode="fill" />
+        app:resize_mode="fill"
+        app:show_timeout="2500"
+        app:fastforward_increment="8000"
+        app:rewind_increment="11000"/>
 
     <TextView
         android:id="@+id/titulo"

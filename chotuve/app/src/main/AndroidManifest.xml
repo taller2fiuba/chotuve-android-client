@@ -26,7 +26,7 @@
         <activity android:name=".vista.perfil.SubirVideoActivity">
         </activity>
         <activity android:name=".vista.ver_video.VerVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
         </activity>
         <activity android:name=".vista.autenticacion.RegistrarmeActivity">
         </activity>

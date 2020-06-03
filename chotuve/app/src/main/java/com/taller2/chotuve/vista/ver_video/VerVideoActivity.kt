@@ -27,6 +27,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.presentador.PresentadorVerVideo
+import com.taller2.chotuve.util.obtenerAltoVideo
 import com.taller2.chotuve.vista.principal.ID_KEY
 import kotlinx.android.synthetic.main.controles_reproductor_video.*
 import kotlinx.android.synthetic.main.ver_video.*
@@ -47,6 +48,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ver_video)
 
+        setAltoReproductorVideo()
         icono_pantalla_completa.setOnClickListener {
             if (pantallaCompleta) {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -177,12 +179,14 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
             )
         )
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        setAltoReproductorVideo()
+        pantallaCompleta = false
+    }
+
+    private fun setAltoReproductorVideo() {
         val params = video_reproductor.layoutParams as ConstraintLayout.LayoutParams
         params.width = ViewGroup.LayoutParams.MATCH_PARENT
-        // TODO poner esta altura en la pantalla inicial y en las portadas
-        params.height = (200 * applicationContext.resources
-            .displayMetrics.density).toInt()
+        params.height = obtenerAltoVideo(applicationContext)
         video_reproductor.layoutParams = params
-        pantallaCompleta = false
     }
 }

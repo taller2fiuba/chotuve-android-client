@@ -145,10 +145,8 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
 
         val currentOrientation = resources.configuration.orientation
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.d("vista", "poniendo en pantalla completa")
             ponerReproductorEnPantallaCompleta()
         } else {
-            Log.d("vista", "saliendo de pantalla completa")
             sacarReproductorDePantallaCompleta()
         }
     }

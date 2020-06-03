@@ -104,9 +104,9 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         videosView.smoothScrollToPosition(0)
     }
 
-    fun verVideo(id: Long) {
+    fun verVideo(id: String) {
         val intent = Intent(context, VerVideoActivity::class.java)
-        intent.putExtra(ID_KEY, id.toString())
+        intent.putExtra(ID_KEY, id)
         startActivity(intent)
     }
 }

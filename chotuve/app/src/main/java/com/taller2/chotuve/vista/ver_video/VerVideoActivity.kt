@@ -57,7 +57,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 ponerReproductorEnPantallaCompleta()
             }
         }
-        val id = intent.getStringExtra(ID_KEY)!!.toLong()
+        val id = intent.getStringExtra(ID_KEY)!!
         presentador.obtenerVideo(id)
     }
 

@@ -46,7 +46,7 @@ class InteractorPrincipal {
                 }
 
                 callback.onObtenerExitoso(videosUrls.map { videoDownloadUrl ->
-                    Video(videoDownloadUrl, 1, "el titulo", "yo papa", "28/02/2018", 20)
+                    Video(videoDownloadUrl, "1", "el titulo", "yo papa", "28/02/2018", 20)
                 })
             },
             1000 // value in milliseconds

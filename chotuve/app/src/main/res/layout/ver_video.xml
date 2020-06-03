@@ -20,40 +20,73 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="150dp" />
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/video_reproductor"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pantalla"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
-        app:controller_layout_id="@layout/controles_reproductor_video"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:resize_mode="fill"
-        app:show_timeout="2500"
-        app:fastforward_increment="8000"
-        app:rewind_increment="11000"/>
+        tools:context=".vista.ver_video.VerVideoActivity">
 
-    <TextView
-        android:id="@+id/titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/video_reproductor"
-        tools:text="titulo" />
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/video_reproductor"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            app:controller_layout_id="@layout/controles_reproductor_video"
+            app:fastforward_increment="8000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:resize_mode="fill"
+            app:rewind_increment="11000"
+            app:show_timeout="2500" />
 
-    <TextView
-        android:id="@+id/autor_y_creacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
-        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo"
-        tools:text="autor 00/00/2018" />
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_reproductor"
+            tools:text="titulo" />
+
+        <TextView
+            android:id="@+id/autor_y_creacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titulo"
+            tools:text="autor 00/00/2018" />
+
+        <TextView
+            android:id="@+id/reacciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Reacciones proximamente"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autor_y_creacion" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Comentarios proximamente"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reacciones" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,13 +69,14 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     override fun mostrarVideo(video: Video) {
         ocultarCargando()
         titulo.text = video.titulo
+        autor_y_creacion.text = getString(R.string.autor_y_creacion, video.autor, video.creacion)
         this.video = video
         inicializarReproductor()
     }
 
     fun ocultarCargando() {
-        val cargando = findViewById<View>(R.id.cargando_video_barra_progreso) as ProgressBar
-        cargando.visibility = View.GONE
+        cargando_video_barra_progreso.visibility = View.GONE
+        pantalla.visibility = View.VISIBLE
     }
 
     override fun setErrorRed() {

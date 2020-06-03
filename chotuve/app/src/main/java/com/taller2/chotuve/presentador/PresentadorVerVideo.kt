@@ -18,8 +18,8 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
         // TODO eliminar esto, solo tarda un segundo para ver el cargando
         Handler().postDelayed(
             {
-                val videoDownloadUrl = "https://firebasestorage.googleapis.com/v0/b/chotuve-a8587.appspot.com/o/videos%2FPeople%20Waiting.mp4?alt=media&token=76524658-e3c6-4ebb-a98c-240ff86bb8d4"
-                vista.mostrarVideo(Video(videoDownloadUrl, "1", "el titulo", "yo papa", "28/02/2018", 20))
+                val videoDownloadUrl = "https://firebasestorage.googleapis.com/v0/b/chotuve-a8587.appspot.com/o/videos%2Fy2mate.com%20-%20Denzel%20Curry%20-%20Ultimate%20(Full%20Video)_dT8dmvAzIqA_240p.mp4?alt=media&token=6adbe71b-02d9-4747-9763-d5d9333a62c2"
+                vista.mostrarVideo(Video(videoDownloadUrl, "1", "musica epicarda", "libe de burzaco", "28/02/2018", 20))
             },
             1000 // value in milliseconds
         )

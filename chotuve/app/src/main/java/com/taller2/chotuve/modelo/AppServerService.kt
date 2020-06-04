@@ -11,30 +11,34 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.util.concurrent.TimeUnit
 
 interface AppServerService {
     // factory method
     companion object {
-        private const val BASE_URL: String = "http://10.0.2.2:28080/"
-        // private const val BASE_URL: String = "https://chotuve-app-server.herokuapp.com/"
+        // private const val BASE_URL: String = "http://10.0.2.2:28080/"
+        private const val BASE_URL: String = "https://chotuve-app-server.herokuapp.com/"
 
         fun create(userToken: String? = null): AppServerService {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+            var httpClient = OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
 
             if (userToken != null) {
-                retrofit.client(
-                    OkHttpClient.Builder().addInterceptor { chain ->
+                httpClient = httpClient.addInterceptor { chain ->
                     val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $userToken")
-                            .build()
-                        chain.proceed(newRequest)
-                    }.build()
-                )
+                        .addHeader("Authorization", "Bearer $userToken")
+                        .build()
+                    chain.proceed(newRequest)
+                }
             }
 
-            return retrofit.build().create(AppServerService::class.java)
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .client(httpClient.build())
+                .build()
+                .create(AppServerService::class.java)
         }
     }
 
@@ -46,6 +50,10 @@ interface AppServerService {
 
     @POST("/video")
     fun crearVideo(@Body video: Video) : Call<ResponseBody>
+
+    @GET("/video")
+    fun obtenerVideos(@Query("cantidad") cantidad: Int = 10,
+                      @Query("offset") offset: Int = 0) : Call<ResponseBody>
 
     @GET("/usuario/{id_usuario}")
     fun obtenerUsuario(@Path("id_usuario") uid : Int) : Call<ResponseBody>

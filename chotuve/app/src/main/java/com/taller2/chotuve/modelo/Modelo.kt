@@ -34,7 +34,9 @@ class Modelo private constructor() {
             chotuveClient = AppServerService.create(userToken)
         }
 
-    private var chotuveClient = AppServerService.create(userToken)
+    var chotuveClient = AppServerService.create(userToken)
+        private set(valor) { field = valor }
+        get() { return field }
 
     fun estaLogueado() : Boolean = userToken != null
 

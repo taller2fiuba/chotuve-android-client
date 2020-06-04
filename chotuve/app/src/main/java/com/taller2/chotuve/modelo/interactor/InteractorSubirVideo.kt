@@ -45,7 +45,7 @@ class InteractorSubirVideo {
     }
 
     fun crearVideo(titulo: String, ubicacion: String, descripcion: String?, visibilidad: String, callbackCrearVideo: CallbackCrearVideo) {
-        modelo.crearVideo(titulo, obtenerDuracionVideo(uri), ubicacion, descripcion ,visibilidad, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
+        modelo.crearVideo(titulo, obtenerDuracionVideo(uri) / 1000, ubicacion, descripcion ,visibilidad, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
             override fun onExito(url: String) {
                 callbackCrearVideo.onExito()
             }

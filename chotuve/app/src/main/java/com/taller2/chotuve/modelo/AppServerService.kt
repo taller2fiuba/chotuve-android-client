@@ -51,6 +51,10 @@ interface AppServerService {
     @POST("/video")
     fun crearVideo(@Body video: Video) : Call<ResponseBody>
 
+    @GET("/video")
+    fun obtenerVideos(@Query("cantidad") cantidad: Int = 10,
+                      @Query("offset") offset: Int = 0) : Call<ResponseBody>
+
     @GET("/usuario/{id_usuario}")
     fun obtenerUsuario(@Path("id_usuario") uid : Int) : Call<ResponseBody>
 }

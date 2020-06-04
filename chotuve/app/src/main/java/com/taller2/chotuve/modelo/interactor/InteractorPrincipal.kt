@@ -1,6 +1,5 @@
 package com.taller2.chotuve.modelo.interactor
 
-import android.text.format.DateFormat
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import com.taller2.chotuve.modelo.Modelo
@@ -11,7 +10,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 
 class InteractorPrincipal {
     interface CallbackObtenerVideo {

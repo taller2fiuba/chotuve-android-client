@@ -2,18 +2,16 @@ package com.taller2.chotuve.vista.perfil
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.taller2.chotuve.Chotuve.Companion.context
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
 import com.taller2.chotuve.presentador.PresentadorSubirVideo
 import com.taller2.chotuve.util.obtenerDuracionVideo
+import com.taller2.chotuve.vista.componentes.VideoPortada
 import kotlinx.android.synthetic.main.subir_video.*
 
 
@@ -38,13 +36,22 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             setContentView(R.layout.subir_video)
-            val visibilidades = listOf("publico", "privado")
-            val adapter = ArrayAdapter(context, R.layout.opcion_list, visibilidades)
-            (visibilidad.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+            visibilidad.setOnClickListener {
+                PopupMenu(context, visibilidad).apply {
+                    menuInflater.inflate(R.menu.menu_visibilidades, menu)
+                    setOnMenuItemClickListener { item ->
+                        visibilidad.setText(item.title)
+                        true
+                    }
+                    show()
+                }
+            }
 
             val uri = data!!.data!!
-            Glide.with(this).load(uri).into(portada_video)
-            duracion.text = DateUtils.formatElapsedTime(obtenerDuracionVideo(uri) / 1000)
+            val portadaVideo = findViewById<View>(R.id.portada_video) as VideoPortada
+            val duracion = obtenerDuracionVideo(uri) / 1000
+            portadaVideo.setUri(uri, duracion)
+
             presentador.elegirVideo(uri)
         }
     }
@@ -53,11 +60,11 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         val tituloString = titulo.editText?.text?.toString()
         val ubicacionString = ubicacion.editText?.text?.toString()
         val descripcionString = descripcion.editText?.text?.toString()
-        val visibilidadString = visibilidad.editText?.text?.toString()
+        val visibilidadString = visibilidad.text?.toString()
         when {
             tituloString.isNullOrEmpty() -> titulo.error = "No puede estar vacío"
             ubicacionString.isNullOrEmpty() -> ubicacion.error = "No puede estar vacío"
-            visibilidadString.isNullOrEmpty() -> visibilidad.error = "No puede estar vacío"
+            visibilidadString.isNullOrEmpty() -> visibilidad_text_field.error = "No puede estar vacío"
             else -> presentador.crearVideo(tituloString, ubicacionString, descripcionString, visibilidadString)
         }
     }

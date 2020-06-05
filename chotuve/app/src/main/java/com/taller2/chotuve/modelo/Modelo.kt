@@ -1,35 +1,48 @@
 package com.taller2.chotuve.modelo
 
-import android.app.Application
 import android.content.Context
-import android.net.Uri
-import android.provider.OpenableColumns
 import android.util.Log
-import com.google.firebase.storage.FirebaseStorage
+import com.taller2.chotuve.Chotuve
 import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import org.json.JSONObject;
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Video
+import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import okhttp3.ResponseBody
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Call
 
-class Modelo private constructor () {
+class Modelo private constructor() {
     // Singleton
     companion object {
         val instance = Modelo()
     }
 
-    private val appServerService = AppServerService.create()
-    private val firebaseStorage = FirebaseStorage.getInstance().reference
-    private var userToken: String? = null;
+    private val appContext = Chotuve.context
+    private val preferences = appContext.getSharedPreferences(appContext.packageName, Context.MODE_PRIVATE)
+
+    private var userToken: String? = preferences.getString("token", null)
+        set(token) {
+            with (preferences.edit()) {
+                putString("token", token)
+                commit()
+            }
+            field = token
+
+            // Actualizar el cliente
+            chotuveClient = AppServerService.create(userToken)
+        }
+
+    var chotuveClient = AppServerService.create(userToken)
+        private set(valor) { field = valor }
+        get() { return field }
 
     fun estaLogueado() : Boolean = userToken != null
 
     fun registrarUsuario(email: String, clave: String, callbackRegistro: CallbackRegistro) {
-        Log.d("modelo", "Registrando usuario " + email)
-        appServerService.registrarUsuario(
+        Log.d("modelo", "Registrando usuario $email")
+        chotuveClient.registrarUsuario(
             InfoRegistro(
                 email,
                 clave
@@ -66,7 +79,7 @@ class Modelo private constructor () {
 
     fun iniciarSesion(email: String, clave: String, callbackInicioSesion: CallbackInicioSesion) {
         Log.d("modelo", "Iniciando sesión de usuario " + email)
-        appServerService.iniciarSesion(
+        chotuveClient.iniciarSesion(
             InfoInicioSesion(
                 email,
                 clave
@@ -103,7 +116,7 @@ class Modelo private constructor () {
 
     fun crearVideo(titulo: String, duracion: Long, ubicacion: String, descripcion: String?, visibilidad: String, url: String, callbackCrearVideo: CallbackCrearVideo) {
         Log.d("modelo", "Subiendo video $titulo con url $url")
-        appServerService.crearVideo("Bearer $userToken", Video(titulo, duracion, ubicacion, descripcion ,visibilidad, url))
+        chotuveClient.crearVideo(Video(titulo, duracion, ubicacion, descripcion, visibilidad, url))
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     val responseCode = response.code()
@@ -120,30 +133,5 @@ class Modelo private constructor () {
                     callbackCrearVideo.onErrorRed(t.message)
                 }
             })
-    }
-
-    // TODO: Esto debería estar en algun paquete `util` o algo así.
-    fun getFilenameFromUri(context: Context, uri: Uri) : String {
-        // https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
-        var result = null as String?
-        if (uri.scheme.equals("content")) {
-            val cursor = context.contentResolver.query(uri, null, null, null, null)
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            } finally {
-                cursor!!.close()
-            }
-        }
-
-        if (result == null) {
-            result = uri.getPath();
-            val cut = result!!.lastIndexOf('/')
-            if (cut != -1) {
-                result = result.substring(cut + 1)
-            }
-        }
-        return result
     }
 }

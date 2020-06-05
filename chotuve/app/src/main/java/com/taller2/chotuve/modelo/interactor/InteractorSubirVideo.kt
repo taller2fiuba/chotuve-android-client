@@ -24,7 +24,7 @@ class InteractorSubirVideo {
     private lateinit var uri: Uri
 
     fun subirVideoAFirebase(uri: Uri, callbackSubirVideo: CallbackSubirVideo) {
-        var fileReference = firebaseStorage.child(obtenerNombreDeArchivo(uri))
+        var fileReference = firebaseStorage.child("videos/" + obtenerNombreDeArchivo(uri))
 
         fileReference.putFile(uri)
             .addOnSuccessListener { taskSnapshot ->
@@ -45,7 +45,7 @@ class InteractorSubirVideo {
     }
 
     fun crearVideo(titulo: String, ubicacion: String, descripcion: String?, visibilidad: String, callbackCrearVideo: CallbackCrearVideo) {
-        modelo.crearVideo(titulo, obtenerDuracionVideo(uri), ubicacion, descripcion ,visibilidad, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
+        modelo.crearVideo(titulo, obtenerDuracionVideo(uri) / 1000, ubicacion, descripcion ,visibilidad, urlDescargaVideo, object : com.taller2.chotuve.modelo.CallbackCrearVideo {
             override fun onExito(url: String) {
                 callbackCrearVideo.onExito()
             }

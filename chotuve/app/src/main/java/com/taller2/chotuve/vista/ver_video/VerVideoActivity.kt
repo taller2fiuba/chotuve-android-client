@@ -71,7 +71,14 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     override fun mostrarVideo(video: Video) {
         ocultarCargando()
         titulo.text = video.titulo
-        autor_y_creacion.text = getString(R.string.autor_y_creacion, video.autor, video.creacion)
+        creacion.text = video.creacion
+        autor.text = video.autor
+        if (!video.descripcion.isNullOrBlank()) {
+            descripcion.text = video.descripcion
+        } else {
+            div2.visibility = View.GONE
+            descripcion.visibility = View.GONE
+        }
         this.video = video
         inicializarReproductor()
     }

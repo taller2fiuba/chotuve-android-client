@@ -43,6 +43,7 @@ class InteractorPrincipal {
                                     objeto.getJSONObject("autor")
                                         .getString("email"),
                                     dmyFormat.format(creacion!!),
+                                    objeto.getString("descripcion"),
                                     objeto.getLong("duracion")
                                 ))
                             }

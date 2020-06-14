@@ -40,7 +40,7 @@ class PerfilFragment : Fragment() {
                 childFragmentManager
             )
         viewPagerAdapter.addFragment(MisVideosFragment.newInstance(), "videos")
-        viewPagerAdapter.addFragment(MiInformacionFragment.newInstance(), "información")
+        viewPagerAdapter.addFragment(InformacionFragment.newInstance(), "información")
         viewPager.adapter = viewPagerAdapter
     }
 

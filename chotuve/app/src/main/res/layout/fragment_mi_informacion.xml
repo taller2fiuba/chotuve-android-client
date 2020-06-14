@@ -17,7 +17,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:background="@drawable/gradient_background"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="335dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -68,7 +68,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 app:strokeWidth="1dp"
-                app:strokeColor="@color/colorSecondary"
+                app:strokeColor="@color/colorPrimary"
                 app:cardElevation="1dp">
                 <LinearLayout
                     android:layout_width="match_parent"

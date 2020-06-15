@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.taller2.chotuve.R
 
-class MisVideosFragment : Fragment() {
+class VideosFragment(val usuarioId: Long?) : Fragment() {
     companion object {
-        fun newInstance(): MisVideosFragment =
-            MisVideosFragment()
+        fun newInstance(usuarioId: Long?): VideosFragment =
+            VideosFragment(usuarioId)
     }
 
     override fun onCreateView(
@@ -24,8 +24,12 @@ class MisVideosFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_mis_videos, container, false)  as View
         val fab = view.findViewById(R.id.subir_video_boton) as FloatingActionButton
-        fab.setOnClickListener { view ->
-            startActivityForResult(Intent(activity, SubirVideoActivity::class.java), 0)
+        if (usuarioId != null) {
+            fab.visibility = View.GONE
+        } else {
+            fab.setOnClickListener { view ->
+                startActivityForResult(Intent(activity, SubirVideoActivity::class.java), 0)
+            }
         }
         return view
     }

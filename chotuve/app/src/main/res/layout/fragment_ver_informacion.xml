@@ -58,8 +58,6 @@
                         android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="32dp"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_account_box_black_24dp"
                         app:layout_constraintEnd_toEndOf="parent"

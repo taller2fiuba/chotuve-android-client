@@ -1,5 +1,7 @@
 package com.taller2.chotuve.vista.perfil
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -29,6 +31,9 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
         boton_editar.setOnClickListener {
             clickEditarPerfil()
         }
+        imagen_perfil.setOnClickListener {
+            elegirFotoPerfil()
+        }
         nombre.editText?.setText(usuario.nombre)
         apellido.editText?.setText(usuario.apellido)
         telefono.editText?.setText(usuario.telefono)
@@ -39,6 +44,28 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .centerCrop()
             .into(imagen_perfil)
+    }
+
+    fun elegirFotoPerfil() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            val uri = data!!.data!!
+            Glide
+                .with(this)
+                .load(uri)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .centerCrop()
+                .into(imagen_perfil)
+
+            presentador.subirFotoPerfil(uri)
+        }
     }
 
     fun clickEditarPerfil() {
@@ -79,6 +106,14 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
         boton_editar.isEnabled = false
     }
 
+    override fun setProgresoSubidaFirebase(porcentaje: Int) {
+        subir_imagen_progress_bar.progress = porcentaje
+    }
+
+    override fun mostrarProgresoSubidaFirebase() {
+        subir_imagen_progress_bar.visibility = View.VISIBLE
+    }
+
     override fun setErrorRed() {
         Log.d("vista", "Error del server")
         boton_editar.isEnabled = true
@@ -92,7 +127,7 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
 
     override fun onEdicionExitosa() {
         activity!!.supportFragmentManager.popBackStack()
-        Toast.makeText(context, "Ok editado", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Bien! Información editada", Toast.LENGTH_LONG).show()
     }
 
 }

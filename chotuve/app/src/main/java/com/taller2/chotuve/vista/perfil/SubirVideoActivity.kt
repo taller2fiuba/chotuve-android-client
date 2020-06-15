@@ -89,10 +89,6 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         subir_video_progress_bar.progress = porcentaje
     }
 
-    override fun setTituloVacio() {
-        titulo.error = "No puede estar vacío"
-    }
-
     override fun setError() {
         Toast.makeText(this, "Error en el formulario", Toast.LENGTH_LONG).show()
     }

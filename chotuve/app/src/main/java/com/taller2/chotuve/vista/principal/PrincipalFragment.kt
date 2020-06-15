@@ -59,7 +59,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         val linearLayoutManager = LinearLayoutManager(context)
         videosView.layoutManager = linearLayoutManager
         scrollInfinitoListener = object : ScrollInfinitoListener(linearLayoutManager) {
-            override fun onLoadMore(pagina: Int, totalItemsCount: Int, view: RecyclerView?) {
+            override fun onLoadMore(pagina: Int, cantidadDeItems: Int, view: RecyclerView?) {
                 // Se llama cuando hay que agregar nuevos videos a la vista
                 videosView.post {
                     // esto hace que el cargando se ejecute justo despues de que esta funcion termine
@@ -71,7 +71,7 @@ class PrincipalFragment : Fragment(), VistaPrincipal {
         }
         adapter = VideosAdapter(this)
         videosView.adapter = adapter
-        videosView.addOnScrollListener(scrollInfinitoListener as ScrollInfinitoListener)
+        videosView.addOnScrollListener(scrollInfinitoListener)
     }
 
     override fun mostrarVideos(videos: List<Video>) {

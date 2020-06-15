@@ -9,7 +9,6 @@ interface VistaSubirVideo {
     fun habilitarBotonSubidaAppServer()
     fun deshabilitarBotonSubidaAppServer()
 
-    fun setTituloVacio()
     fun setError()
     fun setErrorRed()
     fun onSubidaAppServerExitosa()

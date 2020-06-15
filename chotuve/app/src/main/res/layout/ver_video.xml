@@ -69,16 +69,78 @@
             app:layout_constraintTop_toBottomOf="@+id/titulo"
             tools:text="00/00/2018" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/reacciones"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Reacciones proximamente"
-            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/creacion" />
+            app:layout_constraintTop_toBottomOf="@+id/creacion"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/me_gusta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:scaleX="2.0"
+                    android:scaleY="2.0"
+                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:tint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/cantidad_me_gustas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="2k"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/no_me_gusta"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:scaleX="2.0"
+                    android:scaleY="2.0"
+                    android:src="@drawable/ic_thumb_down_black_24dp"
+                    android:tint="@android:color/darker_gray"/>
+
+                <TextView
+                    android:id="@+id/cantidad_no_me_gustas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="200"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <View
             android:id="@+id/div1"

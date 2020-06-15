@@ -34,6 +34,6 @@ class VideoPortadaConTituloYAutor(itemView: View) : RecyclerView.ViewHolder(item
         portada.setUri(video.uri, video.duracion)
         titulo.text = video.titulo
         // TODO pasar a formato hace X años/meses/semanas/horas/minutos
-        autorYCreacion.text = itemView.context.getString(R.string.autor_y_creacion, video.autor, video.creacion)
+        autorYCreacion.text = itemView.context.getString(R.string.autor_y_creacion, video.autor.email, video.creacion)
     }
 }

@@ -1,6 +1,5 @@
 package com.taller2.chotuve.vista.perfil
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,20 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
-class VerInformacionFragment : Fragment(), VistaInformacion {
+class VerInformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
     private val presentador = PresentadorPerfil(this)
     private var usuario: Usuario? = null
-
-    companion object {
-        fun newInstance(): VerInformacionFragment =
-            VerInformacionFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +28,13 @@ class VerInformacionFragment : Fragment(), VistaInformacion {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mostrarCargandoPerfil()
-        presentador.obtenerInformacion()
+        if (usuarioId == null) {
+            // Mi perfil
+            boton_agregar_a_contactos.visibility = View.GONE
+        } else {
+            editar_informacion.visibility = View.GONE
+        }
+        presentador.obtenerInformacion(usuarioId)
     }
 
     override fun onDestroy() {

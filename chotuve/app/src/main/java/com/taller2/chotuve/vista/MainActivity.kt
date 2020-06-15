@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val principalFragment: Fragment = PrincipalFragment.newInstance()
     private val chatsFragment: Fragment = ChatsFragment.newInstance()
     private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
-    private val perfilFragment: Fragment = PerfilFragment.newInstance()
+    private val perfilFragment: Fragment = PerfilFragment.newInstance(null)
     private var fragmentActivo : Fragment = principalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.taller2.chotuve.R
 
-class InformacionFragment : Fragment() {
+class InformacionFragment(val usuarioId: Long?) : Fragment() {
     companion object {
-        fun newInstance(): InformacionFragment =
-            InformacionFragment()
+        fun newInstance(usuarioId: Long?): InformacionFragment =
+            InformacionFragment(usuarioId)
     }
 
     override fun onCreateView(
@@ -18,8 +18,8 @@ class InformacionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_informacion, container, false)
-        val newFragment = VerInformacionFragment()
-        val transaction = activity!!.supportFragmentManager.beginTransaction()
+        val newFragment = VerInformacionFragment(usuarioId)
+        val transaction = fragmentManager!!.beginTransaction()
         transaction.replace(R.id.fragment_container, newFragment)
         transaction.addToBackStack(null)
         transaction.commit()

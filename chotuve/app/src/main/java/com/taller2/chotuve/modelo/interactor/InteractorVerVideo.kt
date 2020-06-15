@@ -1,5 +1,6 @@
 package com.taller2.chotuve.modelo.interactor
 
+import com.taller2.chotuve.modelo.Autor
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Video
 import retrofit2.Callback
@@ -29,12 +30,14 @@ class InteractorVerVideo {
                         val objeto = JSONObject(response.body()!!.string())
                         val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
+                        val autorJson = objeto.getJSONObject("autor")
+                        val autor = Autor(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
+
                         callbackVerVideo.onVideoObtenido(Video(
                             objeto.getString("url"),
                             objeto.getString("id"),
                             objeto.getString("titulo"),
-                            objeto.getJSONObject("autor")
-                                .getString("email"),
+                            autor,
                             dmyFormat.format(creacion!!),
                             objeto.getString("descripcion"),
                             objeto.getLong("duracion")

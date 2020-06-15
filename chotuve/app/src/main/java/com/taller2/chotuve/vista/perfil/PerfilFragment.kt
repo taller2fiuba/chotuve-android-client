@@ -12,10 +12,10 @@ import com.google.android.material.tabs.TabLayout
 import com.taller2.chotuve.R
 
 
-class PerfilFragment : Fragment() {
+class PerfilFragment(val usuarioId: Long?) : Fragment() {
     companion object {
-        fun newInstance(): PerfilFragment =
-            PerfilFragment()
+        fun newInstance(usuarioId: Long?): PerfilFragment =
+            PerfilFragment(usuarioId)
     }
 
     override fun onCreateView(
@@ -40,7 +40,7 @@ class PerfilFragment : Fragment() {
                 childFragmentManager
             )
         viewPagerAdapter.addFragment(MisVideosFragment.newInstance(), "videos")
-        viewPagerAdapter.addFragment(InformacionFragment.newInstance(), "información")
+        viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId), "información")
         viewPager.adapter = viewPagerAdapter
     }
 
@@ -50,7 +50,7 @@ class PerfilFragment : Fragment() {
         private val fragmentTitleList = ArrayList<String>()
 
         override fun getItem(position: Int): Fragment {
-            return fragmentList.get(position)
+            return fragmentList[position]
         }
 
         override fun getCount(): Int {

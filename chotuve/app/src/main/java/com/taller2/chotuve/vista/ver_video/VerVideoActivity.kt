@@ -32,6 +32,7 @@ import com.taller2.chotuve.vista.principal.ID_KEY
 import kotlinx.android.synthetic.main.controles_reproductor_video.*
 import kotlinx.android.synthetic.main.ver_video.*
 
+const val USUARIO_ID_KEY = "com.taller2.chotuve.USUARIO_ID_KEY"
 
 class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     private val presentador = PresentadorVerVideo(this, InteractorVerVideo())
@@ -72,7 +73,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         ocultarCargando()
         titulo.text = video.titulo
         creacion.text = video.creacion
-        autor.text = video.autor
+        autor.text = video.autor.email
         if (!video.descripcion.isNullOrBlank()) {
             descripcion.text = video.descripcion
         } else {
@@ -195,5 +196,12 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         params.width = ViewGroup.LayoutParams.MATCH_PARENT
         params.height = obtenerAltoVideo(applicationContext)
         video_reproductor.layoutParams = params
+    }
+
+    fun clickAutor(view: View) {
+        var data = Intent()
+        data.putExtra(USUARIO_ID_KEY, video!!.autor.usuarioId.toString())
+        setResult(RESULT_OK, data)
+        finish()
     }
 }

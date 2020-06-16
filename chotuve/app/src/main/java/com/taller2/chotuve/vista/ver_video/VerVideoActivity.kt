@@ -76,9 +76,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
             descripcion.visibility = View.GONE
         }
         this.video = video
-        cantidad_me_gustas.text = video.reacciones!!.meGustas.toString()
-        cantidad_no_me_gustas.text = video.reacciones.noMeGustas.toString()
-        colorearReacciones(video.reacciones.miReaccion, null)
+        setearReacciones(video.reacciones!!.meGustas, video.reacciones.noMeGustas, video.reacciones.miReaccion, null)
         inicializarReproductor()
     }
 
@@ -89,34 +87,59 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
 
     fun clickMeGusta(view: View) {
         presentador.reaccionar(video!!.id, Reaccion.ME_GUSTA)
-        colorearReacciones(Reaccion.ME_GUSTA, video!!.reacciones!!.miReaccion)
+        setearReacciones(video!!.reacciones!!.meGustas, video!!.reacciones!!.noMeGustas, Reaccion.ME_GUSTA, video!!.reacciones!!.miReaccion, true)
     }
 
     fun clickNoMeGusta(view: View) {
         presentador.reaccionar(video!!.id, Reaccion.NO_ME_GUSTA)
-        colorearReacciones(Reaccion.NO_ME_GUSTA, video!!.reacciones!!.miReaccion)
+        setearReacciones(video!!.reacciones!!.meGustas, video!!.reacciones!!.noMeGustas, Reaccion.NO_ME_GUSTA, video!!.reacciones!!.miReaccion, true)
     }
 
-    fun colorearReacciones(reaccion: Reaccion?, reaccionAnterior: Reaccion?) {
+    fun setearReacciones(cantidadMeGusta: Long, cantidadNoMeGusta: Long, reaccion: Reaccion?, reaccionAnterior: Reaccion?, esClick: Boolean = false) {
         var reaccionNueva = reaccion
         if (reaccion == reaccionAnterior) {
             // para despintar si volvi a tocar la misma reaccion que ya tenia
             reaccionNueva = null
         }
+        var nuevaCantidadMeGusta = cantidadMeGusta
+        var nuevaCantidadNoMeGusta = cantidadNoMeGusta
         when (reaccionNueva) {
             Reaccion.ME_GUSTA -> {
                 colorear(me_gusta, R.color.colorSecondary)
                 colorear(no_me_gusta, android.R.color.darker_gray)
+                if (esClick) {
+                    nuevaCantidadMeGusta = nuevaCantidadMeGusta + 1
+                    if (reaccionAnterior == Reaccion.NO_ME_GUSTA) {
+                        nuevaCantidadNoMeGusta = nuevaCantidadNoMeGusta - 1
+                    }
+                }
             }
             Reaccion.NO_ME_GUSTA -> {
                 colorear(me_gusta, android.R.color.darker_gray)
                 colorear(no_me_gusta, R.color.colorSecondary)
+                if (esClick) {
+                    nuevaCantidadNoMeGusta = nuevaCantidadNoMeGusta + 1
+                    if (reaccionAnterior == Reaccion.ME_GUSTA) {
+                        nuevaCantidadMeGusta = nuevaCantidadMeGusta - 1
+                    }
+                }
             }
             else -> {
                 colorear(me_gusta, android.R.color.darker_gray)
                 colorear(no_me_gusta, android.R.color.darker_gray)
+                if (esClick) {
+                    if (reaccionAnterior == Reaccion.ME_GUSTA) {
+                        nuevaCantidadMeGusta = nuevaCantidadMeGusta - 1
+                    } else if (reaccionAnterior == Reaccion.NO_ME_GUSTA) {
+                        nuevaCantidadNoMeGusta = nuevaCantidadNoMeGusta - 1
+                    }
+                }
             }
         }
+        cantidad_me_gustas.text = nuevaCantidadMeGusta.toString()
+        cantidad_no_me_gustas.text = nuevaCantidadNoMeGusta.toString()
+        video!!.reacciones!!.meGustas = nuevaCantidadMeGusta
+        video!!.reacciones!!.noMeGustas = nuevaCantidadNoMeGusta
         video!!.reacciones!!.miReaccion = reaccionNueva
     }
 

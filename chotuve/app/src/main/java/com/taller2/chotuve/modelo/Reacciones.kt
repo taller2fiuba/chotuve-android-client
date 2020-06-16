@@ -9,4 +9,4 @@ enum class Reaccion(val value: String) {
     }
 }
 
-class Reacciones(val meGustas: Long, val noMeGustas: Long, var miReaccion: Reaccion?)
+class Reacciones(var meGustas: Long, var noMeGustas: Long, var miReaccion: Reaccion?)

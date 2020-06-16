@@ -108,9 +108,9 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 colorear(me_gusta, R.color.colorSecondary)
                 colorear(no_me_gusta, android.R.color.darker_gray)
                 if (esClick) {
-                    nuevaCantidadMeGusta = nuevaCantidadMeGusta + 1
+                    nuevaCantidadMeGusta += 1
                     if (reaccionAnterior == Reaccion.NO_ME_GUSTA) {
-                        nuevaCantidadNoMeGusta = nuevaCantidadNoMeGusta - 1
+                        nuevaCantidadNoMeGusta -= 1
                     }
                 }
             }
@@ -118,9 +118,9 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 colorear(me_gusta, android.R.color.darker_gray)
                 colorear(no_me_gusta, R.color.colorSecondary)
                 if (esClick) {
-                    nuevaCantidadNoMeGusta = nuevaCantidadNoMeGusta + 1
+                    nuevaCantidadNoMeGusta += 1
                     if (reaccionAnterior == Reaccion.ME_GUSTA) {
-                        nuevaCantidadMeGusta = nuevaCantidadMeGusta - 1
+                        nuevaCantidadMeGusta -= 1
                     }
                 }
             }
@@ -129,9 +129,9 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 colorear(no_me_gusta, android.R.color.darker_gray)
                 if (esClick) {
                     if (reaccionAnterior == Reaccion.ME_GUSTA) {
-                        nuevaCantidadMeGusta = nuevaCantidadMeGusta - 1
+                        nuevaCantidadMeGusta -= 1
                     } else if (reaccionAnterior == Reaccion.NO_ME_GUSTA) {
-                        nuevaCantidadNoMeGusta = nuevaCantidadNoMeGusta - 1
+                        nuevaCantidadNoMeGusta -= 1
                     }
                 }
             }

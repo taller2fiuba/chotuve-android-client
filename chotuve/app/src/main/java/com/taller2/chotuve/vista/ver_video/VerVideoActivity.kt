@@ -76,7 +76,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
             descripcion.visibility = View.GONE
         }
         this.video = video
-        setearReacciones(video.reacciones!!.meGustas, video.reacciones.noMeGustas, video.reacciones.miReaccion, null)
+        setearReacciones(video.reacciones!!.miReaccion, null)
         inicializarReproductor()
     }
 
@@ -87,22 +87,22 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
 
     fun clickMeGusta(view: View) {
         presentador.reaccionar(video!!.id, Reaccion.ME_GUSTA)
-        setearReacciones(video!!.reacciones!!.meGustas, video!!.reacciones!!.noMeGustas, Reaccion.ME_GUSTA, video!!.reacciones!!.miReaccion, true)
+        setearReacciones(Reaccion.ME_GUSTA, video!!.reacciones!!.miReaccion, true)
     }
 
     fun clickNoMeGusta(view: View) {
         presentador.reaccionar(video!!.id, Reaccion.NO_ME_GUSTA)
-        setearReacciones(video!!.reacciones!!.meGustas, video!!.reacciones!!.noMeGustas, Reaccion.NO_ME_GUSTA, video!!.reacciones!!.miReaccion, true)
+        setearReacciones(Reaccion.NO_ME_GUSTA, video!!.reacciones!!.miReaccion, true)
     }
 
-    fun setearReacciones(cantidadMeGusta: Long, cantidadNoMeGusta: Long, reaccion: Reaccion?, reaccionAnterior: Reaccion?, esClick: Boolean = false) {
+    fun setearReacciones(reaccion: Reaccion?, reaccionAnterior: Reaccion?, esClick: Boolean = false) {
         var reaccionNueva = reaccion
         if (reaccion == reaccionAnterior) {
             // para despintar si volvi a tocar la misma reaccion que ya tenia
             reaccionNueva = null
         }
-        var nuevaCantidadMeGusta = cantidadMeGusta
-        var nuevaCantidadNoMeGusta = cantidadNoMeGusta
+        var nuevaCantidadMeGusta = video!!.reacciones!!.meGustas
+        var nuevaCantidadNoMeGusta = video!!.reacciones!!.noMeGustas
         when (reaccionNueva) {
             Reaccion.ME_GUSTA -> {
                 colorear(me_gusta, R.color.colorSecondary)

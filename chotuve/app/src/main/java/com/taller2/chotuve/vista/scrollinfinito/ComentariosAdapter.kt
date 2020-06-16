@@ -5,13 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Video
-import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
-import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
+import com.taller2.chotuve.modelo.Comentario
+import com.taller2.chotuve.vista.ver_video.VerVideoActivity
 
 
-class VideosAdapter(val fragment: MuroDeVideosFragment) : ViewHolderAdapter() {
-    private val VIDEO = 0
+class ComentariosAdapter(val activity: VerVideoActivity) : ViewHolderAdapter() {
+    private val COMENTARIO = 0
     private val CARGANDO = 1
 
     override fun onCreateViewHolder(
@@ -23,10 +22,10 @@ class VideosAdapter(val fragment: MuroDeVideosFragment) : ViewHolderAdapter() {
         var viewHolder: RecyclerView.ViewHolder? = null
 
         when (viewType) {
-            VIDEO -> {
+            COMENTARIO -> {
                 val viewItem: View =
-                    inflater.inflate(R.layout.video_portada_con_titulo_y_autor, parent, false)
-                viewHolder = VideoPortadaConTituloYAutor(viewItem)
+                    inflater.inflate(R.layout.comentario, parent, false)
+                viewHolder = ComentarioViewHolder(viewItem)
             }
             CARGANDO -> {
                 val viewLoading: View =
@@ -44,21 +43,21 @@ class VideosAdapter(val fragment: MuroDeVideosFragment) : ViewHolderAdapter() {
         viewHolder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        val video: Video? = elementos[position] as Video?
+        val comentario: Comentario? = elementos[position] as Comentario?
 
-        if (getItemViewType(position) == VIDEO) {
-            val portadaVideo = viewHolder as VideoPortadaConTituloYAutor
-            portadaVideo.setVideo(video!!)
+        if (getItemViewType(position) == COMENTARIO) {
+            val comentarioViewHolder = viewHolder as ComentarioViewHolder
+            comentarioViewHolder.setComentario(comentario!!)
 
-            portadaVideo.setOnClicklistener(object : VideoPortadaConTituloYAutor.Clicklistener {
+            comentarioViewHolder.setOnClicklistener(object : ComentarioViewHolder.ClickListener {
                 override fun onItemClick(view: View?, position: Int) {
-                    fragment.verVideo((getItem(position)!! as Video).id)
+                    activity.irAPerfilDeUsuario((getItem(position)!! as Comentario).autor.usuarioId)
                 }
             })
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == elementos.size - 1 && estaCargando) CARGANDO else VIDEO
+        return if (position == elementos.size - 1 && estaCargando) CARGANDO else COMENTARIO
     }
 }

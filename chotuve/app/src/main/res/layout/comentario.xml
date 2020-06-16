@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/autor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Franco Liberali" />
+
+        <TextView
+            android:id="@+id/fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
+            app:layout_constraintBaseline_toBaselineOf="@+id/autor"
+            app:layout_constraintStart_toEndOf="@+id/autor"
+            tools:text="16/04/2020" />
+
+        <TextView
+            android:id="@+id/texto_comentario"
+            android:gravity="start"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autor"
+            tools:text="Que buen video, saludos! \nnos vemos gato" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

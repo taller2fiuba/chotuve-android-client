@@ -200,14 +200,40 @@
             app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
         <TextView
+            android:id="@+id/comentarios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Comentarios proximamente"
-            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+            android:text="Comentarios"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/div3" />
+
+        <ProgressBar
+            android:id="@+id/cargando_comentarios_barra_progreso"
+            android:layout_width="112dp"
+            android:layout_height="73dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorSecondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/comentarios"  />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comentarios_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:visibility="gone"
+            tools:visibility="visible"
+
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/comentarios"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

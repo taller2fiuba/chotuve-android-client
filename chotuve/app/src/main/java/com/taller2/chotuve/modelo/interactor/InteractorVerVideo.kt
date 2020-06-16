@@ -35,7 +35,7 @@ class InteractorVerVideo {
                         val autorJson = objeto.getJSONObject("autor")
                         val autor = Autor(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
 
-                        val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.valueOf(objeto.getString("mi-reaccion")) else null
+                        val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.getByValue(objeto.getString("mi-reaccion")) else null
                         val reacciones = Reacciones(
                             objeto.getString("me-gustas").toLong(),
                             objeto.getString("no-me-gustas").toLong(),
@@ -65,7 +65,7 @@ class InteractorVerVideo {
     }
 
     fun reaccionar(videoId: String, reaccion: Reaccion, callbackReaccionar: CallbackReaccionar) {
-        chotuveClient.reaccionar(videoId, com.taller2.chotuve.modelo.data.Reaccion(reaccion.toString())).enqueue(object : Callback<ResponseBody> {
+        chotuveClient.reaccionar(videoId, com.taller2.chotuve.modelo.data.Reaccion(reaccion.value)).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 callbackReaccionar.onErrorRed()
             }

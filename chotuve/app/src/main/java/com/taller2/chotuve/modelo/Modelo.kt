@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
+import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import okhttp3.ResponseBody
 import retrofit2.Callback
 import retrofit2.Response

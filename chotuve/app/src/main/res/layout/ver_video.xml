@@ -96,10 +96,11 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/transparent"
                     android:scaleType="centerInside"
-                    android:scaleX="2.0"
-                    android:scaleY="2.0"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
                     android:src="@drawable/ic_thumb_up_black_24dp"
-                    android:tint="@android:color/darker_gray" />
+                    android:tint="@android:color/darker_gray"
+                    android:onClick="clickMeGusta"/>
 
                 <TextView
                     android:id="@+id/cantidad_me_gustas"
@@ -126,10 +127,11 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/transparent"
                     android:scaleType="centerInside"
-                    android:scaleX="2.0"
-                    android:scaleY="2.0"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
                     android:src="@drawable/ic_thumb_down_black_24dp"
-                    android:tint="@android:color/darker_gray"/>
+                    android:tint="@android:color/darker_gray"
+                    android:onClick="clickNoMeGusta"/>
 
                 <TextView
                     android:id="@+id/cantidad_no_me_gustas"

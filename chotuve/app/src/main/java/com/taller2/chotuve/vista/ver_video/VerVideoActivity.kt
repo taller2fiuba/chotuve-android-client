@@ -4,14 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,8 +22,8 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
-import com.google.android.exoplayer2.util.Util
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.Reaccion
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.presentador.PresentadorVerVideo
@@ -64,29 +64,64 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         presentador.obtenerVideo(id)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presentador.onDestroy()
-    }
-
     override fun mostrarVideo(video: Video) {
         ocultarCargando()
         titulo.text = video.titulo
         creacion.text = video.creacion
         autor.text = video.autor.email
-        if (!video.descripcion.isNullOrBlank()) {
+        if (!video.descripcion.isBlank()) {
             descripcion.text = video.descripcion
         } else {
             div2.visibility = View.GONE
             descripcion.visibility = View.GONE
         }
         this.video = video
+        cantidad_me_gustas.text = video.reacciones!!.meGustas.toString()
+        cantidad_no_me_gustas.text = video.reacciones.noMeGustas.toString()
+        colorearReacciones(video.reacciones.miReaccion, null)
         inicializarReproductor()
     }
 
     fun ocultarCargando() {
         cargando_video_barra_progreso.visibility = View.GONE
         pantalla.visibility = View.VISIBLE
+    }
+
+    fun clickMeGusta(view: View) {
+        presentador.reaccionar(video!!.id, Reaccion.ME_GUSTA)
+        colorearReacciones(Reaccion.ME_GUSTA, video!!.reacciones!!.miReaccion)
+    }
+
+    fun clickNoMeGusta(view: View) {
+        presentador.reaccionar(video!!.id, Reaccion.NO_ME_GUSTA)
+        colorearReacciones(Reaccion.NO_ME_GUSTA, video!!.reacciones!!.miReaccion)
+    }
+
+    fun colorearReacciones(reaccion: Reaccion?, reaccionAnterior: Reaccion?) {
+        var reaccionNueva = reaccion
+        if (reaccion == reaccionAnterior) {
+            // para despintar si volvi a tocar la misma reaccion que ya tenia
+            reaccionNueva = null
+        }
+        when (reaccionNueva) {
+            Reaccion.ME_GUSTA -> {
+                colorear(me_gusta, R.color.colorSecondary)
+                colorear(no_me_gusta, android.R.color.darker_gray)
+            }
+            Reaccion.NO_ME_GUSTA -> {
+                colorear(me_gusta, android.R.color.darker_gray)
+                colorear(no_me_gusta, R.color.colorSecondary)
+            }
+            else -> {
+                colorear(me_gusta, android.R.color.darker_gray)
+                colorear(no_me_gusta, android.R.color.darker_gray)
+            }
+        }
+        video!!.reacciones!!.miReaccion = reaccionNueva
+    }
+
+    private fun colorear(boton: ImageButton, color: Int) {
+        boton.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, color))
     }
 
     override fun setErrorRed() {

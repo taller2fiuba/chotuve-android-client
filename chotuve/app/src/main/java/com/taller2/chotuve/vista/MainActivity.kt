@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFragment(tag: String, fragment: Fragment) {
         var fragmentoExistente = supportFragmentManager.findFragmentByTag(tag)
-        val cantidadStack: Int = supportFragmentManager.backStackEntryCount
         val transicion = supportFragmentManager.beginTransaction().hide(fragmentActivo)
         // Si es fragmento todavia no se creo crearlo
         if (fragmentoExistente == null) {
@@ -84,24 +83,32 @@ class MainActivity : AppCompatActivity() {
         }
         transicion.addToBackStack(tag)
         transicion.commit()
+        // +1 por el que se acaba de agregar, aun no afecta
+        val cantidadStack: Int = supportFragmentManager.backStackEntryCount + 1
         supportFragmentManager.addOnBackStackChangedListener(object : FragmentManager.OnBackStackChangedListener {
             override fun onBackStackChanged() {
-                val nuevaCantidad = supportFragmentManager.backStackEntryCount
                 // Si cantidad en el stack baja entonces tocaron el boton de back
-                if (nuevaCantidad in 1..cantidadStack) {
+                if (supportFragmentManager.backStackEntryCount < cantidadStack) {
                     supportFragmentManager.removeOnBackStackChangedListener(this)
-                    val tagAnterior = supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
+                    val tagAnterior =
+                        supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
                     // seteo el icono a mostrar en la nevegacion con el index del fragment anterior
                     navegacion.menu.getItem(getIndex(tagAnterior)).isChecked = true
                     fragmentActivo = getFragment(tagAnterior)
-                // si esta en cero toque back hasta volver al fragment principal mostrado al crear la actividad
-                } else if (nuevaCantidad == 0) {
-                    navegacion.menu.getItem(FRAGMENT_PRINCIPAL_INDEX).isChecked = true
-                    fragmentActivo = principalFragment
                 }
             }
         })
         fragmentActivo = fragment
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            // ir al fragmento anterior
+            super.onBackPressed()
+        } else {
+            // Salir de la app si no queda nada en el stack
+            finish()
+        }
     }
 
     private fun getIndex(tag: String?) : Int {

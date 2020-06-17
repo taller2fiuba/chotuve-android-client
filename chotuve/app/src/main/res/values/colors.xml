@@ -7,7 +7,7 @@
     <color name="colorSecondaryVariant">#ffdc65</color>
     <color name="colorOnSecondary">#0b222c</color>
 
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#232F34</color>
     <color name="colorPrimaryLight">#5f7481</color>
     <color name="colorAccent">#03DAC5</color>
 </resources>

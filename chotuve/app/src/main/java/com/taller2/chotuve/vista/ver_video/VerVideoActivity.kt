@@ -1,5 +1,7 @@
 package com.taller2.chotuve.vista.ver_video
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -107,6 +109,9 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         setearReacciones(video.reacciones!!.miReaccion, null)
         inicializarReproductor()
         presentador.obtenerComentarios(video.id, 0)
+        // arrancar fuera de la pantalla
+        comentarios_container.animate()
+            .translationY(informacion_container.height.toFloat())
     }
 
     override fun mostrarComentarios(comentarios: List<Comentario>) {
@@ -301,5 +306,44 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         params.width = ViewGroup.LayoutParams.MATCH_PARENT
         params.height = obtenerAltoVideo(applicationContext)
         video_reproductor.layoutParams = params
+    }
+
+    fun clickMostrarComentarios(view: View) {
+        comentarios_container.animate()
+            .translationY(0F)
+            .alpha(1.0f)
+            .setListener(object: Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {}
+
+                override fun onAnimationEnd(animation: Animator) {
+                    informacion_container.visibility = View.GONE
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {}
+
+                override fun onAnimationStart(animation: Animator?) {
+                    comentarios_container.visibility = View.VISIBLE
+                    comentarios_container.alpha = 0.0f
+                }
+            })
+    }
+
+    fun clickCerrarComentarios(view: View) {
+        comentarios_container.animate()
+            .translationY(comentarios_container.height.toFloat())
+            .alpha(0.0f)
+            .setListener(object: Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {}
+
+                override fun onAnimationEnd(animation: Animator) {
+                    comentarios_container.visibility = View.GONE
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {}
+
+                override fun onAnimationStart(animation: Animator?) {
+                    informacion_container.visibility = View.VISIBLE
+                }
+            })
     }
 }

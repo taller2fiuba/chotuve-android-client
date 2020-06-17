@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp">
 
         <TextView
             android:id="@+id/autor"
@@ -20,7 +22,8 @@
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Franco Liberali" />
+            tools:text="Franco Liberali"
+            android:textColor="@android:color/darker_gray"/>
 
         <TextView
             android:id="@+id/fecha"
@@ -32,16 +35,18 @@
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
             app:layout_constraintBaseline_toBaselineOf="@+id/autor"
             app:layout_constraintStart_toEndOf="@+id/autor"
-            tools:text="16/04/2020" />
+            tools:text="16/04/2020"
+            android:textColor="@android:color/darker_gray"/>
 
         <TextView
             android:id="@+id/texto_comentario"
-            android:gravity="start"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:gravity="start"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:textColor="@color/colorOnPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/autor"
             tools:text="Que buen video, saludos! \nnos vemos gato" />

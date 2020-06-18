@@ -1,7 +1,6 @@
 package com.taller2.chotuve.vista.ver_video
 
 import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -253,12 +253,14 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        player!!.stop()
-        releasePlayer()
-        val intent = Intent()
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+        if (comentarios_container.visibility == View.VISIBLE) {
+            clickCerrarComentarios()
+        } else {
+            super.onBackPressed()
+            player!!.stop()
+            releasePlayer()
+            finish()
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -328,7 +330,8 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
             })
     }
 
-    fun clickCerrarComentarios(view: View) {
+    fun clickCerrarComentarios(view: View? = null) {
+        ocultarTeclado()
         comentarios_container.animate()
             .translationY(comentarios_container.height.toFloat())
             .alpha(0.0f)
@@ -346,4 +349,15 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 }
             })
     }
+
+    fun ocultarTeclado() {
+        val imm: InputMethodManager =  getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = currentFocus
+        if (view == null) {
+            view = View(this)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+
 }

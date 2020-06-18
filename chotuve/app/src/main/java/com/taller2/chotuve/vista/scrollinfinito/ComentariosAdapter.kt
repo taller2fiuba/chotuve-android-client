@@ -51,7 +51,13 @@ class ComentariosAdapter(val activity: VerVideoActivity) : ViewHolderAdapter() {
 
             comentarioViewHolder.setOnClicklistener(object : ComentarioViewHolder.ClickListener {
                 override fun onItemClick(view: View?, position: Int) {
-                    activity.irAPerfilDeUsuario((getItem(position)!! as Comentario).autor.usuarioId)
+                    val comentarioClickeado = getItem(position)!! as Comentario
+                    // TODO esto es para chequear si un comentario que acabo de agregar y no tengo mi propia info
+                    // igual si la tengo es un problema porque me llevaria a mi perfil pero al estilo del perfil de otro
+                    // TODO ver como solucionar, posible solucion saber mi id para comparar
+                    if (comentarioClickeado.autor.usuarioId > 0) {
+                        activity.irAPerfilDeUsuario(comentarioClickeado.autor.usuarioId)
+                    }
                 }
             })
         }

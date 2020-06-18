@@ -41,6 +41,11 @@ abstract class ViewHolderAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemInserted(elementos.size - 1)
     }
 
+    fun add(position: Int, elemento: Any?) {
+        elementos.add(position, elemento)
+        notifyItemInserted(position)
+    }
+
     fun addAll(elementos: List<Any>) {
         for (elemento in elementos) {
             add(elemento)

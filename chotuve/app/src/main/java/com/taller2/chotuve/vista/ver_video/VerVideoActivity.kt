@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.Autor
 import com.taller2.chotuve.modelo.Comentario
 import com.taller2.chotuve.modelo.Reaccion
 import com.taller2.chotuve.modelo.Video
@@ -331,7 +332,6 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     }
 
     fun clickCerrarComentarios(view: View? = null) {
-        ocultarTeclado()
         comentarios_container.animate()
             .translationY(comentarios_container.height.toFloat())
             .alpha(0.0f)
@@ -350,14 +350,26 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
             })
     }
 
-    fun ocultarTeclado() {
-        val imm: InputMethodManager =  getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        var view = currentFocus
-        if (view == null) {
-            view = View(this)
+    fun clickAgregarComentario(view: View) {
+        Log.d("vista", "ejecutando")
+        val comentarioString = comentario.editText?.text?.toString()
+        when {
+            comentarioString.isNullOrEmpty() -> comentario.error = "No puede estar vacío"
+            else -> {
+                crear_comentario_boton.visibility = View.GONE
+                creando_comentario_barra_progreso.visibility = View.VISIBLE
+                presentador.crearComentario(video!!.id, comentarioString)
+            }
         }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    override fun agregarNuevoComentario(nuevoComentario: String) {
+        // TODO necesito mi infomacion para no hacer esta negrada
+        comentario.editText?.setText("")
+        crear_comentario_boton.visibility = View.VISIBLE
+        creando_comentario_barra_progreso.visibility = View.GONE
+        adapter.add(0, Comentario(Autor(0, "tú"), "Ahora mismo", nuevoComentario))
+        comentarios_recycler_view.smoothScrollToPosition(0)
 
+    }
 }

@@ -60,4 +60,16 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
             1000
         )
     }
+
+    fun crearComentario(videoId: String, comentario: String) {
+        interactor.crearComentario(videoId, comentario, object : InteractorVerVideo.CallbackComentar {
+            override fun onErrorRed() {
+                vista.setErrorRed()
+            }
+
+            override fun onComentarioCreado(comentario: String) {
+                vista.agregarNuevoComentario(comentario)
+            }
+        })
+    }
 }

@@ -51,7 +51,7 @@
             android:id="@+id/informacion_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            tools:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -210,6 +210,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/comentarios_extensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickMostrarComentarios"
@@ -239,6 +240,72 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_expand_less_black_24dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/comentario_crear_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comentarios_extensor">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/comentario"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:hint="Agrega un nuevo comentario"
+                    app:layout_constraintEnd_toStartOf="@+id/crear_comentario_boton_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
+                        android:maxLines="4"
+                        android:gravity="start"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <FrameLayout
+                    android:id="@+id/crear_comentario_boton_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:tint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <ProgressBar
+                        android:id="@+id/creando_comentario_barra_progreso"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/colorSecondary" />
+
+                    <ImageButton
+                        android:id="@+id/crear_comentario_boton"
+                        android:layout_gravity="center"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+
+                        android:layout_marginTop="1dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:onClick="clickAgregarComentario"
+                        android:tint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_send_black_24dp" />
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
@@ -254,7 +321,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:visibility="gone"
-                tools:visibility="visible"
                 android:fitsSystemWindows="true">
 
                 <ProgressBar
@@ -314,52 +380,6 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_close_black_24dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/nuevo_comentario"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginTop="4dp"
-                        android:hint="Agrega un nuevo comentario"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:textColorHint="@color/colorOnPrimary"
-                        app:boxStrokeColor="@color/colorOnPrimary"
-                        app:counterTextColor="@color/colorOnPrimary"
-                        app:errorEnabled="true"
-                        app:hintTextColor="@color/colorOnPrimary"
-                        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/comentarios_label">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/colorOnPrimary"
-                            android:scrollbars = "vertical"
-                            android:inputType="textMultiLine"
-                            android:maxLines="4"
-                            android:gravity="start"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageButton
-                        android:id="@+id/imageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:backgroundTint="@android:color/transparent"
-                        android:onClick="clickCerrarComentarios"
-                        android:tint="@color/colorOnPrimary"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/comentarios_label"
-                        app:srcCompat="@drawable/ic_send_black_24dp" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

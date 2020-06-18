@@ -1,6 +1,8 @@
 package com.taller2.chotuve.modelo.interactor
 
+import android.util.Log
 import com.taller2.chotuve.modelo.*
+import com.taller2.chotuve.modelo.data.ComentarioData
 import retrofit2.Callback
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -15,6 +17,11 @@ class InteractorVerVideo {
     }
 
     interface CallbackReaccionar {
+        fun onErrorRed()
+    }
+
+    interface CallbackComentar {
+        fun onComentarioCreado(comentario: String)
         fun onErrorRed()
     }
 
@@ -59,7 +66,7 @@ class InteractorVerVideo {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                callbackVerVideo.onError(t?.message.toString())
+                callbackVerVideo.onError(t.message.toString())
             }
         })
     }
@@ -71,6 +78,25 @@ class InteractorVerVideo {
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {}
+        })
+    }
+
+    fun crearComentario(videoId: String, comentario: String, callbackComentar: CallbackComentar) {
+        chotuveClient.comentar(videoId, ComentarioData(comentario)).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                callbackComentar.onErrorRed()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val responseCode = response.code()
+                if (responseCode == 201) {
+                    Log.d("modelo", "Comentario creado")
+                    callbackComentar.onComentarioCreado(comentario)
+                } else {
+                    Log.d("modelo", "Error al comentar")
+                    callbackComentar.onErrorRed()
+                }
+            }
         })
     }
 }

@@ -4,6 +4,7 @@ import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Reaccion
 import com.taller2.chotuve.modelo.data.Video
+import com.taller2.chotuve.modelo.data.ComentarioData
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -52,6 +53,9 @@ interface AppServerService {
 
     @POST("/video/{id}/reaccion")
     fun reaccionar(@Path("id") id: String, @Body reaccion: Reaccion) : Call<ResponseBody>
+
+    @POST("/video/{id}/comentario")
+    fun comentar(@Path("id") id: String, @Body comentario: ComentarioData) : Call<ResponseBody>
 
     @GET("/video")
     fun obtenerVideos(@Query("cantidad") cantidad: Int = 10,

@@ -39,8 +39,8 @@ class PerfilFragment(val usuarioId: Long?) : Fragment() {
             ViewPagerAdapter(
                 childFragmentManager
             )
-        viewPagerAdapter.addFragment(VideosFragment.newInstance(usuarioId), "videos")
         viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId), "información")
+        viewPagerAdapter.addFragment(VideosFragment.newInstance(usuarioId), "videos")
         viewPager.adapter = viewPagerAdapter
     }
 

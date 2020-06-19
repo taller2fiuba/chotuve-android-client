@@ -51,12 +51,20 @@ class InteractorPerfil {
         val data = JSONObject(body)
         return Usuario(
             data.getLong("id"),
-            data.getString("nombre"),
-            data.getString("apellido"),
-            data.getString("email"),
-            data.getString("telefono"),
-            data.getString("direccion"),
-            data.getString("foto")
+            getString(data, "nombre"),
+            getString(data, "apellido"),
+            getString(data, "email")!!,
+            getString(data, "telefono"),
+            getString(data, "direccion"),
+            getString(data, "foto")
         )
+    }
+
+    private fun getString(data: JSONObject, campo: String): String? {
+        val valor = data.getString(campo)
+        if (valor != "null" && valor != "") {
+            return valor
+        }
+        return null
     }
 }

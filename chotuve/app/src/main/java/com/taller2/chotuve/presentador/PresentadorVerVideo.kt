@@ -30,35 +30,15 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
     }
 
     fun obtenerComentarios(videoId: String, pagina: Int) {
-        val handler = Handler()
-        handler.postDelayed(
-            Runnable {
-                if (pagina == 0) {
-                    val comentarios = listOf<Comentario>(
-                        Comentario(Autor(1, "franco"), "16/04/2020", "hola todo bien?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien2?"),
-                        Comentario(Autor(1, "mati"), "18/04/2020", "hola todo bien3?"),
-                        Comentario(Autor(1, "edson"), "19/04/2020", "hola todo bien4?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien5?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien6?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien7?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien8?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien9?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien10?")
-                    )
-                    vista.mostrarComentarios(comentarios)
-                } else if (pagina == 1){
-                    val comentarios = listOf<Comentario>(
-                        Comentario(Autor(1, "franco"), "16/04/2020", "hola todo bien11?"),
-                        Comentario(Autor(1, "lucho"), "17/04/2020", "hola todo bien12?")
-                    )
-                    vista.mostrarComentarios(comentarios)
-                } else {
-                    vista.mostrarComentarios(emptyList())
-                }
-            },
-            1000
-        )
+        interactor.obtenerComentarios(videoId, pagina, object : InteractorVerVideo.CallbackVerComentarios {
+            override fun onExito(comentarios: List<Comentario>) {
+                vista.mostrarComentarios(comentarios)
+            }
+
+            override fun onErrorRed() {
+                vista.setErrorRed()
+            }
+        })
     }
 
     fun crearComentario(videoId: String, comentario: String) {

@@ -5,6 +5,7 @@ import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ComentarioData
 import retrofit2.Callback
 import okhttp3.ResponseBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -22,6 +23,11 @@ class InteractorVerVideo {
 
     interface CallbackComentar {
         fun onComentarioCreado(comentario: String)
+        fun onErrorRed()
+    }
+
+    interface CallbackVerComentarios {
+        fun onExito(comentarios: List<Comentario>)
         fun onErrorRed()
     }
 
@@ -98,5 +104,55 @@ class InteractorVerVideo {
                 }
             }
         })
+    }
+
+    fun obtenerComentarios(videoId: String, pagina: Int, callbackVerComentarios: CallbackVerComentarios) {
+        chotuveClient.obtenerComentarios(videoId, 10, pagina * 10).enqueue(
+            object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("I/VerVideo", "Comentarios obtenidos")
+                    when (response.code()) {
+                        200 -> callbackVerComentarios.onExito(deserializarComentarios(response.body()!!.string()!!))
+                        400, 401, 404 -> callbackVerComentarios.onErrorRed()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    callbackVerComentarios.onErrorRed()
+                }
+            }
+        )
+        // callbackVerComentarios.onExito(listOf(Comentario(Autor(1, "franco"), "16/04/2020", "hola todo bien?")))
+    }
+
+    private fun deserializarComentarios(jsonData: String): List<Comentario> {
+        val iso8601Format =
+            SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS")
+        val dmyFormat = SimpleDateFormat("dd/MM/yyyy")
+        val data = JSONArray(jsonData)
+        val comentarios = mutableListOf<Comentario>()
+
+        for (i in 0 until data.length()) {
+            val obj = data.getJSONObject(i)
+            val autor = obj.getJSONObject("autor")
+            var fecha = obj.getString("fecha")
+            // Cortar el +00:00 que API 23 no entiende
+            fecha = fecha.substring(0, fecha.length - 6)
+
+            comentarios.add(
+                Comentario(
+                    Autor(
+                        autor.getLong("id"),
+                        autor.getString("email")
+                    ),
+                    dmyFormat.format(
+                        iso8601Format.parse(obj.getString("fecha"))!!
+                    ),
+                    obj.getString("comentario")
+                )
+            )
+        }
+
+        return comentarios
     }
 }

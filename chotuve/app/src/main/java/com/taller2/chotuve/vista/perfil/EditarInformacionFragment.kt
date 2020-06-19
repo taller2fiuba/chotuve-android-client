@@ -38,12 +38,14 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
         apellido.editText?.setText(usuario.apellido)
         telefono.editText?.setText(usuario.telefono)
         direccion.editText?.setText(usuario.direccion)
-        Glide
-            .with(this)
-            .load(usuario.fotoPerfilUri)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .centerCrop()
-            .into(imagen_perfil)
+        if (usuario.fotoPerfilUri != null) {
+            Glide
+                .with(this)
+                .load(usuario.fotoPerfilUri)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .centerCrop()
+                .into(imagen_perfil)
+        }
     }
 
     fun elegirFotoPerfil() {
@@ -126,7 +128,7 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
     }
 
     override fun onEdicionExitosa() {
-        activity!!.supportFragmentManager.popBackStack()
+        fragmentManager!!.popBackStack()
         Toast.makeText(context, "Bien! Información editada", Toast.LENGTH_LONG).show()
     }
 

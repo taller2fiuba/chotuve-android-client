@@ -3,6 +3,7 @@ package com.taller2.chotuve.modelo
 import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Reaccion
+import com.taller2.chotuve.modelo.data.Perfil
 import com.taller2.chotuve.modelo.data.Video
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -34,7 +35,7 @@ interface AppServerService {
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create().withNullSerialization())
                 .client(httpClient.build())
                 .build()
                 .create(AppServerService::class.java)
@@ -60,6 +61,12 @@ interface AppServerService {
     @GET("/video/{id}")
     fun obtenerVideo(@Path("id") id: String) : Call<ResponseBody>
 
-    @GET("/usuario/{id_usuario}")
-    fun obtenerUsuario(@Path("id_usuario") uid : Int) : Call<ResponseBody>
+    @GET("/usuario/{id_usuario}/perfil")
+    fun obtenerPerfilUsuario(@Path("id_usuario") uid : Long) : Call<ResponseBody>
+
+    @GET("/usuario/perfil")
+    fun obtenerMiPerfil() : Call<ResponseBody>
+
+    @PUT("/usuario/perfil")
+    fun editarPerfil(@Body perfil: Perfil) : Call<ResponseBody>
 }

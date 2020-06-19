@@ -14,7 +14,7 @@ class InteractorFirebase(val carpeta: String) {
     }
 
     private val firebaseStorage = FirebaseStorage.getInstance().reference
-    lateinit var urlDescarga: String
+    var urlDescarga: String? = null
 
     fun subir(uri: Uri, callbackSubirAFirebase: CallbackSubir) {
         val fileReference = firebaseStorage.child(carpeta + "/" + obtenerNombreDeArchivo(uri))

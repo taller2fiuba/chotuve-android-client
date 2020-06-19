@@ -3,6 +3,7 @@ package com.taller2.chotuve.modelo
 import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Reaccion
+import com.taller2.chotuve.modelo.data.Perfil
 import com.taller2.chotuve.modelo.data.Video
 import com.taller2.chotuve.modelo.data.ComentarioData
 import okhttp3.OkHttpClient
@@ -35,7 +36,7 @@ interface AppServerService {
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create().withNullSerialization())
                 .client(httpClient.build())
                 .build()
                 .create(AppServerService::class.java)
@@ -74,4 +75,7 @@ interface AppServerService {
 
     @GET("/usuario/perfil")
     fun obtenerMiPerfil() : Call<ResponseBody>
+
+    @PUT("/usuario/perfil")
+    fun editarPerfil(@Body perfil: Perfil) : Call<ResponseBody>
 }

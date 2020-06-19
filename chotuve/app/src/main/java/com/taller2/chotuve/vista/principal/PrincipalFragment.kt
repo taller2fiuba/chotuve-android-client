@@ -29,14 +29,9 @@ class PrincipalFragment : Fragment() {
     }
 
     fun scrollTop() {
-        val fragmentManager = activity!!.supportFragmentManager
-        val muroDeVideosFragment = fragmentManager.findFragmentByTag(MURO_VIDEOS_TAG) as MuroDeVideosFragment
+        val muroDeVideosFragment = activity!!.supportFragmentManager.findFragmentByTag(MURO_VIDEOS_TAG) as MuroDeVideosFragment
         if (muroDeVideosFragment.isVisible) {
             muroDeVideosFragment.scrollTop()
-        } else {
-            // si se esta mostrando otro fragmento volver al inicio y luego hacer scrollTop
-            fragmentManager.popBackStack(MURO_VIDEOS_TAG, 0)
-            scrollTop()
         }
     }
 }

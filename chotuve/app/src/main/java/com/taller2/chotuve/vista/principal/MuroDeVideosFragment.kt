@@ -112,7 +112,7 @@ class MuroDeVideosFragment : Fragment(), VistaPrincipal {
         if (resultCode == RESULT_OK) {
             val usuarioId = data!!.getStringExtra(USUARIO_ID_KEY)
             val newFragment = PerfilFragment(usuarioId!!.toLong())
-            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            val transaction = fragmentManager!!.beginTransaction()
             transaction.replace(R.id.fragment_container, newFragment)
             transaction.addToBackStack(null)
             transaction.commit()

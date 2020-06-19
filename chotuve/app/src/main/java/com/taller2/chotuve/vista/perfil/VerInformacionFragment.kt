@@ -15,6 +15,8 @@ import com.taller2.chotuve.presentador.PresentadorPerfil
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
 class VerInformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
+    private val AUN_NO_COMPLETADO = "Aún no completado"
+
     private val presentador = PresentadorPerfil(this)
     private var usuario: Usuario? = null
 
@@ -47,18 +49,23 @@ class VerInformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacio
     }
 
     override fun mostrarPerfil(usuario: Usuario) {
-        // TODO tener en cuenta que pueden ser valores nelos si todavia no se completaron
         this.usuario = usuario
-        nombre_y_apellido.text = getString(R.string.nombre_y_apellido, usuario.nombre, usuario.apellido)
+        if (usuario.nombre != null && usuario.apellido != null) {
+            nombre_y_apellido.text = getString(R.string.nombre_y_apellido, usuario.nombre, usuario.apellido)
+        } else {
+            nombre_y_apellido.text = AUN_NO_COMPLETADO
+        }
         email.text = usuario.email
-        telefono.text = usuario.telefono
-        direccion.text = usuario.direccion
-        Glide
-            .with(this)
-            .load(usuario.fotoPerfilUri)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .centerCrop()
-            .into(imagen_perfil)
+        telefono.text = usuario.telefono ?: AUN_NO_COMPLETADO
+        direccion.text = usuario.direccion ?: AUN_NO_COMPLETADO
+        if (usuario.fotoPerfilUri != null) {
+            Glide
+                .with(this)
+                .load(usuario.fotoPerfilUri)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .centerCrop()
+                .into(imagen_perfil)
+        }
         editar_informacion.setOnClickListener {
             irAEditarInformacion()
         }

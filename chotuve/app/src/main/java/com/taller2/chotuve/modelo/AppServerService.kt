@@ -64,6 +64,9 @@ interface AppServerService {
     @GET("/video/{id}")
     fun obtenerVideo(@Path("id") id: String) : Call<ResponseBody>
 
-    @GET("/usuario/{id_usuario}")
-    fun obtenerUsuario(@Path("id_usuario") uid : Int) : Call<ResponseBody>
+    @GET("/usuario/{id_usuario}/perfil")
+    fun obtenerPerfilUsuario(@Path("id_usuario") uid : Long) : Call<ResponseBody>
+
+    @GET("/usuario/perfil")
+    fun obtenerMiPerfil() : Call<ResponseBody>
 }

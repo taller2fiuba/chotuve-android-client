@@ -75,7 +75,7 @@ class VerInformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacio
 
     fun irAEditarInformacion() {
         val newFragment = EditarInformacionFragment(usuario!!)
-        val transaction = activity!!.supportFragmentManager.beginTransaction()
+        val transaction = fragmentManager!!.beginTransaction()
         transaction.replace(R.id.fragment_container, newFragment)
         transaction.addToBackStack(null)
         transaction.commit()

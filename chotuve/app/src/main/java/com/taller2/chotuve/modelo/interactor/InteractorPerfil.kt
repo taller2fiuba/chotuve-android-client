@@ -62,7 +62,7 @@ class InteractorPerfil {
 
     private fun getString(data: JSONObject, campo: String): String? {
         val valor = data.getString(campo)
-        if (valor != "null") {
+        if (valor != "null" && valor != "") {
             return valor
         }
         return null

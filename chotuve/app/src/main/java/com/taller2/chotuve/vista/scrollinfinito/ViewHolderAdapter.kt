@@ -1,14 +1,6 @@
 package com.taller2.chotuve.vista.scrollinfinito
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Video
-import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
-import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
-
 
 abstract class ViewHolderAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var elementos: MutableList<Any?> = mutableListOf()

@@ -11,7 +11,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.taller2.chotuve.R
 
-
 class PerfilFragment(val usuarioId: Long?) : Fragment() {
     companion object {
         fun newInstance(usuarioId: Long?): PerfilFragment =
@@ -22,7 +21,6 @@ class PerfilFragment(val usuarioId: Long?) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_perfil, container, false) as View
 
         var pager = view.findViewById(R.id.perfil_view_pager) as ViewPager
@@ -44,7 +42,7 @@ class PerfilFragment(val usuarioId: Long?) : Fragment() {
         // contactos solo en mi perfil
         // TODO ver si se pueden ver contactos de contactos o de todos
         if (usuarioId == null) {
-            viewPagerAdapter.addFragment(ContactosFragment.newInstance(), "contactos")
+            viewPagerAdapter.addFragment(ContactosFragment.newInstance(this), "contactos")
         }
         viewPager.adapter = viewPagerAdapter
     }

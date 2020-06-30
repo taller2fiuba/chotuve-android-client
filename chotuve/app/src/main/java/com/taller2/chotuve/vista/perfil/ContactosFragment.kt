@@ -15,10 +15,10 @@ import com.taller2.chotuve.modelo.Autor
 import com.taller2.chotuve.presentador.PresentadorContactos
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
-class ContactosFragment : Fragment(), VistaContactos {
+class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaContactos {
     companion object {
-        fun newInstance(): ContactosFragment =
-            ContactosFragment()
+        fun newInstance(perfilFragment: PerfilFragment): ContactosFragment =
+            ContactosFragment(perfilFragment)
     }
 
     private val presentador = PresentadorContactos(this)
@@ -36,6 +36,7 @@ class ContactosFragment : Fragment(), VistaContactos {
     }
 
     override fun mostrarContactos(contactos: List<Autor>) {
+        // TODO esto se rompe si cambias de pestaña antes de que carge aveces, no puedo determinar bien porque aveces apsa y aveces no
         contactos.forEach { autor: Autor ->
             val textView = TextView(context)
             textView.text = autor.email
@@ -59,10 +60,10 @@ class ContactosFragment : Fragment(), VistaContactos {
 
     fun irAPerfilDeUsuario(usuarioId: Long) {
         val newFragment = PerfilFragment(usuarioId)
-        val transaction = fragmentManager!!.beginTransaction()
-        transaction.replace(R.id.fragment_container, newFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        val transicion = activity!!.supportFragmentManager.beginTransaction().hide(perfilFragment)
+        transicion.add(R.id.container_navegacion, newFragment)
+        transicion.addToBackStack(null)
+        transicion.commit()
     }
 
     override fun setErrorRed() {

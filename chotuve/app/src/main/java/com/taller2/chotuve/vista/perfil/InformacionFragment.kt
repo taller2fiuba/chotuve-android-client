@@ -17,10 +17,10 @@ class InformacionFragment(val usuarioId: Long?) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_informacion, container, false)
+        val view = inflater.inflate(R.layout.fragment_informacion_container, container, false)
         val newFragment = VerInformacionFragment(usuarioId)
         val transaction = fragmentManager!!.beginTransaction()
-        transaction.replace(R.id.fragment_container, newFragment)
+        transaction.replace(R.id.informacion_container, newFragment)
         transaction.addToBackStack(null)
         transaction.commit()
         return view

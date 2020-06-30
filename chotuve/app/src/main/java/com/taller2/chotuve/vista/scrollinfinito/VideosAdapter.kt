@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
-import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
+import com.taller2.chotuve.vista.principal.PrincipalFragment
 
 
-class VideosAdapter(val fragment: MuroDeVideosFragment) : ViewHolderAdapter() {
+class VideosAdapter(val fragment: PrincipalFragment) : ViewHolderAdapter() {
     private val VIDEO = 0
     private val CARGANDO = 1
 

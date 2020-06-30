@@ -88,13 +88,17 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.addOnBackStackChangedListener(object : FragmentManager.OnBackStackChangedListener {
             override fun onBackStackChanged() {
                 // Si cantidad en el stack baja entonces tocaron el boton de back
-                if (supportFragmentManager.backStackEntryCount < cantidadStack) {
+                if (supportFragmentManager.backStackEntryCount in 1 until cantidadStack) {
                     supportFragmentManager.removeOnBackStackChangedListener(this)
                     val tagAnterior =
                         supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
                     // seteo el icono a mostrar en la nevegacion con el index del fragment anterior
                     navegacion.menu.getItem(getIndex(tagAnterior)).isChecked = true
                     fragmentActivo = getFragment(tagAnterior)
+                } else if (supportFragmentManager.backStackEntryCount == 0) {
+                    // volvi al principio de todo, es la pantalla principal
+                    navegacion.menu.getItem(FRAGMENT_PRINCIPAL_INDEX).isChecked = true
+                    fragmentActivo = principalFragment
                 }
             }
         })
@@ -102,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1) {
+        if (supportFragmentManager.backStackEntryCount > 0) {
             // ir al fragmento anterior
             super.onBackPressed()
         } else {

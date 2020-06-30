@@ -112,7 +112,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         presentador.obtenerComentarios(video.id, 0)
         // arrancar fuera de la pantalla
         comentarios_container.animate()
-            .translationY(informacion_container.height.toFloat())
+            .translationY(informacion_video_container.height.toFloat())
     }
 
     override fun mostrarComentarios(comentarios: List<Comentario>) {
@@ -319,7 +319,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 override fun onAnimationRepeat(animation: Animator?) {}
 
                 override fun onAnimationEnd(animation: Animator) {
-                    informacion_container.visibility = View.GONE
+                    informacion_video_container.visibility = View.GONE
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {}
@@ -345,7 +345,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
                 override fun onAnimationCancel(animation: Animator?) {}
 
                 override fun onAnimationStart(animation: Animator?) {
-                    informacion_container.visibility = View.VISIBLE
+                    informacion_video_container.visibility = View.VISIBLE
                 }
             })
     }

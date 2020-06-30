@@ -40,9 +40,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Contacto 1"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:text="Contacto 1"
+                tools:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"
@@ -58,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Contacto 2"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -74,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Contacto 3"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:visibility="gone"
                 tools:visibility="visible"/>
         </LinearLayout>

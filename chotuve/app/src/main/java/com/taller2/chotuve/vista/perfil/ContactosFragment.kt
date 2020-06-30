@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.google.android.material.textview.MaterialTextView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Autor
 import com.taller2.chotuve.presentador.PresentadorContactos
@@ -38,7 +39,8 @@ class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaC
     override fun mostrarContactos(contactos: List<Autor>) {
         // TODO esto se rompe si cambias de pestaña antes de que carge aveces, no puedo determinar bien porque aveces apsa y aveces no
         contactos.forEach { autor: Autor ->
-            val textView = TextView(context)
+            val textView = MaterialTextView(context!!)
+            textView.setTextAppearance(android.R.style.TextAppearance_Material_Body1)
             textView.text = autor.email
             textView.setOnClickListener {
                 irAPerfilDeUsuario(autor.usuarioId)

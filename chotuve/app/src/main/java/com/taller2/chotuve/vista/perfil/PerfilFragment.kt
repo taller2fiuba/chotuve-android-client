@@ -41,6 +41,11 @@ class PerfilFragment(val usuarioId: Long?) : Fragment() {
             )
         viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId), "información")
         viewPagerAdapter.addFragment(VideosFragment.newInstance(usuarioId), "videos")
+        // contactos solo en mi perfil
+        // TODO ver si se pueden ver contactos de contactos o de todos
+        if (usuarioId == null) {
+            viewPagerAdapter.addFragment(ContactosFragment.newInstance(), "contactos")
+        }
         viewPager.adapter = viewPagerAdapter
     }
 

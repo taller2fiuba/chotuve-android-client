@@ -40,7 +40,4 @@ class VideosFragment(val usuarioId: Long?) : Fragment() {
             Toast.makeText(context, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
         }
     }
-
-
-
 }

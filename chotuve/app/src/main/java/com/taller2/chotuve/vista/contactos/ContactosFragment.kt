@@ -55,7 +55,7 @@ class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), Vi
             params.setMargins(8, 8, 0, 8)
             textView.layoutParams = params
             textView.setOnClickListener {
-                irAPerfilDeUsuario(usuario.usuarioId)
+                irAPerfilDeUsuario(usuario.id)
             }
             contactos_container.addView(textView)
         }

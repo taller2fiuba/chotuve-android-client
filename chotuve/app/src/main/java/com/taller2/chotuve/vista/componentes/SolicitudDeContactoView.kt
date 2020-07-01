@@ -32,7 +32,7 @@ class SolicitudDeContactoView(context: Context, vista: VistaSolicitudesDeContact
             aceptar.visibility = View.GONE
         }
         autor_email.setOnClickListener {
-            vista.irAPerfilDeUsuario(solicitud.usuario.usuarioId)
+            vista.irAPerfilDeUsuario(solicitud.usuario.id)
         }
     }
 }

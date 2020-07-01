@@ -1,3 +1,3 @@
 package com.taller2.chotuve.modelo
 
-class Usuario(val usuarioId: Long, val email: String)
+class Usuario(val id: Long, val email: String)

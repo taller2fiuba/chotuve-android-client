@@ -35,4 +35,8 @@ class PresentadorPerfil (private var vista: VistaInformacion?) {
         else
             interactor.cargarPerfil(usuarioId, callback)
     }
+
+    fun enviarSolicitudDeContacto(usuarioId: Long) {
+
+    }
 }

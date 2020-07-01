@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.EstadoContacto
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
@@ -35,10 +36,8 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mostrarCargandoPerfil()
-        if (usuarioId == null) {
-            // Mi perfil
-            boton_agregar_a_contactos.visibility = View.GONE
-        } else {
+        if (usuarioId != null) {
+            // perfil de otro usuario
             editar_informacion.visibility = View.GONE
         }
         presentador.obtenerInformacion(usuarioId)
@@ -74,8 +73,30 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
         editar_informacion.setOnClickListener {
             irAEditarInformacion()
         }
+        if (usuarioId != null) {
+            when (perfilDeUsuario.estadoContacto) {
+                EstadoContacto.ES_CONTACTO -> boton_en_contactos.visibility = View.VISIBLE
+                EstadoContacto.SOLICITUD_ENVIADA -> boton_solitud_enviada.visibility = View.VISIBLE
+                EstadoContacto.SOLICITUD_PENDIENTE -> {
+                    aceptar_rechazar_container.visibility = View.VISIBLE
+                    // TODO falta el id de solicitud para poder aceptar y rechazar
+                }
+                null -> {
+                    boton_agregar_a_contactos.visibility = View.VISIBLE
+                    boton_agregar_a_contactos.setOnClickListener {
+                        enviarSolicitudDeContacto(perfilDeUsuario.usuario.id)
+                        boton_agregar_a_contactos.visibility = View.GONE
+                        boton_solitud_enviada.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
         cargando_barra_progreso.visibility = View.GONE
         perfil_informacion.visibility = View.VISIBLE
+    }
+
+    fun enviarSolicitudDeContacto(usuarioId: Long) {
+        presentador.enviarSolicitudDeContacto(usuarioId)
     }
 
     fun irAEditarInformacion() {

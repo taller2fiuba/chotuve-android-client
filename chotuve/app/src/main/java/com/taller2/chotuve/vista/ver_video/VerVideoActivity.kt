@@ -188,7 +188,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     }
 
     fun clickAutor(view: View) {
-        irAPerfilDeUsuario(video!!.autor.usuarioId)
+        irAPerfilDeUsuario(video!!.autor.id)
     }
 
     fun irAPerfilDeUsuario(usuarioId: Long) {

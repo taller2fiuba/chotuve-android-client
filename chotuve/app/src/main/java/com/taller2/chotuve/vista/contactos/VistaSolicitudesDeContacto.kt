@@ -6,5 +6,6 @@ interface VistaSolicitudesDeContacto {
     fun mostrarSolicitudes(solicitudes: List<SolicitudDeContacto>)
     fun rechazarSolicitud(solicitudId: Long)
     fun aceptarSolicitud(solicitudId: Long)
+    fun irAPerfilDeUsuario(usuarioId: Long)
     fun setErrorRed()
 }

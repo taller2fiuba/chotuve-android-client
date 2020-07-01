@@ -11,6 +11,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.SolicitudDeContacto
 import com.taller2.chotuve.presentador.PresentadorSolicitudesDeContacto
 import com.taller2.chotuve.vista.componentes.SolicitudDeContactoView
+import com.taller2.chotuve.vista.perfil.PerfilFragment
 import kotlinx.android.synthetic.main.fragment_solicitudes_de_contacto.*
 
 class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
@@ -43,6 +44,15 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
 
     override fun aceptarSolicitud(solicitudId: Long) {
         presentador.aceptarSolicitud(solicitudId)
+    }
+
+    override fun irAPerfilDeUsuario(usuarioId: Long) {
+        val newFragment =
+            PerfilFragment(usuarioId)
+        val transicion = fragmentManager!!.beginTransaction()
+        transicion.replace(R.id.container_navegacion, newFragment)
+        transicion.addToBackStack(null)
+        transicion.commit()
     }
 
     override fun setErrorRed() {

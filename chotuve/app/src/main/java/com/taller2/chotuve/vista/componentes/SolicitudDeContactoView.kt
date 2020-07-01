@@ -31,5 +31,8 @@ class SolicitudDeContactoView(context: Context, vista: VistaSolicitudesDeContact
             rechazar.visibility = View.GONE
             aceptar.visibility = View.GONE
         }
+        autor_email.setOnClickListener {
+            vista.irAPerfilDeUsuario(solicitud.autor.usuarioId)
+        }
     }
 }

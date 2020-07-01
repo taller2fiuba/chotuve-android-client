@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.google.android.material.textview.MaterialTextView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Autor
@@ -16,10 +15,10 @@ import com.taller2.chotuve.presentador.PresentadorContactos
 import com.taller2.chotuve.vista.perfil.PerfilFragment
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
-class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaContactos {
+class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), VistaContactos {
     companion object {
-        fun newInstance(perfilFragment: PerfilFragment): ContactosFragment =
-            ContactosFragment(perfilFragment)
+        fun newInstance(fragmentAnterior: Fragment): ContactosFragment =
+            ContactosFragment(fragmentAnterior)
     }
 
     private val presentador = PresentadorContactos(this)
@@ -35,8 +34,8 @@ class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaC
         super.onViewCreated(view, savedInstanceState)
         boton_ver_solicitudes.setOnClickListener {
             val newFragment = SolicitudesDeContactoFragment()
-            val transicion = activity!!.supportFragmentManager.beginTransaction().hide(perfilFragment)
-            transicion.add(R.id.container_navegacion, newFragment)
+            val transicion = activity!!.supportFragmentManager.beginTransaction()
+            transicion.replace(R.id.container_navegacion, newFragment)
             transicion.addToBackStack(null)
             transicion.commit()
         }
@@ -44,9 +43,9 @@ class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaC
     }
 
     override fun mostrarContactos(contactos: List<Autor>) {
-        // TODO esto se rompe si cambias de pestaña antes de que carge aveces, no puedo determinar bien porque aveces apsa y aveces no
         contactos.forEach { autor: Autor ->
             val textView = MaterialTextView(context!!)
+            // TODO este estilo no esta bien, pasar a component
             textView.setTextAppearance(android.R.style.TextAppearance_Material_Body1)
             textView.text = autor.email
             val params = LinearLayout.LayoutParams(
@@ -67,7 +66,7 @@ class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaC
     fun irAPerfilDeUsuario(usuarioId: Long) {
         val newFragment =
             PerfilFragment(usuarioId)
-        val transicion = activity!!.supportFragmentManager.beginTransaction().hide(perfilFragment)
+        val transicion = activity!!.supportFragmentManager.beginTransaction().hide(fragmentAnterior)
         transicion.add(R.id.container_navegacion, newFragment)
         transicion.addToBackStack(null)
         transicion.commit()

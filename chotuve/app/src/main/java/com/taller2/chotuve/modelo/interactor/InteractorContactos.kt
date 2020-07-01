@@ -2,6 +2,8 @@ package com.taller2.chotuve.modelo.interactor
 
 import android.util.Log
 import com.taller2.chotuve.modelo.*
+import com.taller2.chotuve.modelo.data.ResponderSolicitudDeContactoData
+import com.taller2.chotuve.modelo.data.RespuestaSolicitudDeContacto
 import com.taller2.chotuve.modelo.data.SolicitudDeContactoData
 import retrofit2.Callback
 import okhttp3.ResponseBody
@@ -22,6 +24,10 @@ class InteractorContactos {
     }
 
     interface CallbackEnviarSolicitudDeContacto {
+        fun onErrorRed(mensaje: String?)
+    }
+
+    interface CallbackResponderSolicitudesDeContacto {
         fun onErrorRed(mensaje: String?)
     }
 
@@ -88,6 +94,28 @@ class InteractorContactos {
 
     fun enviarSolicitudDeContacto(usuarioId: Long, callback: CallbackEnviarSolicitudDeContacto) {
         chotuveClient.enviarSolicitudDeContacto(SolicitudDeContactoData(usuarioId)).enqueue(
+            object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("InteractorContactos", "Respuesta obtenida: " + response.code())
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("InteractorContactos", "Error: " + t.message)
+                    callback.onErrorRed(t.message)
+                }
+            }
+        )
+    }
+
+    fun rechazarSolicitud(id: Long, callback: CallbackResponderSolicitudesDeContacto) {
+        responderSolicitud(id, RespuestaSolicitudDeContacto.RECHAZAR, callback)
+    }
+
+    fun aceptarSolicitud(id: Long, callback: CallbackResponderSolicitudesDeContacto) {
+        responderSolicitud(id, RespuestaSolicitudDeContacto.ACEPTAR, callback)
+    }
+
+    private fun responderSolicitud(id: Long, respuesta: RespuestaSolicitudDeContacto, callback: CallbackResponderSolicitudesDeContacto) {
+        chotuveClient.responderSolicitudDeContacto(id, ResponderSolicitudDeContactoData(respuesta.value)).enqueue(
             object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     Log.d("InteractorContactos", "Respuesta obtenida: " + response.code())

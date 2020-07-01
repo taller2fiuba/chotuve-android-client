@@ -84,4 +84,7 @@ interface AppServerService {
 
     @POST("/usuario/solicitud-contacto")
     fun enviarSolicitudDeContacto(@Body data: SolicitudDeContactoData) : Call<ResponseBody>
+
+    @PUT("/usuario/solicitud-contacto/{id}")
+    fun responderSolicitudDeContacto(@Path("id") id : Long, @Body data: ResponderSolicitudDeContactoData) : Call<ResponseBody>
 }

@@ -19,8 +19,19 @@ class PresentadorSolicitudesDeContacto(private val vista: VistaSolicitudesDeCont
     }
 
     fun rechazarSolicitud(solicitudId: Long) {
+        interactor.rechazarSolicitud(solicitudId, object : InteractorContactos.CallbackResponderSolicitudesDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
+
     }
 
     fun aceptarSolicitud(solicitudId: Long) {
+        interactor.aceptarSolicitud(solicitudId, object : InteractorContactos.CallbackResponderSolicitudesDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
     }
 }

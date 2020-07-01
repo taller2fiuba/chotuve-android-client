@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.perfil
+package com.taller2.chotuve.vista.contactos
 
 import com.taller2.chotuve.modelo.Autor
 

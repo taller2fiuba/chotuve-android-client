@@ -2,7 +2,7 @@ package com.taller2.chotuve.presentador
 
 import android.os.Handler
 import com.taller2.chotuve.modelo.Autor
-import com.taller2.chotuve.vista.perfil.VistaContactos
+import com.taller2.chotuve.vista.contactos.VistaContactos
 
 class PresentadorContactos(private val vista: VistaContactos) {
 

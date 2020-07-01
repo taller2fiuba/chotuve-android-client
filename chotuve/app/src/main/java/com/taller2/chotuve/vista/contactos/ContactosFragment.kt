@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.perfil
+package com.taller2.chotuve.vista.contactos
 
 import android.os.Bundle
 import android.util.Log
@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.textview.MaterialTextView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Autor
 import com.taller2.chotuve.presentador.PresentadorContactos
+import com.taller2.chotuve.vista.perfil.PerfilFragment
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
 class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaContactos {
@@ -33,6 +33,13 @@ class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        boton_ver_solicitudes.setOnClickListener {
+            val newFragment = SolicitudesDeContactoFragment()
+            val transicion = activity!!.supportFragmentManager.beginTransaction().hide(perfilFragment)
+            transicion.add(R.id.container_navegacion, newFragment)
+            transicion.addToBackStack(null)
+            transicion.commit()
+        }
         presentador.obtenerContactos()
     }
 
@@ -42,26 +49,24 @@ class ContactosFragment(val perfilFragment: PerfilFragment) : Fragment(), VistaC
             val textView = MaterialTextView(context!!)
             textView.setTextAppearance(android.R.style.TextAppearance_Material_Body1)
             textView.text = autor.email
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(8, 8, 0, 8)
+            textView.layoutParams = params
             textView.setOnClickListener {
                 irAPerfilDeUsuario(autor.usuarioId)
             }
             contactos_container.addView(textView)
-            val divider = View(context)
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                1
-            )
-            params.setMargins(0, 8, 0, 8)
-            divider.layoutParams = params
-            divider.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.darker_gray))
-            contactos_container.addView(divider)
         }
         cargando_contactos_barra_progreso.visibility = View.GONE
         contactos_container.visibility = View.VISIBLE
     }
 
     fun irAPerfilDeUsuario(usuarioId: Long) {
-        val newFragment = PerfilFragment(usuarioId)
+        val newFragment =
+            PerfilFragment(usuarioId)
         val transicion = activity!!.supportFragmentManager.beginTransaction().hide(perfilFragment)
         transicion.add(R.id.container_navegacion, newFragment)
         transicion.addToBackStack(null)

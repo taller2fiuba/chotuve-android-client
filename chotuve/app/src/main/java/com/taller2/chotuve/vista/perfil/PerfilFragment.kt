@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.taller2.chotuve.R
+import com.taller2.chotuve.vista.contactos.ContactosFragment
 
 class PerfilFragment(val usuarioId: Long?) : Fragment() {
     companion object {

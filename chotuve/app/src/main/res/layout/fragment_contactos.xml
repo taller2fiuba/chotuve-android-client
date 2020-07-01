@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vista.perfil.ContactosFragment">
+    tools:context=".vista.contactos.ContactosFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,22 +37,50 @@
             android:paddingEnd="16dp"
             android:paddingTop="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/boton_ver_solicitudes"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:visibility="gone"
-                tools:text="Contacto 1"
-                tools:visibility="visible" />
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+                    android:text="Solicitudes de contacto" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
+                    android:text="Aprobá o rechazá tus solicitudes" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+                android:text="Todos tus contactos" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:text="Contacto 1"
+                tools:visibility="visible"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -61,16 +89,10 @@
                 tools:text="Contacto 2"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:visibility="gone"
-                tools:visibility="visible"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
+                tools:visibility="visible"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:visibility="gone"
-                tools:visibility="visible"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +100,10 @@
                 tools:text="Contacto 3"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:visibility="visible"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
         </LinearLayout>
     </ScrollView>
 

@@ -61,6 +61,9 @@ class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), Vi
         }
         cargando_contactos_barra_progreso.visibility = View.GONE
         contactos_container.visibility = View.VISIBLE
+        if (contactos.isEmpty()) {
+            aun_no_tenes_contactos.visibility = View.VISIBLE
+        }
     }
 
     fun irAPerfilDeUsuario(usuarioId: Long) {

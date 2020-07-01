@@ -78,4 +78,7 @@ interface AppServerService {
 
     @PUT("/usuario/perfil")
     fun editarPerfil(@Body perfil: Perfil) : Call<ResponseBody>
+
+    @GET("/usuario/contacto")
+    fun obtenerContactos() : Call<ResponseBody>
 }

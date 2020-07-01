@@ -72,6 +72,18 @@
                 android:text="Todos tus contactos" />
 
             <TextView
+                android:id="@+id/aun_no_tenes_contactos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+                android:visibility="gone"
+                android:text="Aún no tenes contactos..."
+                tools:visibility="visible"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"

@@ -43,11 +43,6 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
         presentador.obtenerInformacion(usuarioId)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presentador.onDestroy()
-    }
-
     fun mostrarCargandoPerfil() {
         cargando_barra_progreso.visibility = View.VISIBLE
     }

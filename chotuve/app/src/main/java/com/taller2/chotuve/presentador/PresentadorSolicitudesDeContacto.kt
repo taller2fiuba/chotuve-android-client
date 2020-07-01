@@ -1,21 +1,21 @@
 package com.taller2.chotuve.presentador
 
-import android.os.Handler
-import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.modelo.SolicitudDeContacto
+import com.taller2.chotuve.modelo.interactor.InteractorContactos
 import com.taller2.chotuve.vista.contactos.VistaSolicitudesDeContacto
 
 class PresentadorSolicitudesDeContacto(private val vista: VistaSolicitudesDeContacto) {
+    private val interactor = InteractorContactos()
 
     fun obtenerSolicitudes() {
-        val handler = Handler()
-        handler.postDelayed(Runnable {
-            val solicitudes = listOf<SolicitudDeContacto>(
-                SolicitudDeContacto(1, Usuario(1, "perrito")),
-                SolicitudDeContacto(2, Usuario(2, "gatito"))
-            )
-            vista.mostrarSolicitudes(solicitudes)
-        }, 1000)
+        interactor.obtenerSolicitudesDeContacto(object : InteractorContactos.CallbackObtenerSolicitudesDeContacto {
+            override fun onObtenerExitoso(solicitudes: List<SolicitudDeContacto>) {
+                vista.mostrarSolicitudes(solicitudes)
+            }
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
     }
 
     fun rechazarSolicitud(solicitudId: Long) {

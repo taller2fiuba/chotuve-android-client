@@ -1,11 +1,8 @@
 package com.taller2.chotuve.modelo
 
-import com.taller2.chotuve.modelo.data.InfoInicioSesion
-import com.taller2.chotuve.modelo.data.InfoRegistro
+import com.taller2.chotuve.modelo.data.*
 import com.taller2.chotuve.modelo.data.Reaccion
-import com.taller2.chotuve.modelo.data.Perfil
 import com.taller2.chotuve.modelo.data.Video
-import com.taller2.chotuve.modelo.data.ComentarioData
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -81,4 +78,10 @@ interface AppServerService {
 
     @GET("/usuario/contacto")
     fun obtenerContactos() : Call<ResponseBody>
+
+    @GET("/usuario/solicitud-contacto")
+    fun obtenerSolicitudesDeContacto() : Call<ResponseBody>
+
+    @POST("/usuario/solicitud-contacto")
+    fun enviarSolicitudDeContacto(@Body data: SolicitudDeContactoData) : Call<ResponseBody>
 }

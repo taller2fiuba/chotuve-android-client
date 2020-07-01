@@ -36,6 +36,9 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
         }
         cargando_solicitudes_barra_progreso.visibility = View.GONE
         solicitudes_container.visibility = View.VISIBLE
+        if (solicitudes.isEmpty()) {
+            sin_solicitudes.visibility = View.VISIBLE
+        }
     }
 
     override fun rechazarSolicitud(solicitudId: Long) {

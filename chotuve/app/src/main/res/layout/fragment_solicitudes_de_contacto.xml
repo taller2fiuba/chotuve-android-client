@@ -32,9 +32,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
+            tools:visibility="visible"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:paddingTop="16dp">
+
+            <TextView
+                android:id="@+id/sin_solicitudes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+                android:visibility="gone"
+                android:text="Sin solicitudes de contacto"
+                tools:visibility="visible"/>
         </LinearLayout>
     </ScrollView>
 

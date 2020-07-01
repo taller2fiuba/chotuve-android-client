@@ -74,15 +74,21 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
                 EstadoContacto.SOLICITUD_ENVIADA -> boton_solitud_enviada.visibility = View.VISIBLE
                 EstadoContacto.SOLICITUD_PENDIENTE -> {
                     aceptar_rechazar_container.visibility = View.VISIBLE
-                    // TODO falta el id de solicitud para poder aceptar y rechazar
+                    boton_aceptar.setOnClickListener {
+                        presentador.aceptarSolicitudDeContacto(perfilDeUsuario.solicitudId!!)
+                        boton_aceptar.visibility = View.GONE
+                        boton_rechazar.visibility = View.GONE
+                        boton_en_contactos.visibility = View.VISIBLE
+                    }
+                    boton_rechazar.setOnClickListener {
+                        presentador.rechazarSolicitudDeContacto(perfilDeUsuario.solicitudId!!)
+                        boton_aceptar.visibility = View.GONE
+                        boton_rechazar.visibility = View.GONE
+                        configurarBotonAgregarAContactos(perfilDeUsuario)
+                    }
                 }
                 null -> {
-                    boton_agregar_a_contactos.visibility = View.VISIBLE
-                    boton_agregar_a_contactos.setOnClickListener {
-                        enviarSolicitudDeContacto(perfilDeUsuario.usuario.id)
-                        boton_agregar_a_contactos.visibility = View.GONE
-                        boton_solitud_enviada.visibility = View.VISIBLE
-                    }
+                    configurarBotonAgregarAContactos(perfilDeUsuario)
                 }
             }
         }
@@ -90,8 +96,13 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
         perfil_informacion.visibility = View.VISIBLE
     }
 
-    fun enviarSolicitudDeContacto(usuarioId: Long) {
-        presentador.enviarSolicitudDeContacto(usuarioId)
+    private fun configurarBotonAgregarAContactos(perfilDeUsuario: PerfilDeUsuario) {
+        boton_agregar_a_contactos.visibility = View.VISIBLE
+        boton_agregar_a_contactos.setOnClickListener {
+            presentador.enviarSolicitudDeContacto(perfilDeUsuario.usuario.id)
+            boton_agregar_a_contactos.visibility = View.GONE
+            boton_solitud_enviada.visibility = View.VISIBLE
+        }
     }
 
     fun irAEditarInformacion() {

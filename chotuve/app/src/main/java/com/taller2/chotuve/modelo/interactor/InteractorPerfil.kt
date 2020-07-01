@@ -6,6 +6,7 @@ import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.modelo.Usuario
 import retrofit2.Callback
 import okhttp3.ResponseBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -23,7 +24,33 @@ class InteractorPerfil {
         chotuveClient.obtenerPerfilUsuario(usuarioId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 when (response.code()) {
-                    200 -> callbackCargarPerfil.onExito(deserializar(response.body()!!.string()!!))
+                    200 -> {
+                        val perfil = deserializar(response.body()!!.string()!!)
+                        if (perfil.estadoContacto?.value == EstadoContacto.SOLICITUD_PENDIENTE.value) {
+                            chotuveClient.obtenerSolicitudesDeContacto().enqueue(object : Callback<ResponseBody> {
+                                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                    when (response.code()) {
+                                        200 -> {
+                                            val json = JSONArray(response.body()!!.string())
+                                            for (i in 0 until json.length()) {
+                                                val objeto = json.getJSONObject(i)
+                                                if (objeto.getLong("usuario_id") == usuarioId) {
+                                                    perfil.solicitudId = objeto.getLong("id")
+                                                    callbackCargarPerfil.onExito(perfil)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                    callbackCargarPerfil.onErrorRed()
+                                }
+                            })
+                        } else {
+                            callbackCargarPerfil.onExito(perfil)
+                        }
+                    }
                     400, 401, 404 -> callbackCargarPerfil.onError()
                 }
             }
@@ -59,7 +86,8 @@ class InteractorPerfil {
             getString(data, "telefono"),
             getString(data, "direccion"),
             getString(data, "foto"),
-            if (estadoContacto != null) EstadoContacto.getByValue(estadoContacto) else null
+            if (estadoContacto != null) EstadoContacto.getByValue(estadoContacto) else null,
+            null
         )
     }
 

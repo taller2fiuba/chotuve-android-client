@@ -41,4 +41,21 @@ class PresentadorPerfil (private var vista: VistaInformacion) {
             }
         })
     }
+
+    fun rechazarSolicitudDeContacto(solicitudId: Long) {
+        interactorContactos.rechazarSolicitud(solicitudId, object : InteractorContactos.CallbackResponderSolicitudesDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
+
+    }
+
+    fun aceptarSolicitudDeContacto(solicitudId: Long) {
+        interactorContactos.aceptarSolicitud(solicitudId, object : InteractorContactos.CallbackResponderSolicitudesDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
+    }
 }

@@ -1,8 +1,7 @@
 package com.taller2.chotuve.presentador
 
-import android.os.Handler
 import android.util.Log
-import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.modelo.interactor.InteractorPerfil
 import com.taller2.chotuve.vista.perfil.VistaInformacion
 
@@ -16,8 +15,8 @@ class PresentadorPerfil (private var vista: VistaInformacion?) {
 
     fun obtenerInformacion(usuarioId: Long?) {
         val callback = object : InteractorPerfil.CallbackCargarPerfil {
-            override fun onExito(usuario: Usuario) {
-                vista?.mostrarPerfil(usuario)
+            override fun onExito(perfilDeUsuario: PerfilDeUsuario) {
+                vista?.mostrarPerfil(perfilDeUsuario)
             }
 
             override fun onError() {

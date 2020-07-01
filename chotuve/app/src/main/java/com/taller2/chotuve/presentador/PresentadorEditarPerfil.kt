@@ -1,9 +1,7 @@
 package com.taller2.chotuve.presentador
 
 import android.net.Uri
-import android.os.Handler
 import android.util.Log
-import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.modelo.data.Perfil
 import com.taller2.chotuve.modelo.interactor.InteractorEditarPerfil
 import com.taller2.chotuve.modelo.interactor.InteractorFirebase

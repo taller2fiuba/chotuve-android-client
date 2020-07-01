@@ -2,7 +2,6 @@ package com.taller2.chotuve.vista.ver_video
 
 import android.animation.Animator
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
@@ -12,7 +11,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +25,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Autor
+import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.modelo.Comentario
 import com.taller2.chotuve.modelo.Reaccion
 import com.taller2.chotuve.modelo.Video
@@ -368,7 +366,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         comentario.editText?.setText("")
         crear_comentario_boton.visibility = View.VISIBLE
         creando_comentario_barra_progreso.visibility = View.GONE
-        adapter.add(0, Comentario(Autor(0, "tú"), "Ahora mismo", nuevoComentario))
+        adapter.add(0, Comentario(Usuario(0, "tú"), "Ahora mismo", nuevoComentario))
         comentarios_recycler_view.smoothScrollToPosition(0)
 
     }

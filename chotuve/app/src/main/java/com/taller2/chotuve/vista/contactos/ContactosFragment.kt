@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.android.material.textview.MaterialTextView
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Autor
+import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
 import com.taller2.chotuve.vista.perfil.PerfilFragment
 import kotlinx.android.synthetic.main.fragment_contactos.*
@@ -42,12 +42,12 @@ class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), Vi
         presentador.obtenerContactos()
     }
 
-    override fun mostrarContactos(contactos: List<Autor>) {
-        contactos.forEach { autor: Autor ->
+    override fun mostrarContactos(contactos: List<Usuario>) {
+        contactos.forEach { usuario: Usuario ->
             val textView = MaterialTextView(context!!)
             // TODO este estilo no esta bien, pasar a component
             textView.setTextAppearance(android.R.style.TextAppearance_Material_Body1)
-            textView.text = autor.email
+            textView.text = usuario.email
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -55,7 +55,7 @@ class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), Vi
             params.setMargins(8, 8, 0, 8)
             textView.layoutParams = params
             textView.setOnClickListener {
-                irAPerfilDeUsuario(autor.usuarioId)
+                irAPerfilDeUsuario(usuario.usuarioId)
             }
             contactos_container.addView(textView)
         }

@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
@@ -23,7 +23,7 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
     private val AUN_NO_COMPLETADO = "Aún no completado"
 
     private val presentador = PresentadorPerfil(this)
-    private var usuario: Usuario? = null
+    private var perfilDeUsuario: PerfilDeUsuario? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,20 +53,20 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
         cargando_barra_progreso.visibility = View.VISIBLE
     }
 
-    override fun mostrarPerfil(usuario: Usuario) {
-        this.usuario = usuario
-        if (usuario.nombre != null && usuario.apellido != null) {
-            nombre_y_apellido.text = getString(R.string.nombre_y_apellido, usuario.nombre, usuario.apellido)
+    override fun mostrarPerfil(perfilDeUsuario: PerfilDeUsuario) {
+        this.perfilDeUsuario = perfilDeUsuario
+        if (perfilDeUsuario.nombre != null && perfilDeUsuario.apellido != null) {
+            nombre_y_apellido.text = getString(R.string.nombre_y_apellido, perfilDeUsuario.nombre, perfilDeUsuario.apellido)
         } else {
             nombre_y_apellido.text = AUN_NO_COMPLETADO
         }
-        email.text = usuario.email
-        telefono.text = usuario.telefono ?: AUN_NO_COMPLETADO
-        direccion.text = usuario.direccion ?: AUN_NO_COMPLETADO
-        if (usuario.fotoPerfilUri != null) {
+        email.text = perfilDeUsuario.usuario.email
+        telefono.text = perfilDeUsuario.telefono ?: AUN_NO_COMPLETADO
+        direccion.text = perfilDeUsuario.direccion ?: AUN_NO_COMPLETADO
+        if (perfilDeUsuario.fotoPerfilUri != null) {
             Glide
                 .with(this)
-                .load(usuario.fotoPerfilUri)
+                .load(perfilDeUsuario.fotoPerfilUri)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .into(imagen_perfil)
@@ -79,7 +79,7 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
     }
 
     fun irAEditarInformacion() {
-        val newFragment = EditarInformacionFragment(usuario!!)
+        val newFragment = EditarInformacionFragment(perfilDeUsuario!!)
         val transaction = activity!!.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container_navegacion, newFragment)
         transaction.addToBackStack(null)

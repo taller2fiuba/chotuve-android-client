@@ -17,7 +17,7 @@ class SolicitudDeContactoView(context: Context, vista: VistaSolicitudesDeContact
     init {
         View.inflate(context, R.layout.solicitud_de_contacto, this)
         autor_email = findViewById<View>(R.id.autor_solicitud_contacto) as TextView
-        autor_email.text = solicitud.autor.email
+        autor_email.text = solicitud.usuario.email
         rechazar = findViewById<View>(R.id.rechazar_solicitud_contacto) as Button
         aceptar = findViewById<View>(R.id.aceptar_solicitud_contacto) as Button
 
@@ -32,7 +32,7 @@ class SolicitudDeContactoView(context: Context, vista: VistaSolicitudesDeContact
             aceptar.visibility = View.GONE
         }
         autor_email.setOnClickListener {
-            vista.irAPerfilDeUsuario(solicitud.autor.usuarioId)
+            vista.irAPerfilDeUsuario(solicitud.usuario.usuarioId)
         }
     }
 }

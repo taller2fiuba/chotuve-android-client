@@ -12,11 +12,11 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorEditarPerfil
 import kotlinx.android.synthetic.main.fragment_editar_informacion.*
 
-class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarInformacion {
+class EditarInformacionFragment(val perfilDeUsuario: PerfilDeUsuario) : Fragment(), VistaEditarInformacion {
     private val presentador = PresentadorEditarPerfil(this)
 
     override fun onCreateView(
@@ -34,14 +34,14 @@ class EditarInformacionFragment(val usuario: Usuario) : Fragment(), VistaEditarI
         imagen_perfil.setOnClickListener {
             elegirFotoPerfil()
         }
-        nombre.editText?.setText(usuario.nombre)
-        apellido.editText?.setText(usuario.apellido)
-        telefono.editText?.setText(usuario.telefono)
-        direccion.editText?.setText(usuario.direccion)
-        if (usuario.fotoPerfilUri != null) {
+        nombre.editText?.setText(perfilDeUsuario.nombre)
+        apellido.editText?.setText(perfilDeUsuario.apellido)
+        telefono.editText?.setText(perfilDeUsuario.telefono)
+        direccion.editText?.setText(perfilDeUsuario.direccion)
+        if (perfilDeUsuario.fotoPerfilUri != null) {
             Glide
                 .with(this)
-                .load(usuario.fotoPerfilUri)
+                .load(perfilDeUsuario.fotoPerfilUri)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .into(imagen_perfil)

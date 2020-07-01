@@ -1,6 +1,7 @@
 package com.taller2.chotuve.modelo.interactor
 
 import com.taller2.chotuve.modelo.Modelo
+import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.modelo.Usuario
 import retrofit2.Callback
 import okhttp3.ResponseBody
@@ -10,7 +11,7 @@ import retrofit2.Response
 
 class InteractorPerfil {
     interface CallbackCargarPerfil {
-        fun onExito(usuario: Usuario)
+        fun onExito(perfilDeUsuario: PerfilDeUsuario)
         fun onError()
         fun onErrorRed()
     }
@@ -47,13 +48,12 @@ class InteractorPerfil {
         })
     }
 
-    private fun deserializar(body: String): Usuario {
+    private fun deserializar(body: String): PerfilDeUsuario {
         val data = JSONObject(body)
-        return Usuario(
-            data.getLong("id"),
+        return PerfilDeUsuario(
+            Usuario(data.getLong("id"), getString(data, "email")!!),
             getString(data, "nombre"),
             getString(data, "apellido"),
-            getString(data, "email")!!,
             getString(data, "telefono"),
             getString(data, "direccion"),
             getString(data, "foto")

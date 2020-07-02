@@ -11,8 +11,6 @@ import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
 import com.taller2.chotuve.vista.chats.ChatsFragment
 import com.taller2.chotuve.vista.notificaciones.NotificacionesFragment
-import com.taller2.chotuve.vista.perfil.PerfilFragment
-import com.taller2.chotuve.vista.principal.PrincipalFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     private val FRAGMENT_PERFIL_INDEX =  3
 
     private lateinit var navegacion : BottomNavigationView
-    private val principalFragment: Fragment = PrincipalFragment.newInstance()
+    private val principalFragment: Fragment = SeccionFragment.principal()
     private val chatsFragment: Fragment = ChatsFragment.newInstance()
     private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
-    private val perfilFragment: Fragment = PerfilFragment.newInstance(null)
+    private val perfilFragment: Fragment = SeccionFragment.perfil(null)
     private var fragmentActivo : Fragment = principalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {

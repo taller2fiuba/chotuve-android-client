@@ -13,7 +13,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
-import com.taller2.chotuve.vista.perfil.PerfilFragment
+import com.taller2.chotuve.vista.SeccionFragment
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
 class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaContactos {
@@ -68,8 +68,7 @@ class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaCont
     }
 
     fun irAPerfilDeUsuario(usuarioId: Long) {
-        val newFragment =
-            PerfilFragment(usuarioId)
+        val newFragment = SeccionFragment.perfil(usuarioId)
         val transicion = fm.beginTransaction()
         transicion.replace(R.id.fragment_container, newFragment)
         transicion.addToBackStack(null)

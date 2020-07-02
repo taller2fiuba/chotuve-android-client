@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.SolicitudDeContacto
 import com.taller2.chotuve.presentador.PresentadorSolicitudesDeContacto
+import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.SolicitudDeContactoView
-import com.taller2.chotuve.vista.perfil.PerfilFragment
 import kotlinx.android.synthetic.main.fragment_solicitudes_de_contacto.*
 
 class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
@@ -50,8 +50,7 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
     }
 
     override fun irAPerfilDeUsuario(usuarioId: Long) {
-        val newFragment =
-            PerfilFragment(usuarioId)
+        val newFragment = SeccionFragment.perfil(usuarioId)
         val transicion = fragmentManager!!.beginTransaction()
         transicion.replace(R.id.fragment_container, newFragment)
         transicion.addToBackStack(null)

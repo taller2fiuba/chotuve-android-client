@@ -12,12 +12,7 @@ import com.google.android.material.tabs.TabLayout
 import com.taller2.chotuve.R
 import com.taller2.chotuve.vista.contactos.ContactosFragment
 
-class VerPerfilFragment(val usuarioId: Long?) : Fragment() {
-    companion object {
-        fun newInstance(usuarioId: Long?): VerPerfilFragment =
-            VerPerfilFragment(usuarioId)
-    }
-
+class PerfilViewPagerFragment(val usuarioId: Long?) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

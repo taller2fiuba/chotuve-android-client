@@ -16,7 +16,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
 import com.taller2.chotuve.presentador.PresentadorPrincipal
-import com.taller2.chotuve.vista.perfil.PerfilFragment
+import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.scroll_infinito.ScrollInfinitoListener
 import com.taller2.chotuve.vista.scroll_infinito.VideosAdapter
 import com.taller2.chotuve.vista.ver_video.USUARIO_ID_KEY
@@ -109,8 +109,8 @@ class MuroDeVideosFragment : Fragment(), VistaPrincipal {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            val usuarioId = data!!.getStringExtra(USUARIO_ID_KEY)
-            val newFragment = PerfilFragment(usuarioId!!.toLong())
+            val usuarioId = data!!.getStringExtra(USUARIO_ID_KEY)!!.toLong()
+            val newFragment = SeccionFragment.perfil(usuarioId)
             val transaction = fragmentManager!!.beginTransaction()
             transaction.replace(R.id.fragment_container, newFragment)
             transaction.addToBackStack(null)

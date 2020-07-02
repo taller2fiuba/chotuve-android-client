@@ -9,7 +9,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.vista.perfil.PerfilViewPagerFragment
 import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
 
-open class SeccionFragment(val primerFragment: Fragment) : Fragment() {
+class SeccionFragment(val primerFragment: Fragment) : Fragment() {
     companion object {
         fun perfil(usuarioId: Long?): SeccionFragment =
             SeccionFragment(PerfilViewPagerFragment(usuarioId))

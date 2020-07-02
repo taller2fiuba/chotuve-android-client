@@ -14,6 +14,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
 import com.taller2.chotuve.vista.SeccionFragment
+import com.taller2.chotuve.vista.componentes.UsuarioView
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
 class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaContactos {
@@ -45,23 +46,20 @@ class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaCont
 
     override fun mostrarContactos(contactos: List<Usuario>) {
         contactos.forEach { usuario: Usuario ->
-            val textView = MaterialTextView(context!!)
-            // TODO este estilo no esta bien, pasar a component
-            textView.setTextAppearance(android.R.style.TextAppearance_Material_Body1)
-            textView.text = usuario.email
+            val usuarioView = UsuarioView(context!!, usuario)
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             params.setMargins(8, 8, 0, 8)
-            textView.layoutParams = params
-            textView.setOnClickListener {
+            usuarioView.layoutParams = params
+            usuarioView.setOnClickListener {
                 irAPerfilDeUsuario(usuario.id)
             }
-            contactos_container.addView(textView)
+            contactos_container.addView(usuarioView)
         }
         cargando_contactos_barra_progreso.visibility = View.GONE
-        contactos_container.visibility = View.VISIBLE
+        contactos_view.visibility = View.VISIBLE
         if (contactos.isEmpty()) {
             aun_no_tenes_contactos.visibility = View.VISIBLE
         }

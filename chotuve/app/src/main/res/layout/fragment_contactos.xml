@@ -23,16 +23,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
+        android:id="@+id/contactos_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
-            android:id="@+id/contactos_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:paddingTop="16dp">
@@ -71,51 +71,26 @@
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
                 android:text="Todos tus contactos" />
 
-            <TextView
-                android:id="@+id/aun_no_tenes_contactos"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/contactos_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
-                android:visibility="gone"
-                android:text="Aún no tenes contactos..."
-                tools:visibility="visible"
+                android:orientation="vertical"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:visibility="gone"
-                tools:text="Contacto 1"
-                tools:visibility="visible"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Contacto 2"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Contacto 3"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:id="@+id/aun_no_tenes_contactos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:visibility="gone"
+                    android:text="Aún no tenes contactos..."
+                    tools:visibility="visible"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.textview.MaterialTextView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
@@ -15,10 +16,10 @@ import com.taller2.chotuve.presentador.PresentadorContactos
 import com.taller2.chotuve.vista.perfil.PerfilFragment
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
-class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), VistaContactos {
+class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaContactos {
     companion object {
-        fun newInstance(fragmentAnterior: Fragment): ContactosFragment =
-            ContactosFragment(fragmentAnterior)
+        fun newInstance(fm: FragmentManager): ContactosFragment =
+            ContactosFragment(fm)
     }
 
     private val presentador = PresentadorContactos(this)
@@ -34,8 +35,8 @@ class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), Vi
         super.onViewCreated(view, savedInstanceState)
         boton_ver_solicitudes.setOnClickListener {
             val newFragment = SolicitudesDeContactoFragment()
-            val transicion = activity!!.supportFragmentManager.beginTransaction()
-            transicion.replace(R.id.container_navegacion, newFragment)
+            val transicion = fm.beginTransaction()
+            transicion.replace(R.id.fragment_container, newFragment)
             transicion.addToBackStack(null)
             transicion.commit()
         }
@@ -69,8 +70,8 @@ class ContactosFragment(private val fragmentAnterior: Fragment) : Fragment(), Vi
     fun irAPerfilDeUsuario(usuarioId: Long) {
         val newFragment =
             PerfilFragment(usuarioId)
-        val transicion = activity!!.supportFragmentManager.beginTransaction().hide(fragmentAnterior)
-        transicion.add(R.id.container_navegacion, newFragment)
+        val transicion = fm.beginTransaction()
+        transicion.replace(R.id.fragment_container, newFragment)
         transicion.addToBackStack(null)
         transicion.commit()
     }

@@ -53,7 +53,7 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
         val newFragment =
             PerfilFragment(usuarioId)
         val transicion = fragmentManager!!.beginTransaction()
-        transicion.replace(R.id.container_navegacion, newFragment)
+        transicion.replace(R.id.fragment_container, newFragment)
         transicion.addToBackStack(null)
         transicion.commit()
     }

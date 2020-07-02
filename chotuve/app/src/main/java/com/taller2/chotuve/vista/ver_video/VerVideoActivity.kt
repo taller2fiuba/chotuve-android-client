@@ -33,8 +33,8 @@ import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.presentador.PresentadorVerVideo
 import com.taller2.chotuve.util.obtenerAltoVideo
 import com.taller2.chotuve.vista.principal.ID_KEY
-import com.taller2.chotuve.vista.scrollinfinito.ComentariosAdapter
-import com.taller2.chotuve.vista.scrollinfinito.ScrollInfinitoListener
+import com.taller2.chotuve.vista.scroll_infinito.ComentariosAdapter
+import com.taller2.chotuve.vista.scroll_infinito.ScrollInfinitoListener
 import kotlinx.android.synthetic.main.controles_reproductor_video.*
 import kotlinx.android.synthetic.main.ver_video.*
 

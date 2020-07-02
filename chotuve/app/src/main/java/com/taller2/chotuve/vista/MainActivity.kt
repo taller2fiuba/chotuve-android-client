@@ -64,11 +64,11 @@ class MainActivity : AppCompatActivity() {
                     else -> false
                 }
             }
-            navegacion.setOnNavigationItemReselectedListener {
-                if (fragmentActivo == principalFragment) {
-                    (fragmentActivo as PrincipalFragment).scrollTop()
-                }
-            }
+            //navegacion.setOnNavigationItemReselectedListener {
+            //    if (fragmentActivo == principalFragment) {
+            //        (fragmentActivo as PrincipalFragment).scrollTop()
+            //    }
+            //}
         }
     }
 
@@ -106,12 +106,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            // ir al fragmento anterior
-            super.onBackPressed()
+        val childFragmentManager = fragmentActivo.childFragmentManager
+        // si ese fragment por dentro hizo cambios en el fragment entonces ir atras dentro de ese fragment
+        if (childFragmentManager.backStackEntryCount > 0) {
+            childFragmentManager.popBackStack()
+            return
         } else {
-            // Salir de la app si no queda nada en el stack
-            finish()
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                // ir al seccion anterior
+                super.onBackPressed()
+            } else {
+                // Salir de la app si no queda nada en el stack
+                finish()
+            }
         }
     }
 

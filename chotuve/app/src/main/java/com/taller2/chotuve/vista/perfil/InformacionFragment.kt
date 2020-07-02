@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
@@ -15,10 +16,10 @@ import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
-class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
+class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager) : Fragment(), VistaInformacion {
     companion object {
-        fun newInstance(usuarioId: Long?): InformacionFragment =
-            InformacionFragment(usuarioId)
+        fun newInstance(usuarioId: Long?, fm: FragmentManager): InformacionFragment =
+            InformacionFragment(usuarioId, fm)
     }
 
     private val AUN_NO_COMPLETADO = "Aún no completado"
@@ -107,8 +108,8 @@ class InformacionFragment(val usuarioId: Long?) : Fragment(), VistaInformacion {
 
     fun irAEditarInformacion() {
         val newFragment = EditarInformacionFragment(perfilDeUsuario!!)
-        val transaction = activity!!.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_navegacion, newFragment)
+        val transaction = fm.beginTransaction()
+        transaction.replace(R.id.fragment_container, newFragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

@@ -22,52 +22,12 @@ class PerfilFragment(val usuarioId: Long?) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_perfil, container, false) as View
-
-        var pager = view.findViewById(R.id.perfil_view_pager) as ViewPager
-        setupViewPager(pager)
-
-        val toolbar = view.findViewById(R.id.perfil_toolbar) as TabLayout
-        toolbar.setupWithViewPager(pager)
-
+        // TODO codigo repetido con principal fragment
+        val view = inflater.inflate(R.layout.fragment_container, container, false)
+        val fragment = VerPerfilFragment(usuarioId)
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.commit()
         return view
-    }
-
-    private fun setupViewPager(viewPager : ViewPager) {
-        val viewPagerAdapter =
-            ViewPagerAdapter(
-                childFragmentManager
-            )
-        viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId), "información")
-        viewPagerAdapter.addFragment(VideosFragment.newInstance(usuarioId), "videos")
-        // contactos solo en mi perfil
-        // TODO ver si se pueden ver contactos de contactos o de todos
-        if (usuarioId == null) {
-            viewPagerAdapter.addFragment(ContactosFragment.newInstance(this), "contactos")
-        }
-        viewPager.adapter = viewPagerAdapter
-    }
-
-    private class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-        private val fragmentList = ArrayList<Fragment>()
-        private val fragmentTitleList = ArrayList<String>()
-
-        override fun getItem(position: Int): Fragment {
-            return fragmentList[position]
-        }
-
-        override fun getCount(): Int {
-            return fragmentList.size
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return fragmentTitleList[position]
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            fragmentList.add(fragment)
-            fragmentTitleList.add(title)
-        }
     }
 }

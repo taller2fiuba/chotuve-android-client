@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.scrollinfinito
+package com.taller2.chotuve.vista.scroll_infinito
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.vista.componentes.VideoPortadaConTituloYAutor
-import com.taller2.chotuve.vista.principal.PrincipalFragment
+import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
 
 
-class VideosAdapter(val fragment: PrincipalFragment) : ViewHolderAdapter() {
+class VideosAdapter(val fragment: MuroDeVideosFragment) : ViewHolderAdapter() {
     private val VIDEO = 0
     private val CARGANDO = 1
 

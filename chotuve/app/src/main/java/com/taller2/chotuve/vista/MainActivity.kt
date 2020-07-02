@@ -64,11 +64,6 @@ class MainActivity : AppCompatActivity() {
                     else -> false
                 }
             }
-            //navegacion.setOnNavigationItemReselectedListener {
-            //    if (fragmentActivo == principalFragment) {
-            //        (fragmentActivo as PrincipalFragment).scrollTop()
-            //    }
-            //}
         }
     }
 

@@ -24,11 +24,4 @@ class PrincipalFragment : Fragment() {
         transaction.commit()
         return view
     }
-
-    //fun scrollTop() {
-    //    val muroDeVideosFragment = activity!!.supportFragmentManager.findFragmentByTag(MURO_VIDEOS_TAG) as MuroDeVideosFragment
-    //    if (muroDeVideosFragment.isVisible) {
-    //        muroDeVideosFragment.scrollTop()
-    //    }
-    //}
 }

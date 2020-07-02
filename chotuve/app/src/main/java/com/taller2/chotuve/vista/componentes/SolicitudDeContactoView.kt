@@ -10,14 +10,14 @@ import com.taller2.chotuve.modelo.SolicitudDeContacto
 import com.taller2.chotuve.vista.contactos.VistaSolicitudesDeContacto
 
 class SolicitudDeContactoView(context: Context, vista: VistaSolicitudesDeContacto, solicitud: SolicitudDeContacto) :  ConstraintLayout(context) {
-    private var usuarioEmail: TextView
+    private var usuarioView: UsuarioView
     private var rechazar: Button
     private var aceptar: Button
 
     init {
-        View.inflate(context, R.layout.solicitud_de_contacto, this)
-        usuarioEmail = findViewById<View>(R.id.autor_solicitud_contacto) as TextView
-        usuarioEmail.text = solicitud.usuario.email
+        View.inflate(context, R.layout.componente_solicitud_de_contacto, this)
+        usuarioView = findViewById<View>(R.id.usuario_solicitud_contacto) as UsuarioView
+        usuarioView.setUsuario(solicitud.usuario)
         rechazar = findViewById<View>(R.id.rechazar_solicitud_contacto) as Button
         aceptar = findViewById<View>(R.id.aceptar_solicitud_contacto) as Button
 
@@ -31,7 +31,7 @@ class SolicitudDeContactoView(context: Context, vista: VistaSolicitudesDeContact
             rechazar.visibility = View.GONE
             aceptar.visibility = View.GONE
         }
-        usuarioEmail.setOnClickListener {
+        usuarioView.setOnClickListener {
             vista.irAPerfilDeUsuario(solicitud.usuario.id)
         }
     }

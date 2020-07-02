@@ -46,7 +46,8 @@ class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaCont
 
     override fun mostrarContactos(contactos: List<Usuario>) {
         contactos.forEach { usuario: Usuario ->
-            val usuarioView = UsuarioView(context!!, usuario)
+            val usuarioView = UsuarioView(context!!)
+            usuarioView.setUsuario(usuario)
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

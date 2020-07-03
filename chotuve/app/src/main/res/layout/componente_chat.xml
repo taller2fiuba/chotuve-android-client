@@ -7,14 +7,20 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/contenido_mensaje"
+        android:id="@+id/chat_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Hola, todo bien?"
+        tools:text="Pepito"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"/>
 
     <TextView
-        android:id="@+id/hora_mensaje"
+        android:id="@+id/chat_ultimo_mensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="todo bien?"
+        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"/>
+    <TextView
+        android:id="@+id/fecha_y_hora_ultimo_mensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="17:05"

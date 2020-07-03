@@ -5,46 +5,16 @@
     tools:context=".vista.chats.ChatsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
+    android:paddingRight="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mensajes_recycler_view"
+        android:id="@+id/chats_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/nuevo_mensaje_container"/>
-
-    <LinearLayout
-        android:id="@+id/nuevo_mensaje_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"/>
-
-        <ImageButton
-            android:id="@+id/boton_enviar_mensaje"
-            android:layout_gravity="center"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="1dp"
-            android:backgroundTint="@android:color/transparent"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_send_black_24dp"
-            android:enabled="false"/>
-
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 
     <ProgressBar
-        android:id="@+id/cargando_mensajes_barra_progreso"
+        android:id="@+id/cargando_chats_barra_progreso"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

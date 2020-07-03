@@ -58,4 +58,8 @@ class PresentadorPerfil (private var vista: VistaInformacion) {
             }
         })
     }
+
+    fun cerrarSesion() {
+        interactor.cerrarSesion()
+    }
 }

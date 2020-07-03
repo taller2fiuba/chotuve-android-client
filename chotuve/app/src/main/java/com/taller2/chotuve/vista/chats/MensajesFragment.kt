@@ -16,16 +16,11 @@ import com.taller2.chotuve.modelo.Mensaje
 import com.taller2.chotuve.vista.componentes.MensajeViewHolder
 import kotlinx.android.synthetic.main.fragment_mensajes.*
 
-class MensajesFragment : Fragment() {
-    val CHAT = "hello-firebase/mensajes/1-2"
+class MensajesFragment(chatKey: String) : Fragment() {
+    val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
-
-    companion object {
-        fun newInstance(): MensajesFragment =
-            MensajesFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,15 +39,11 @@ class MensajesFragment : Fragment() {
         mensajes_recycler_view.layoutManager = linearLayoutManager
         firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
 
-        val mensajesRef: DatabaseReference = firebaseDatabaseReference.child(CHAT)
+        val mensajesRef: DatabaseReference = firebaseDatabaseReference.child(MENSAJES_CHILD)
 
         val options: FirebaseRecyclerOptions<Mensaje> =
             FirebaseRecyclerOptions.Builder<Mensaje>()
-                //.setQuery(mensajesRef.orderByChild("mensaje"), Mensaje::class.java)
-                //.setQuery(mensajesRef.orderByChild("mensaje").equalTo("Hola"), Mensaje::class.java)
-                //.setQuery(mensajesRef.orderByKey().endAt("-A"), Mensaje::class.java)
-                .setQuery(mensajesRef.orderByChild("soloYo").equalTo(true), Mensaje::class.java)
-                //.setQuery(mensajesRef, Mensaje::class.java)
+                .setQuery(mensajesRef, Mensaje::class.java)
                 .build()
         firebaseAdapter =
             object : FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>(options) {

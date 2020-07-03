@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.taller2.chotuve.R
+import com.taller2.chotuve.vista.chats.ChatsFragment
 import com.taller2.chotuve.vista.perfil.PerfilViewPagerFragment
 import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
 
@@ -16,6 +17,9 @@ class SeccionFragment(val primerFragment: Fragment) : Fragment() {
 
         fun principal(): SeccionFragment =
             SeccionFragment(MuroDeVideosFragment())
+
+        fun chats(): SeccionFragment =
+            SeccionFragment(ChatsFragment())
     }
 
     override fun onCreateView(

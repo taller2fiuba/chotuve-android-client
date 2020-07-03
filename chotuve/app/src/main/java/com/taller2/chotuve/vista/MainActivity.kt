@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navegacion : BottomNavigationView
     private val principalFragment: Fragment = SeccionFragment.principal()
-    private val chatsFragment: Fragment = ChatsFragment.newInstance()
+    private val chatsFragment: Fragment = SeccionFragment.chats()
     private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
     private val perfilFragment: Fragment = SeccionFragment.perfil(null)
     private var fragmentActivo : Fragment = principalFragment

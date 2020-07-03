@@ -11,6 +11,18 @@ class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var usuario: TextView = itemView.findViewById<View>(R.id.chat_usuario) as TextView
     private var ultimoMensaje: TextView = itemView.findViewById<View>(R.id.chat_ultimo_mensaje) as TextView
     private var fechaYHoraUltimoMensaje: TextView = itemView.findViewById<View>(R.id.fecha_y_hora_ultimo_mensaje) as TextView
+    var clickListener: Clicklistener? = null
+
+    // TODO codigo repetido con VideoPortadoConTituloYAutor
+    init {
+        itemView.setOnClickListener { view ->
+            clickListener!!.onItemClick(view, adapterPosition)
+        }
+    }
+
+    interface Clicklistener {
+        fun onItemClick(view: View?, position: Int)
+    }
 
     fun setChat(chat: Chat) {
         usuario.text = chat.key

@@ -19,15 +19,11 @@ import kotlinx.android.synthetic.main.fragment_chats.*
 
 
 class ChatsFragment : Fragment() {
+    // TODO mucho codigo repetido con mensajes fragment y con videos adapter
     val CHATS_CHILD = "hello-firebase/chats"
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Chat, ChatViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
-
-    companion object {
-        fun newInstance(): ChatsFragment =
-            ChatsFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +38,6 @@ class ChatsFragment : Fragment() {
     }
 
     private fun configurarRecyclerView() {
-        linearLayoutManager.stackFromEnd = true
         chats_recycler_view.layoutManager = linearLayoutManager
         firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
 
@@ -80,6 +75,11 @@ class ChatsFragment : Fragment() {
                 ) {
                     cargando_chats_barra_progreso.visibility = View.GONE
                     viewHolder.setChat(chat)
+                    viewHolder.clickListener = object : ChatViewHolder.Clicklistener {
+                        override fun onItemClick(view: View?, position: Int) {
+                            verMensajes((getItem(position) as Chat).key!!)
+                        }
+                    }
                 }
             }
 
@@ -101,6 +101,14 @@ class ChatsFragment : Fragment() {
         })
 
         chats_recycler_view.adapter = firebaseAdapter
+    }
+
+    private fun verMensajes(key: String) {
+        val newFragment = MensajesFragment(key)
+        val transaction = fragmentManager!!.beginTransaction().hide(this)
+        transaction.add(R.id.fragment_container, newFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onStart() {

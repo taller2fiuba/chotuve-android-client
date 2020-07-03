@@ -13,20 +13,16 @@ class VideoPortadaConTituloYAutor(itemView: View) : RecyclerView.ViewHolder(item
     private var titulo: TextView = itemView.findViewById<View>(R.id.titulo) as TextView
     private var autorYCreacion: TextView = itemView.findViewById<View>(R.id.autor_y_creacion) as TextView
     var id: String? = null
-    private var mClickListener: Clicklistener? = null
+    var clickListener: Clicklistener? = null
 
     init {
         itemView.setOnClickListener { view ->
-            mClickListener!!.onItemClick(view, adapterPosition)
+            clickListener!!.onItemClick(view, adapterPosition)
         }
     }
 
     interface Clicklistener {
         fun onItemClick(view: View?, position: Int)
-    }
-
-    fun setOnClicklistener(clicklistener: Clicklistener?) {
-        mClickListener = clicklistener
     }
 
     fun setVideo(video: Video) {

@@ -11,8 +11,6 @@ import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
 import com.taller2.chotuve.vista.chats.ChatsFragment
 import com.taller2.chotuve.vista.notificaciones.NotificacionesFragment
-import com.taller2.chotuve.vista.perfil.PerfilFragment
-import com.taller2.chotuve.vista.principal.PrincipalFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     private val FRAGMENT_PERFIL_INDEX =  3
 
     private lateinit var navegacion : BottomNavigationView
-    private val principalFragment: Fragment = PrincipalFragment.newInstance()
+    private val principalFragment: Fragment = SeccionFragment.principal()
     private val chatsFragment: Fragment = ChatsFragment.newInstance()
     private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
-    private val perfilFragment: Fragment = PerfilFragment.newInstance(null)
+    private val perfilFragment: Fragment = SeccionFragment.perfil(null)
     private var fragmentActivo : Fragment = principalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,11 +62,6 @@ class MainActivity : AppCompatActivity() {
                     else -> false
                 }
             }
-            navegacion.setOnNavigationItemReselectedListener {
-                if (fragmentActivo == principalFragment) {
-                    (fragmentActivo as PrincipalFragment).scrollTop()
-                }
-            }
         }
     }
 
@@ -88,13 +81,17 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.addOnBackStackChangedListener(object : FragmentManager.OnBackStackChangedListener {
             override fun onBackStackChanged() {
                 // Si cantidad en el stack baja entonces tocaron el boton de back
-                if (supportFragmentManager.backStackEntryCount < cantidadStack) {
+                if (supportFragmentManager.backStackEntryCount in 1 until cantidadStack) {
                     supportFragmentManager.removeOnBackStackChangedListener(this)
                     val tagAnterior =
                         supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
                     // seteo el icono a mostrar en la nevegacion con el index del fragment anterior
                     navegacion.menu.getItem(getIndex(tagAnterior)).isChecked = true
                     fragmentActivo = getFragment(tagAnterior)
+                } else if (supportFragmentManager.backStackEntryCount == 0) {
+                    // volvi al principio de todo, es la pantalla principal
+                    navegacion.menu.getItem(FRAGMENT_PRINCIPAL_INDEX).isChecked = true
+                    fragmentActivo = principalFragment
                 }
             }
         })
@@ -102,12 +99,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1) {
-            // ir al fragmento anterior
-            super.onBackPressed()
+        val childFragmentManager = fragmentActivo.childFragmentManager
+        // si ese fragment por dentro hizo cambios en el fragment entonces ir atras dentro de ese fragment
+        if (childFragmentManager.backStackEntryCount > 0) {
+            childFragmentManager.popBackStack()
+            return
         } else {
-            // Salir de la app si no queda nada en el stack
-            finish()
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                // ir al seccion anterior
+                super.onBackPressed()
+            } else {
+                // Salir de la app si no queda nada en el stack
+                finish()
+            }
         }
     }
 

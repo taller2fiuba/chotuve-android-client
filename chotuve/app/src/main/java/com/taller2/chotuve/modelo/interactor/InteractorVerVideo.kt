@@ -46,7 +46,7 @@ class InteractorVerVideo {
                         val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
                         val autorJson = objeto.getJSONObject("autor")
-                        val autor = Autor(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
+                        val autor = Usuario(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
 
                         val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.getByValue(objeto.getString("mi-reaccion")) else null
                         val reacciones = Reacciones(
@@ -141,7 +141,7 @@ class InteractorVerVideo {
 
             comentarios.add(
                 Comentario(
-                    Autor(
+                    Usuario(
                         autor.getLong("id"),
                         autor.getString("email")
                     ),

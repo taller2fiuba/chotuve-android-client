@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vista.perfil.PerfilFragment">
+    tools:context=".vista.perfil.PerfilViewPagerFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/perfil_view_pager"
@@ -23,12 +23,17 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/perfil_informacion_menu" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/perfil_videos_menu" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/perfil_informacion_menu" />
+                android:text="Contactos" />
 
         </com.google.android.material.tabs.TabLayout>
 

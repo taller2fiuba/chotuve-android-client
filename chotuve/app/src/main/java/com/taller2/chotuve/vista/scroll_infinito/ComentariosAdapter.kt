@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.scrollinfinito
+package com.taller2.chotuve.vista.scroll_infinito
 
 import android.view.LayoutInflater
 import android.view.View
@@ -55,8 +55,8 @@ class ComentariosAdapter(val activity: VerVideoActivity) : ViewHolderAdapter() {
                     // TODO esto es para chequear si un comentario que acabo de agregar y no tengo mi propia info
                     // igual si la tengo es un problema porque me llevaria a mi perfil pero al estilo del perfil de otro
                     // TODO ver como solucionar, posible solucion saber mi id para comparar
-                    if (comentarioClickeado.autor.usuarioId > 0) {
-                        activity.irAPerfilDeUsuario(comentarioClickeado.autor.usuarioId)
+                    if (comentarioClickeado.autor.id > 0) {
+                        activity.irAPerfilDeUsuario(comentarioClickeado.autor.id)
                     }
                 }
             })

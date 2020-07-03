@@ -1,23 +1,20 @@
 package com.taller2.chotuve.presentador
 
-import android.os.Handler
 import android.util.Log
-import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.modelo.PerfilDeUsuario
+import com.taller2.chotuve.modelo.interactor.InteractorContactos
 import com.taller2.chotuve.modelo.interactor.InteractorPerfil
 import com.taller2.chotuve.vista.perfil.VistaInformacion
 
 
-class PresentadorPerfil (private var vista: VistaInformacion?) {
+class PresentadorPerfil (private var vista: VistaInformacion) {
     private val interactor = InteractorPerfil()
-
-    fun onDestroy() {
-        vista = null
-    }
+    private val interactorContactos = InteractorContactos()
 
     fun obtenerInformacion(usuarioId: Long?) {
         val callback = object : InteractorPerfil.CallbackCargarPerfil {
-            override fun onExito(usuario: Usuario) {
-                vista?.mostrarPerfil(usuario)
+            override fun onExito(perfilDeUsuario: PerfilDeUsuario) {
+                vista.mostrarPerfil(perfilDeUsuario)
             }
 
             override fun onError() {
@@ -35,5 +32,30 @@ class PresentadorPerfil (private var vista: VistaInformacion?) {
             interactor.cargarMiPerfil(callback)
         else
             interactor.cargarPerfil(usuarioId, callback)
+    }
+
+    fun enviarSolicitudDeContacto(usuarioId: Long) {
+        interactorContactos.enviarSolicitudDeContacto(usuarioId, object : InteractorContactos.CallbackEnviarSolicitudDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
+    }
+
+    fun rechazarSolicitudDeContacto(solicitudId: Long) {
+        interactorContactos.rechazarSolicitud(solicitudId, object : InteractorContactos.CallbackResponderSolicitudesDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
+
+    }
+
+    fun aceptarSolicitudDeContacto(solicitudId: Long) {
+        interactorContactos.aceptarSolicitud(solicitudId, object : InteractorContactos.CallbackResponderSolicitudesDeContacto {
+            override fun onErrorRed(mensaje: String?) {
+                vista.setErrorRed()
+            }
+        })
     }
 }

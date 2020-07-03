@@ -2,11 +2,9 @@ package com.taller2.chotuve.modelo.interactor
 
 import android.util.Log
 import com.taller2.chotuve.modelo.Modelo
-import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.modelo.data.Perfil
 import retrofit2.Callback
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 

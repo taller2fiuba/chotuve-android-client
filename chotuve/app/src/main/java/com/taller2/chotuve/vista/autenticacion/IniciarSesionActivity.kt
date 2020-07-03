@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.textfield.TextInputLayout
-import com.taller2.chotuve.vista.MainActivity
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.CallbackInicioSesion
-import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.interactor.InteractorIniciarSesion
 import com.taller2.chotuve.presentador.PresentadorIniciarSesion
-import com.taller2.chotuve.vista.perfil.SubirVideoActivity
+import com.taller2.chotuve.vista.MainActivity
 import kotlinx.android.synthetic.main.iniciar_sesion.*
+
 
 class IniciarSesionActivity : AppCompatActivity(), VistaIniciarSesion {
     private val presentador = PresentadorIniciarSesion(this, InteractorIniciarSesion())
@@ -57,6 +54,8 @@ class IniciarSesionActivity : AppCompatActivity(), VistaIniciarSesion {
     }
 
     override fun irAPantallaPrincipal() {
-        startActivity(Intent(this, MainActivity::class.java))
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }

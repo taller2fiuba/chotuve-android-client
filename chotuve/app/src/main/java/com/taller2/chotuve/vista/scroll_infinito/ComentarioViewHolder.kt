@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.scrollinfinito
+package com.taller2.chotuve.vista.scroll_infinito
 
 import android.view.View
 import android.widget.TextView
@@ -30,7 +30,7 @@ class ComentarioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun setComentario(comentario: Comentario) {
-        usuarioId = comentario.autor.usuarioId
+        usuarioId = comentario.autor.id
         autor.text = comentario.autor.email
         fecha.text = comentario.fecha
         textoComentario.text = comentario.comentario

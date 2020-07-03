@@ -1,4 +1,4 @@
-package com.taller2.chotuve.vista.scrollinfinito
+package com.taller2.chotuve.vista.scroll_infinito
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager

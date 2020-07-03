@@ -2,7 +2,7 @@ package com.taller2.chotuve.modelo.interactor
 
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
-import com.taller2.chotuve.modelo.Autor
+import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Video
 import okhttp3.ResponseBody
@@ -39,7 +39,7 @@ class InteractorPrincipal {
 
                                 // TODO codigo repetido con interactorVerVideo, ver manera de volar esto con Moshi (?)
                                 val autorJson = objeto.getJSONObject("autor")
-                                val autor = Autor(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
+                                val autor = Usuario(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
 
                                 ret.add(Video(
                                     objeto.getString("url"),

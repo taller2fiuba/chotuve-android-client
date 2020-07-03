@@ -10,19 +10,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.taller2.chotuve.R
+import com.taller2.chotuve.vista.contactos.ContactosFragment
 
-
-class PerfilFragment(val usuarioId: Long?) : Fragment() {
-    companion object {
-        fun newInstance(usuarioId: Long?): PerfilFragment =
-            PerfilFragment(usuarioId)
-    }
-
+class PerfilViewPagerFragment(val usuarioId: Long?) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_perfil, container, false) as View
 
         var pager = view.findViewById(R.id.perfil_view_pager) as ViewPager
@@ -39,8 +33,13 @@ class PerfilFragment(val usuarioId: Long?) : Fragment() {
             ViewPagerAdapter(
                 childFragmentManager
             )
-        viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId), "información")
+        viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId, fragmentManager!!), "información")
         viewPagerAdapter.addFragment(VideosFragment.newInstance(usuarioId), "videos")
+        // contactos solo en mi perfil
+        // TODO ver si se pueden ver contactos de contactos o de todos
+        if (usuarioId == null) {
+            viewPagerAdapter.addFragment(ContactosFragment.newInstance(fragmentManager!!), "contactos")
+        }
         viewPager.adapter = viewPagerAdapter
     }
 

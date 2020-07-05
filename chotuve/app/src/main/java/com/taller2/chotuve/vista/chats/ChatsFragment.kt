@@ -31,7 +31,7 @@ class ChatsFragment : Fragment(), VistaContactos {
     private lateinit var contactos: Map<Long, Usuario>
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Chat, ChatViewHolder>
-    private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +42,7 @@ class ChatsFragment : Fragment(), VistaContactos {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        linearLayoutManager = LinearLayoutManager(context)
         presentadorContactos.obtenerContactos()
     }
 

@@ -18,7 +18,8 @@ class InteractorPerfil {
         fun onErrorRed()
     }
 
-    private val chotuveClient = Modelo.instance.chotuveClient
+    private val modelo = Modelo.instance
+    private val chotuveClient = modelo.chotuveClient
 
     fun cargarPerfil(usuarioId: Long, callbackCargarPerfil: CallbackCargarPerfil) {
         chotuveClient.obtenerPerfilUsuario(usuarioId).enqueue(object : Callback<ResponseBody> {
@@ -99,5 +100,9 @@ class InteractorPerfil {
             }
         }
         return null
+    }
+
+    fun cerrarSesion() {
+        modelo.cerrarSesion()
     }
 }

@@ -1,12 +1,13 @@
 package com.taller2.chotuve.vista.perfil
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,6 +15,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.EstadoContacto
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
+import com.taller2.chotuve.vista.autenticacion.IniciarSesionActivity
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
 class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager) : Fragment(), VistaInformacion {
@@ -40,6 +42,14 @@ class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager)
         if (usuarioId != null) {
             // perfil de otro usuario
             editar_informacion.visibility = View.GONE
+            boton_logout.visibility = View.GONE
+        } else {
+            boton_logout.setOnClickListener {
+                presentador.cerrarSesion()
+                val intent = Intent(context, IniciarSesionActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
         }
         presentador.obtenerInformacion(usuarioId)
     }

@@ -41,6 +41,11 @@ class Modelo private constructor() {
 
     fun estaLogueado() : Boolean = userToken != null
 
+    fun cerrarSesion() {
+        // TODO deberia avisar al server del cierre de sesion para invalidar el token
+        userToken = null
+    }
+
     fun registrarUsuario(email: String, clave: String, callbackRegistro: CallbackRegistro) {
         Log.d("modelo", "Registrando usuario $email")
         chotuveClient.registrarUsuario(

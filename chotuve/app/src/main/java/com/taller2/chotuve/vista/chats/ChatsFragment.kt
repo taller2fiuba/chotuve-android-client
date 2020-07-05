@@ -99,7 +99,8 @@ class ChatsFragment : Fragment(), VistaContactos {
                     viewHolder.setChat(chat)
                     viewHolder.clickListener = object : ChatViewHolder.Clicklistener {
                         override fun onItemClick(view: View?, position: Int) {
-                            verMensajes((getItem(position) as Chat).key!!)
+                            val chat = getItem(position)
+                            verMensajes(chat.key!!, chat.destinatario!!)
                         }
                     }
                 }
@@ -125,8 +126,8 @@ class ChatsFragment : Fragment(), VistaContactos {
         chats_recycler_view.adapter = firebaseAdapter
     }
 
-    private fun verMensajes(key: String) {
-        val newFragment = MensajesFragment(key)
+    private fun verMensajes(key: String, destinario: Usuario) {
+        val newFragment = MensajesFragment(key, destinario)
         val transaction = fragmentManager!!.beginTransaction().hide(this)
         transaction.add(R.id.fragment_container, newFragment)
         transaction.addToBackStack(null)

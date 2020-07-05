@@ -13,10 +13,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Mensaje
+import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.MensajeViewHolder
 import kotlinx.android.synthetic.main.fragment_mensajes.*
 
-class MensajesFragment(chatKey: String) : Fragment() {
+class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
     val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
     private val MENSAJE_MIO = 0
     private val MENSAJE_OTRO = 1
@@ -33,7 +35,22 @@ class MensajesFragment(chatKey: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        top_bar_destinatario.title = destinario.email
+        top_bar_destinatario.setOnClickListener {
+            irAPerfilDeUsuario(destinario)
+        }
+        top_bar_destinatario.setNavigationOnClickListener {
+            fragmentManager!!.popBackStack()
+        }
         configurarRecyclerView()
+    }
+
+    private fun irAPerfilDeUsuario(usuario: Usuario) {
+        val newFragment = SeccionFragment.perfil(usuario.id)
+        val transicion = fragmentManager!!.beginTransaction().hide(this)
+        transicion.add(R.id.fragment_container, newFragment)
+        transicion.addToBackStack(null)
+        transicion.commit()
     }
 
     private fun configurarRecyclerView() {

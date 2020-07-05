@@ -63,4 +63,6 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.10.8'
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.10.8'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.8'
+
+    implementation 'joda-time:joda-time:2.9.4'
 }

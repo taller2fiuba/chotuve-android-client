@@ -25,7 +25,7 @@ class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun setChat(chat: Chat) {
-        usuario.text = chat.key
+        usuario.text = chat.destinatario!!.email
         ultimoMensaje.text =  chat.ultimoMensaje
         fechaYHoraUltimoMensaje.text = chat.fechaYHora
     }

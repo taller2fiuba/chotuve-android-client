@@ -1,9 +1,11 @@
 package com.taller2.chotuve.vista.chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
@@ -14,13 +16,19 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Chat
+import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.presentador.PresentadorContactos
+import com.taller2.chotuve.util.obtenerFechaDeTimestamp
 import com.taller2.chotuve.vista.componentes.ChatViewHolder
+import com.taller2.chotuve.vista.contactos.VistaContactos
 import kotlinx.android.synthetic.main.fragment_chats.*
 
 
-class ChatsFragment : Fragment() {
+class ChatsFragment : Fragment(), VistaContactos {
     // TODO mucho codigo repetido con mensajes fragment y con videos adapter
     val CHATS_CHILD = "hello-firebase/chats"
+    private val presentadorContactos = PresentadorContactos(this)
+    private lateinit var contactos: Map<Long, Usuario>
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Chat, ChatViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
@@ -34,8 +42,20 @@ class ChatsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configurarRecyclerView()
+        presentadorContactos.obtenerContactos()
     }
+
+    override fun mostrarContactos(contactos: List<Usuario>) {
+        this.contactos = contactos.map { it.id to it }.toMap()
+        configurarRecyclerView()
+        firebaseAdapter.startListening()
+    }
+
+    override fun setErrorRed() {
+        Log.d("vista", "Error del server")
+        Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
+    }
+
 
     private fun configurarRecyclerView() {
         chats_recycler_view.layoutManager = linearLayoutManager
@@ -45,9 +65,11 @@ class ChatsFragment : Fragment() {
 
         val parser =
             SnapshotParser<Chat> { dataSnapshot ->
-                // TODO buscar info del otro usuario aca
                 val chat: Chat = dataSnapshot.getValue(Chat::class.java)!!
                 chat.key = dataSnapshot.key
+                // TODO pasar 1 a usuario actual
+                val destinatarioId = chat.key!!.split('-').find { it.toLong() != 1L }!!.toLong()
+                chat.destinatario = contactos[destinatarioId]
                 chat
             }
 
@@ -113,7 +135,9 @@ class ChatsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        firebaseAdapter.startListening()
+        if (this::firebaseAdapter.isInitialized) {
+            firebaseAdapter.startListening()
+        }
     }
 
     override fun onPause() {
@@ -123,7 +147,9 @@ class ChatsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        firebaseAdapter.startListening()
+        if (this::firebaseAdapter.isInitialized) {
+            firebaseAdapter.startListening()
+        }
     }
 
 }

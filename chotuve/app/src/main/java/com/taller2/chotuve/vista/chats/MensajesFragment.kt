@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_mensajes.*
 
 class MensajesFragment(chatKey: String) : Fragment() {
     val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
+    private val MENSAJE_MIO = 0
+    private val MENSAJE_OTRO = 1
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
@@ -47,15 +49,27 @@ class MensajesFragment(chatKey: String) : Fragment() {
                 .build()
         firebaseAdapter =
             object : FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>(options) {
-                override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MensajeViewHolder {
+                override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MensajeViewHolder {
                     val inflater = LayoutInflater.from(viewGroup.context)
-                    return MensajeViewHolder(
-                        inflater.inflate(
-                            R.layout.componente_mensaje,
-                            viewGroup,
-                            false
-                        )
-                    )
+                    var viewHolder: MensajeViewHolder? = null
+                    when (viewType) {
+                        MENSAJE_MIO -> {
+                            val viewMensajeMio: View =
+                                inflater.inflate(R.layout.componente_mensaje_mio, viewGroup, false)
+                            viewHolder =  MensajeViewHolder(viewMensajeMio)
+                        }
+                        MENSAJE_OTRO -> {
+                            val viewMensajeOtro: View =
+                                inflater.inflate(R.layout.componente_mensaje_otro, viewGroup, false)
+                            viewHolder = MensajeViewHolder(viewMensajeOtro)
+                        }
+                    }
+                    return viewHolder!!
+                }
+
+                override fun getItemViewType(position: Int): Int {
+                    // TODO en donde dice 1 va mi id
+                    return if (getItem(position).enviadoPor == 1L) MENSAJE_MIO else MENSAJE_OTRO
                 }
 
                 override fun onBindViewHolder(

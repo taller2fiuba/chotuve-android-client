@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Chat
+import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
 import com.taller2.chotuve.util.obtenerFechaDeTimestamp
@@ -28,6 +29,7 @@ class ChatsFragment : Fragment(), VistaContactos {
     // TODO mucho codigo repetido con mensajes fragment y con videos adapter
     val CHATS_CHILD = "hello-firebase/chats"
     private val presentadorContactos = PresentadorContactos(this)
+    private val miUsuarioId = Modelo.instance.id
     private lateinit var contactos: Map<Long, Usuario>
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Chat, ChatViewHolder>
@@ -68,15 +70,15 @@ class ChatsFragment : Fragment(), VistaContactos {
             SnapshotParser<Chat> { dataSnapshot ->
                 val chat: Chat = dataSnapshot.getValue(Chat::class.java)!!
                 chat.key = dataSnapshot.key
-                // TODO pasar 1 a usuario actual
-                val destinatarioId = chat.key!!.split('-').find { it.toLong() != 1L }!!.toLong()
+                val destinatarioId = chat.key!!.split('-').find { it.toLong() != miUsuarioId }!!.toLong()
                 chat.destinatario = contactos[destinatarioId]
                 chat
             }
 
         val options: FirebaseRecyclerOptions<Chat> =
             FirebaseRecyclerOptions.Builder<Chat>()
-                .setQuery(chatsRef.orderByChild("1").equalTo(true), parser)
+                    // TODO ojo aca que no estoy ordenando por ultimo mensaje
+                .setQuery(chatsRef.orderByChild(miUsuarioId.toString()).equalTo(true), parser)
                 .build()
         firebaseAdapter =
             object : FirebaseRecyclerAdapter<Chat, ChatViewHolder>(options) {

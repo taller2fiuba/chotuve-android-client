@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private val principalFragment: Fragment = SeccionFragment.principal()
     private val chatsFragment: Fragment = SeccionFragment.chats()
     private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
+    // TODO ahora se mi id, esto de mandar null ya no seria necesario
+    // por ahora lo dejo asi para no perder tiempo
     private val perfilFragment: Fragment = SeccionFragment.perfil(null)
     private var fragmentActivo : Fragment = principalFragment
 

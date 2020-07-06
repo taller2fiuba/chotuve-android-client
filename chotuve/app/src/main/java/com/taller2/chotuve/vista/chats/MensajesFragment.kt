@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Mensaje
+import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.MensajeViewHolder
@@ -22,6 +23,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
     val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
     private val MENSAJE_MIO = 0
     private val MENSAJE_OTRO = 1
+    private val miUsuarioId = Modelo.instance.id
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
@@ -85,8 +87,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
                 }
 
                 override fun getItemViewType(position: Int): Int {
-                    // TODO en donde dice 1 va mi id
-                    return if (getItem(position).enviadoPor == 1L) MENSAJE_MIO else MENSAJE_OTRO
+                    return if (getItem(position).enviadoPor == miUsuarioId) MENSAJE_MIO else MENSAJE_OTRO
                 }
 
                 override fun onBindViewHolder(

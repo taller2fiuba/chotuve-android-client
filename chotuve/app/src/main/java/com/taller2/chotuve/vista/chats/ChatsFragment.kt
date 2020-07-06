@@ -19,7 +19,6 @@ import com.taller2.chotuve.modelo.Chat
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
-import com.taller2.chotuve.util.obtenerFechaDeTimestamp
 import com.taller2.chotuve.vista.componentes.ChatViewHolder
 import com.taller2.chotuve.vista.contactos.VistaContactos
 import kotlinx.android.synthetic.main.fragment_chats.*
@@ -27,9 +26,9 @@ import kotlinx.android.synthetic.main.fragment_chats.*
 
 class ChatsFragment : Fragment(), VistaContactos {
     // TODO mucho codigo repetido con mensajes fragment y con videos adapter
-    val CHATS_CHILD = "hello-firebase/chats"
-    private val presentadorContactos = PresentadorContactos(this)
     private val miUsuarioId = Modelo.instance.id
+    val CHATS_CHILD = "hello-firebase/chats/$miUsuarioId"
+    private val presentadorContactos = PresentadorContactos(this)
     private lateinit var contactos: Map<Long, Usuario>
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Chat, ChatViewHolder>
@@ -69,16 +68,19 @@ class ChatsFragment : Fragment(), VistaContactos {
         val parser =
             SnapshotParser<Chat> { dataSnapshot ->
                 val chat: Chat = dataSnapshot.getValue(Chat::class.java)!!
-                chat.key = dataSnapshot.key
-                val destinatarioId = chat.key!!.split('-').find { it.toLong() != miUsuarioId }!!.toLong()
+                val destinatarioId = dataSnapshot.key!!.toLong()
+                if (destinatarioId > miUsuarioId!!) {
+                    chat.key = "$miUsuarioId-$destinatarioId"
+                } else {
+                    chat.key = "$destinatarioId-$miUsuarioId"
+                }
                 chat.destinatario = contactos[destinatarioId]
                 chat
             }
 
         val options: FirebaseRecyclerOptions<Chat> =
             FirebaseRecyclerOptions.Builder<Chat>()
-                    // TODO ojo aca que no estoy ordenando por ultimo mensaje
-                .setQuery(chatsRef.orderByChild(miUsuarioId.toString()).equalTo(true), parser)
+                .setQuery(chatsRef.orderByChild("orden"), parser)
                 .build()
         firebaseAdapter =
             object : FirebaseRecyclerAdapter<Chat, ChatViewHolder>(options) {

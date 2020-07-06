@@ -64,7 +64,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
 
         val options: FirebaseRecyclerOptions<Mensaje> =
             FirebaseRecyclerOptions.Builder<Mensaje>()
-                .setQuery(mensajesRef, Mensaje::class.java)
+                .setQuery(mensajesRef.orderByChild("timestamp"), Mensaje::class.java)
                 .build()
         firebaseAdapter =
             object : FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>(options) {

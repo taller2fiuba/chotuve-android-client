@@ -143,7 +143,9 @@ class ChatsFragment : Fragment(), VistaContactos {
     }
 
     override fun onPause() {
-        firebaseAdapter.stopListening()
+        if (this::firebaseAdapter.isInitialized) {
+            firebaseAdapter.stopListening()
+        }
         super.onPause()
     }
 

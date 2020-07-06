@@ -121,17 +121,23 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        firebaseAdapter.startListening()
+        if (this::firebaseAdapter.isInitialized) {
+            firebaseAdapter.startListening()
+        }
     }
 
     override fun onPause() {
-        firebaseAdapter.stopListening()
+        if (this::firebaseAdapter.isInitialized) {
+            firebaseAdapter.stopListening()
+        }
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        firebaseAdapter.startListening()
+        if (this::firebaseAdapter.isInitialized) {
+            firebaseAdapter.startListening()
+        }
     }
 
 }

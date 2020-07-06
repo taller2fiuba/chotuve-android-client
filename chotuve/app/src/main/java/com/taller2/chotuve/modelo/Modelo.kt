@@ -35,6 +35,15 @@ class Modelo private constructor() {
             chotuveClient = AppServerService.create(userToken)
         }
 
+    var id: Long? = preferences.getLong("id", 0)
+        set(id) {
+            with (preferences.edit()) {
+                putLong("id", id!!)
+                commit()
+            }
+            field = id
+        }
+
     var chotuveClient = AppServerService.create(userToken)
         private set(valor) { field = valor }
         get() { return field }
@@ -65,6 +74,7 @@ class Modelo private constructor() {
                         } else {
                             Log.d("modelo", "Token obtenido")
                             userToken = json.getString("auth_token")
+                            id = json.getLong("id")
                             callbackRegistro.onExito()
                         }
                     } else if (response.code() == 400) {
@@ -102,6 +112,7 @@ class Modelo private constructor() {
                         } else {
                             Log.d("modelo", "Token obtenido")
                             userToken = json.getString("auth_token")
+                            id = json.getLong("id")
                             callbackInicioSesion.onExito()
                         }
                     } else if (response.code() == 400) {

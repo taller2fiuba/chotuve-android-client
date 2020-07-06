@@ -25,10 +25,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.Usuario
-import com.taller2.chotuve.modelo.Comentario
-import com.taller2.chotuve.modelo.Reaccion
-import com.taller2.chotuve.modelo.Video
+import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.presentador.PresentadorVerVideo
 import com.taller2.chotuve.util.obtenerAltoVideo
@@ -42,6 +39,7 @@ const val USUARIO_ID_KEY = "com.taller2.chotuve.USUARIO_ID_KEY"
 
 class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     private val presentador = PresentadorVerVideo(this, InteractorVerVideo())
+    val modelo = Modelo.instance
 
     private var player: SimpleExoPlayer? = null
     private var pantallaCompleta = false
@@ -362,11 +360,11 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
     }
 
     override fun agregarNuevoComentario(nuevoComentario: String) {
-        // TODO necesito mi infomacion para no hacer esta negrada
         comentario.editText?.setText("")
         crear_comentario_boton.visibility = View.VISIBLE
         creando_comentario_barra_progreso.visibility = View.GONE
-        adapter.add(0, Comentario(Usuario(0, "tú"), "Ahora mismo", nuevoComentario))
+        // TODO obtener mi perfil para no poner tú de email o poner tu a todos mis comentarios
+        adapter.add(0, Comentario(Usuario(modelo.id!!, "tú"), "Ahora mismo", nuevoComentario))
         comentarios_recycler_view.smoothScrollToPosition(0)
 
     }

@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.database.SnapshotParser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Chat
 import com.taller2.chotuve.modelo.Modelo
@@ -49,8 +48,24 @@ class ChatsFragment : Fragment(), VistaContactos {
 
     override fun mostrarContactos(contactos: List<Usuario>) {
         this.contactos = contactos.map { it.id to it }.toMap()
+        firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
+        mostrarSinChatsSiAunNoHayChats()
         configurarRecyclerView()
         firebaseAdapter.startListening()
+    }
+
+    fun mostrarSinChatsSiAunNoHayChats() {
+        firebaseDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!snapshot.hasChild(CHATS_CHILD)) {
+                    mensaje_sin_chats.visibility = View.VISIBLE
+                    cargando_chats_barra_progreso.visibility = View.GONE
+                }
+            }
+        })
     }
 
     override fun setErrorRed() {
@@ -61,7 +76,6 @@ class ChatsFragment : Fragment(), VistaContactos {
 
     private fun configurarRecyclerView() {
         chats_recycler_view.layoutManager = linearLayoutManager
-        firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
 
         val chatsRef: DatabaseReference = firebaseDatabaseReference.child(CHATS_CHILD)
 
@@ -100,6 +114,7 @@ class ChatsFragment : Fragment(), VistaContactos {
                     position: Int,
                     chat: Chat
                 ) {
+                    mensaje_sin_chats.visibility = View.GONE
                     cargando_chats_barra_progreso.visibility = View.GONE
                     viewHolder.setChat(chat)
                     viewHolder.clickListener = object : ChatViewHolder.Clicklistener {

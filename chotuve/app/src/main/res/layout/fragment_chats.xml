@@ -14,6 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <TextView
+        android:id="@+id/mensaje_sin_chats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No tenes mensajes, comenzá a hablar con algún contacto tocando el botón +"
+        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+        android:visibility="gone"/>
+
     <ProgressBar
         android:id="@+id/cargando_chats_barra_progreso"
         style="?android:attr/progressBarStyleLarge"

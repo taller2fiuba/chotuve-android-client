@@ -15,11 +15,12 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Mensaje
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.presentador.PresentadorMensajes
 import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.MensajeViewHolder
 import kotlinx.android.synthetic.main.fragment_mensajes.*
 
-class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
+class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), VistaMensajes {
     // TODO sacar hello-firebase
     val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
     private val MENSAJE_MIO = 0
@@ -28,6 +29,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
+    private val presentador = PresentadorMensajes(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,17 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
         }
         top_bar_destinatario.setNavigationOnClickListener {
             fragmentManager!!.popBackStack()
+        }
+        boton_enviar_mensaje.setOnClickListener {
+            val nuevoMensaje = nuevo_mensaje_contenido.text?.toString()
+            when {
+                nuevoMensaje.isNullOrEmpty() -> nuevo_mensaje_contenido.error = "No puede estar vacío"
+                else -> {
+                    boton_enviar_mensaje.visibility = View.GONE
+                    creando_mensaje_barra_progreso.visibility = View.VISIBLE
+                    presentador.enviarMensaje(destinario.id, nuevoMensaje)
+                }
+            }
         }
         firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         ocultarCargandoSiChatAunNoExiste()
@@ -155,6 +168,17 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
         if (this::firebaseAdapter.isInitialized) {
             firebaseAdapter.startListening()
         }
+    }
+
+    override fun mensajeEnviado() {
+        nuevo_mensaje_contenido.setText("")
+        creando_mensaje_barra_progreso.visibility = View.GONE
+        boton_enviar_mensaje.visibility = View.VISIBLE
+    }
+
+    override fun setErrorRed() {
+        creando_mensaje_barra_progreso.visibility = View.GONE
+        boton_enviar_mensaje.visibility = View.VISIBLE
     }
 
 }

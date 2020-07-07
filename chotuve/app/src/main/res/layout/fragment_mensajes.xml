@@ -27,8 +27,8 @@
         android:id="@+id/mensajes_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/top_bar"
-        android:layout_above="@+id/nuevo_mensaje_container"/>
+        android:layout_above="@+id/nuevo_mensaje_container"
+        android:layout_below="@+id/top_bar" />
 
     <LinearLayout
         android:id="@+id/nuevo_mensaje_container"
@@ -39,6 +39,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/nuevo_mensaje_contenido"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -49,16 +50,32 @@
             android:maxLines="4"
             android:gravity="start"/>
 
-        <ImageButton
-            android:id="@+id/boton_enviar_mensaje"
-            android:layout_gravity="center"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="1dp"
-            android:backgroundTint="@android:color/transparent"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_send_black_24dp"
-            android:enabled="false"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorPrimary">
+
+            <ProgressBar
+                android:id="@+id/creando_mensaje_barra_progreso"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="1dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorSecondary" />
+
+            <ImageButton
+                android:id="@+id/boton_enviar_mensaje"
+                android:layout_gravity="center"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@android:color/transparent"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_send_black_24dp"/>
+        </FrameLayout>
 
     </LinearLayout>
 

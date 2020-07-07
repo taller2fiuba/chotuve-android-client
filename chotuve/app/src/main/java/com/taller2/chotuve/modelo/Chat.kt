@@ -9,7 +9,7 @@ class Chat {
     var timestamp: Long? = null
         set(value) {
             field = value
-            fechaYHora = obtenerFechaDeTimestamp(value!!)
+            fechaYHora = obtenerFechaDeTimestamp(value!!, true)
         }
     var fechaYHora: String? = null
     var destinatario: Usuario? = null

@@ -18,7 +18,6 @@ import com.taller2.chotuve.modelo.Chat
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
-import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.ChatViewHolder
 import com.taller2.chotuve.vista.contactos.ContactosFragment
 import com.taller2.chotuve.vista.contactos.VistaContactos

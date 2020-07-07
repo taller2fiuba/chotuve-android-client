@@ -1,6 +1,5 @@
 package com.taller2.chotuve.util
 
-import android.util.Log
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat

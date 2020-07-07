@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/usuario_container">
 
-    <TextView
-        android:id="@+id/usuario_email"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/usuario_foto_de_perfil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_account_box_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="usuario@email.com"
-        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-        android:clickable="true"
-        android:focusable="true"/>
-</FrameLayout>
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/usuario_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="usuario@email.com"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+</LinearLayout>

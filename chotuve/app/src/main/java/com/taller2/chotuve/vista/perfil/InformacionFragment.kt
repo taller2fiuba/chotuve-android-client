@@ -68,10 +68,10 @@ class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager)
         email.text = perfilDeUsuario.usuario.email
         telefono.text = perfilDeUsuario.telefono ?: AUN_NO_COMPLETADO
         direccion.text = perfilDeUsuario.direccion ?: AUN_NO_COMPLETADO
-        if (perfilDeUsuario.fotoPerfilUri != null) {
+        if (perfilDeUsuario.usuario.fotoPerfilUri != null) {
             Glide
                 .with(this)
-                .load(perfilDeUsuario.fotoPerfilUri)
+                .load(perfilDeUsuario.usuario.fotoPerfilUri)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .into(imagen_perfil)

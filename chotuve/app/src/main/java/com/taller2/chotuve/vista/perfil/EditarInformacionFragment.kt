@@ -38,10 +38,10 @@ class EditarInformacionFragment(val perfilDeUsuario: PerfilDeUsuario) : Fragment
         apellido.editText?.setText(perfilDeUsuario.apellido)
         telefono.editText?.setText(perfilDeUsuario.telefono)
         direccion.editText?.setText(perfilDeUsuario.direccion)
-        if (perfilDeUsuario.fotoPerfilUri != null) {
+        if (perfilDeUsuario.usuario.fotoPerfilUri != null) {
             Glide
                 .with(this)
-                .load(perfilDeUsuario.fotoPerfilUri)
+                .load(perfilDeUsuario.usuario.fotoPerfilUri)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .into(imagen_perfil)

@@ -12,11 +12,4 @@ enum class EstadoContacto(val value: String) {
     }
 }
 
-class PerfilDeUsuario(val usuario: Usuario, val nombre: String?, val apellido: String?, val telefono: String?, val direccion: String?, val fotoPerfil: String?, val estadoContacto: EstadoContacto?, var solicitudId: Long?) {
-    val fotoPerfilUri: Uri?
-        get() {
-            if (fotoPerfil != null)
-                return Uri.parse(fotoPerfil)
-            return null
-        }
-}
+class PerfilDeUsuario(val usuario: Usuario, val nombre: String?, val apellido: String?, val telefono: String?, val direccion: String?, val estadoContacto: EstadoContacto?, var solicitudId: Long?)

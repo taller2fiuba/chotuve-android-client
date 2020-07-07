@@ -1,6 +1,7 @@
 package com.taller2.chotuve.vista.chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Mensaje
 import com.taller2.chotuve.modelo.Modelo
@@ -20,6 +20,7 @@ import com.taller2.chotuve.vista.componentes.MensajeViewHolder
 import kotlinx.android.synthetic.main.fragment_mensajes.*
 
 class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
+    // TODO sacar hello-firebase
     val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
     private val MENSAJE_MIO = 0
     private val MENSAJE_OTRO = 1
@@ -44,7 +45,23 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
         top_bar_destinatario.setNavigationOnClickListener {
             fragmentManager!!.popBackStack()
         }
+        firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
+        ocultarCargandoSiChatAunNoExiste()
         configurarRecyclerView()
+    }
+
+    fun ocultarCargandoSiChatAunNoExiste() {
+        firebaseDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("vista", error.message)
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!snapshot.hasChild(MENSAJES_CHILD)) {
+                    cargando_mensajes_barra_progreso.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun irAPerfilDeUsuario(usuario: Usuario) {
@@ -58,7 +75,6 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment() {
     private fun configurarRecyclerView() {
         linearLayoutManager.stackFromEnd = true
         mensajes_recycler_view.layoutManager = linearLayoutManager
-        firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
 
         val mensajesRef: DatabaseReference = firebaseDatabaseReference.child(MENSAJES_CHILD)
 

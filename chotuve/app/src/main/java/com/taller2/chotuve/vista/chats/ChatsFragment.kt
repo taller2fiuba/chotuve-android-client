@@ -18,7 +18,9 @@ import com.taller2.chotuve.modelo.Chat
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
+import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.ChatViewHolder
+import com.taller2.chotuve.vista.contactos.ContactosFragment
 import com.taller2.chotuve.vista.contactos.VistaContactos
 import kotlinx.android.synthetic.main.fragment_chats.*
 
@@ -26,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_chats.*
 class ChatsFragment : Fragment(), VistaContactos {
     // TODO mucho codigo repetido con mensajes fragment y con videos adapter
     private val miUsuarioId = Modelo.instance.id
+    // TODO sacar hello-firebase
     val CHATS_CHILD = "hello-firebase/chats/$miUsuarioId"
     private val presentadorContactos = PresentadorContactos(this)
     private lateinit var contactos: Map<Long, Usuario>
@@ -50,6 +53,20 @@ class ChatsFragment : Fragment(), VistaContactos {
         this.contactos = contactos.map { it.id to it }.toMap()
         firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         mostrarSinChatsSiAunNoHayChats()
+        nuevo_chat_boton.setOnClickListener {
+            val newFragment = ContactosFragment(fragmentManager!!, false) { usuario: Usuario ->
+                fragmentManager!!.popBackStack()
+                val newFragment = MensajesFragment(generarKey(usuario.id), usuario)
+                val transaction = fragmentManager!!.beginTransaction().hide(this)
+                transaction.add(R.id.fragment_container, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+            val transaction = fragmentManager!!.beginTransaction().hide(this)
+            transaction.add(R.id.fragment_container, newFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
         configurarRecyclerView()
         firebaseAdapter.startListening()
     }
@@ -57,6 +74,7 @@ class ChatsFragment : Fragment(), VistaContactos {
     fun mostrarSinChatsSiAunNoHayChats() {
         firebaseDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
+                Log.d("vista", error.message)
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -73,6 +91,14 @@ class ChatsFragment : Fragment(), VistaContactos {
         Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
     }
 
+    private fun generarKey(usuarioId: Long): String {
+        return if (usuarioId > miUsuarioId!!) {
+            "$miUsuarioId-$usuarioId"
+        } else {
+            "$usuarioId-$miUsuarioId"
+        }
+    }
+
 
     private fun configurarRecyclerView() {
         chats_recycler_view.layoutManager = linearLayoutManager
@@ -83,11 +109,7 @@ class ChatsFragment : Fragment(), VistaContactos {
             SnapshotParser<Chat> { dataSnapshot ->
                 val chat: Chat = dataSnapshot.getValue(Chat::class.java)!!
                 val destinatarioId = dataSnapshot.key!!.toLong()
-                if (destinatarioId > miUsuarioId!!) {
-                    chat.key = "$miUsuarioId-$destinatarioId"
-                } else {
-                    chat.key = "$destinatarioId-$miUsuarioId"
-                }
+                chat.key = generarKey(destinatarioId)
                 chat.destinatario = contactos[destinatarioId]
                 chat
             }

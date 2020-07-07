@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.contactos.ContactosFragment
 
 class PerfilViewPagerFragment(val usuarioId: Long?) : Fragment() {
@@ -38,7 +40,13 @@ class PerfilViewPagerFragment(val usuarioId: Long?) : Fragment() {
         // contactos solo en mi perfil
         // TODO ver si se pueden ver contactos de contactos o de todos
         if (usuarioId == null) {
-            viewPagerAdapter.addFragment(ContactosFragment.newInstance(fragmentManager!!), "contactos")
+            viewPagerAdapter.addFragment(ContactosFragment(fragmentManager!!, true) { usuario: Usuario ->
+                val newFragment = SeccionFragment.perfil(usuario.id)
+                val transicion = fragmentManager!!.beginTransaction()
+                transicion.replace(R.id.fragment_container, newFragment)
+                transicion.addToBackStack(null)
+                transicion.commit()
+            }, "contactos")
         }
         viewPager.adapter = viewPagerAdapter
     }

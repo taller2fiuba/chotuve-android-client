@@ -22,7 +22,7 @@ class VideosFragment(val usuarioId: Long?) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_mis_videos, container, false)  as View
+        val view = inflater.inflate(R.layout.fragment_videos, container, false)  as View
         val fab = view.findViewById(R.id.subir_video_boton) as FloatingActionButton
         if (usuarioId != null) {
             fab.visibility = View.GONE

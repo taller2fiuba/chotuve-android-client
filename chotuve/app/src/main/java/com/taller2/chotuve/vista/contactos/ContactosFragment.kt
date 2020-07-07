@@ -12,16 +12,10 @@ import androidx.fragment.app.FragmentManager
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
-import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.UsuarioView
 import kotlinx.android.synthetic.main.fragment_contactos.*
 
-class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaContactos {
-    companion object {
-        fun newInstance(fm: FragmentManager): ContactosFragment =
-            ContactosFragment(fm)
-    }
-
+class ContactosFragment(private val fm: FragmentManager, private val mostrarSolicitudes: Boolean, private val clickListener: (Usuario) -> Int) : Fragment(), VistaContactos {
     private val presentador = PresentadorContactos(this)
 
     override fun onCreateView(
@@ -33,17 +27,23 @@ class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaCont
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        boton_ver_solicitudes.setOnClickListener {
-            val newFragment = SolicitudesDeContactoFragment()
-            val transicion = fm.beginTransaction()
-            transicion.replace(R.id.fragment_container, newFragment)
-            transicion.addToBackStack(null)
-            transicion.commit()
+        if (mostrarSolicitudes) {
+            boton_ver_solicitudes.setOnClickListener {
+                val newFragment = SolicitudesDeContactoFragment()
+                val transicion = fm.beginTransaction()
+                transicion.replace(R.id.fragment_container, newFragment)
+                transicion.addToBackStack(null)
+                transicion.commit()
+            }
+        } else {
+            boton_ver_solicitudes_divider.visibility = View.GONE
+            boton_ver_solicitudes.visibility = View.GONE
         }
         presentador.obtenerContactos()
     }
 
     override fun mostrarContactos(contactos: List<Usuario>) {
+        // TODO ordenar alfabeticamente
         contactos.forEach { usuario: Usuario ->
             val usuarioView = UsuarioView(context!!)
             usuarioView.setUsuario(usuario)
@@ -54,7 +54,7 @@ class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaCont
             params.setMargins(8, 8, 0, 8)
             usuarioView.layoutParams = params
             usuarioView.setOnClickListener {
-                irAPerfilDeUsuario(usuario.id)
+                clickListener(usuario)
             }
             contactos_container.addView(usuarioView)
         }
@@ -63,14 +63,6 @@ class ContactosFragment(private val fm: FragmentManager) : Fragment(), VistaCont
         if (contactos.isEmpty()) {
             aun_no_tenes_contactos.visibility = View.VISIBLE
         }
-    }
-
-    fun irAPerfilDeUsuario(usuarioId: Long) {
-        val newFragment = SeccionFragment.perfil(usuarioId)
-        val transicion = fm.beginTransaction()
-        transicion.replace(R.id.fragment_container, newFragment)
-        transicion.addToBackStack(null)
-        transicion.commit()
     }
 
     override fun setErrorRed() {

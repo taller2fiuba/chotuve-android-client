@@ -31,4 +31,14 @@
         android:indeterminateTint="@color/colorSecondary"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nuevo_chat_boton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:contentDescription="chat"
+        android:src="@drawable/ic_add_black_24dp"/>
 </RelativeLayout>

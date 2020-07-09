@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -18,24 +19,21 @@ import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorMensajes
 import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.MensajeViewHolder
+import com.taller2.chotuve.vista.scroll_infinito.MensajesAdapter
 import kotlinx.android.synthetic.main.fragment_mensajes.*
 
-class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), VistaMensajes {
-    // TODO sacar hello-firebase
-    val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
-    private val MENSAJE_MIO = 0
-    private val MENSAJE_OTRO = 1
-    private val miUsuarioId = Modelo.instance.id
-    private lateinit var firebaseDatabaseReference: DatabaseReference
-    private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>
-    private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
+class MensajesFragment(chatKey: String, val destinario: Usuario) : FirebaseRTDBFragment(), VistaMensajes {
+    private val MENSAJES_CHILD = "$RTDB_NODE/$RTDB_NODE_MENSAJES/$chatKey"
+
     private val presentador = PresentadorMensajes(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_mensajes, container, false)
+        val view = inflater.inflate(R.layout.fragment_mensajes, container, false)
+        recyclerView = mensajes_recycler_view
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,23 +56,14 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), V
                 }
             }
         }
-        firebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         ocultarCargandoSiChatAunNoExiste()
         configurarRecyclerView()
     }
 
     fun ocultarCargandoSiChatAunNoExiste() {
-        firebaseDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("vista", error.message)
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (!snapshot.hasChild(MENSAJES_CHILD)) {
-                    cargando_mensajes_barra_progreso.visibility = View.GONE
-                }
-            }
-        })
+        ejecutarAccionSiChildNoExiste(MENSAJES_CHILD) {
+            cargando_mensajes_barra_progreso.visibility = View.GONE
+        }
     }
 
     private fun irAPerfilDeUsuario(usuario: Usuario) {
@@ -87,7 +76,6 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), V
 
     private fun configurarRecyclerView() {
         linearLayoutManager.stackFromEnd = true
-        mensajes_recycler_view.layoutManager = linearLayoutManager
 
         val mensajesRef: DatabaseReference = firebaseDatabaseReference.child(MENSAJES_CHILD)
 
@@ -95,39 +83,8 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), V
             FirebaseRecyclerOptions.Builder<Mensaje>()
                 .setQuery(mensajesRef.orderByChild("timestamp"), Mensaje::class.java)
                 .build()
-        firebaseAdapter =
-            object : FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>(options) {
-                override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MensajeViewHolder {
-                    val inflater = LayoutInflater.from(viewGroup.context)
-                    var viewHolder: MensajeViewHolder? = null
-                    when (viewType) {
-                        MENSAJE_MIO -> {
-                            val viewMensajeMio: View =
-                                inflater.inflate(R.layout.componente_mensaje_mio, viewGroup, false)
-                            viewHolder =  MensajeViewHolder(viewMensajeMio)
-                        }
-                        MENSAJE_OTRO -> {
-                            val viewMensajeOtro: View =
-                                inflater.inflate(R.layout.componente_mensaje_otro, viewGroup, false)
-                            viewHolder = MensajeViewHolder(viewMensajeOtro)
-                        }
-                    }
-                    return viewHolder!!
-                }
 
-                override fun getItemViewType(position: Int): Int {
-                    return if (getItem(position).enviadoPor == miUsuarioId) MENSAJE_MIO else MENSAJE_OTRO
-                }
-
-                override fun onBindViewHolder(
-                    viewHolder: MensajeViewHolder,
-                    position: Int,
-                    mensaje: Mensaje
-                ) {
-                    cargando_mensajes_barra_progreso.visibility = View.GONE
-                    viewHolder.setMensaje(mensaje)
-                }
-            }
+        firebaseAdapter = MensajesAdapter(this, miUsuarioId!!, options) as FirebaseRecyclerAdapter<Any?, RecyclerView.ViewHolder>
 
         firebaseAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -136,7 +93,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), V
                 val ultimoItemVisible: Int = linearLayoutManager.findLastCompletelyVisibleItemPosition()
                 // Si es la carga inicial del recycler o
                 // estoy parado en el fondo de la lista
-                // entonces ir al fondo de la lista y mostrar el nuevo mensaje
+                // entonces ir al nuevo fondo de la lista para mostrar el nuevo mensaje
                 if (ultimoItemVisible == -1 ||
                     positionStart >= mensajeCantidad - 1 &&
                     ultimoItemVisible == positionStart - 1
@@ -146,28 +103,12 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), V
             }
         })
 
-        mensajes_recycler_view.adapter = firebaseAdapter
+        recyclerView.adapter = firebaseAdapter
+        firebaseAdapter.startListening()
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (this::firebaseAdapter.isInitialized) {
-            firebaseAdapter.startListening()
-        }
-    }
-
-    override fun onPause() {
-        if (this::firebaseAdapter.isInitialized) {
-            firebaseAdapter.stopListening()
-        }
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (this::firebaseAdapter.isInitialized) {
-            firebaseAdapter.startListening()
-        }
+    fun mensajesCargados() {
+        cargando_mensajes_barra_progreso.visibility = View.GONE
     }
 
     override fun mensajeEnviado() {
@@ -180,5 +121,4 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), V
         creando_mensaje_barra_progreso.visibility = View.GONE
         boton_enviar_mensaje.visibility = View.VISIBLE
     }
-
 }

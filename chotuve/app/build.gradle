@@ -21,6 +21,27 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_BASE_URL", "\"https://chotuve-app-server.herokuapp.com\""
+            buildConfigField "String", "RTDB_NODE", "\"app-server-prod\""
+            buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS
+            buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
+        }
+
+        // esto esta mal en realidad, no deberia poder pegarle a prod desde android studio
+        prod {
+            initWith debug
+            buildConfigField "String", "API_BASE_URL", "\"https://chotuve-app-server.herokuapp.com\""
+            buildConfigField "String", "RTDB_NODE", "\"app-server-prod\""
+            buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS
+            buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
+        }
+
+        dev {
+            initWith debug
+            buildConfigField "String", "API_BASE_URL", "\"http://10.0.2.2:28080/\""
+            buildConfigField "String", "RTDB_NODE", "\"app-server-dev\""
+            buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS
+            buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
         }
     }
 

@@ -12,10 +12,8 @@ import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 interface AppServerService {
-    // factory method
     companion object {
-        // private const val BASE_URL: String = "http://10.0.2.2:28080/"
-        private const val BASE_URL: String = "https://chotuve-app-server.herokuapp.com/"
+        private val BASE_URL: String = com.taller2.chotuve.BuildConfig.API_BASE_URL
 
         fun create(userToken: String? = null): AppServerService {
             var httpClient = OkHttpClient.Builder()

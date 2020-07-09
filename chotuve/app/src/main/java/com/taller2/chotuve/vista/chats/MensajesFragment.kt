@@ -21,11 +21,15 @@ import com.taller2.chotuve.vista.componentes.MensajeViewHolder
 import kotlinx.android.synthetic.main.fragment_mensajes.*
 
 class MensajesFragment(chatKey: String, val destinario: Usuario) : Fragment(), VistaMensajes {
-    // TODO sacar hello-firebase
-    val MENSAJES_CHILD = "hello-firebase/mensajes/$chatKey"
+    private val RTDB_NODE = com.taller2.chotuve.BuildConfig.RTDB_NODE
+    private val RTDB_NODE_MENSAJES = com.taller2.chotuve.BuildConfig.RTDB_NODE_MENSAJES
+    val MENSAJES_CHILD = "$RTDB_NODE/$RTDB_NODE_MENSAJES/$chatKey"
+
     private val MENSAJE_MIO = 0
     private val MENSAJE_OTRO = 1
+
     private val miUsuarioId = Modelo.instance.id
+
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Mensaje, MensajeViewHolder>
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)

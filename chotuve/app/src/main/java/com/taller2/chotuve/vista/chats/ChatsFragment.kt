@@ -27,9 +27,12 @@ import kotlinx.android.synthetic.main.fragment_chats.*
 class ChatsFragment : Fragment(), VistaContactos {
     // TODO mucho codigo repetido con mensajes fragment y con videos adapter
     private val miUsuarioId = Modelo.instance.id
-    // TODO sacar hello-firebase
-    val CHATS_CHILD = "hello-firebase/chats/$miUsuarioId"
+    private val RTDB_NODE = com.taller2.chotuve.BuildConfig.RTDB_NODE
+    private val RTDB_NODE_CHATS = com.taller2.chotuve.BuildConfig.RTDB_NODE_CHATS
+    private val CHATS_CHILD = "$RTDB_NODE/$RTDB_NODE_CHATS/$miUsuarioId"
+
     private val presentadorContactos = PresentadorContactos(this)
+
     private lateinit var contactos: Map<Long, Usuario>
     private lateinit var firebaseDatabaseReference: DatabaseReference
     private lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Chat, ChatViewHolder>

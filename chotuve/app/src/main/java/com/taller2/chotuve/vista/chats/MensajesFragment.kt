@@ -31,9 +31,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : FirebaseRTDBF
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_mensajes, container, false)
-        recyclerView = mensajes_recycler_view
-        return view
+        return inflater.inflate(R.layout.fragment_mensajes, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,6 +73,8 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : FirebaseRTDBF
     }
 
     private fun configurarRecyclerView() {
+        linearLayoutManager = LinearLayoutManager(context)
+        mensajes_recycler_view.layoutManager = linearLayoutManager
         linearLayoutManager.stackFromEnd = true
 
         val mensajesRef: DatabaseReference = firebaseDatabaseReference.child(MENSAJES_CHILD)
@@ -103,7 +103,7 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : FirebaseRTDBF
             }
         })
 
-        recyclerView.adapter = firebaseAdapter
+        mensajes_recycler_view.adapter = firebaseAdapter
         firebaseAdapter.startListening()
     }
 

@@ -1,8 +1,6 @@
 package com.taller2.chotuve.vista.chats
 
-import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,14 +18,6 @@ open class FirebaseRTDBFragment : Fragment() {
     protected val firebaseDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
     protected lateinit var linearLayoutManager: LinearLayoutManager
     protected lateinit var firebaseAdapter: FirebaseRecyclerAdapter<Any?, RecyclerView.ViewHolder>
-    protected lateinit var recyclerView: RecyclerView
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = linearLayoutManager
-    }
 
     protected fun ejecutarAccionSiChildNoExiste(child: String, accion: () -> Unit) {
         firebaseDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {

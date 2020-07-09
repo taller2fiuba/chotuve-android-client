@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -30,9 +31,7 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_chats, container, false)
-        recyclerView = chats_recycler_view
-        return view
+        return inflater.inflate(R.layout.fragment_chats, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,6 +61,8 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
     }
 
     private fun configurarRecyclerView() {
+        linearLayoutManager = LinearLayoutManager(context)
+        chats_recycler_view.layoutManager = linearLayoutManager
         val chatsRef: DatabaseReference = firebaseDatabaseReference.child(CHATS_CHILD)
 
         val parser =
@@ -78,7 +79,7 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
                 .setQuery(chatsRef.orderByChild("orden"), parser)
                 .build()
         firebaseAdapter = ChatsAdapter(this, options) as FirebaseRecyclerAdapter<Any?, RecyclerView.ViewHolder>
-        recyclerView.adapter = firebaseAdapter
+        chats_recycler_view.adapter = firebaseAdapter
         firebaseAdapter.startListening()
     }
 

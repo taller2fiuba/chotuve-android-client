@@ -21,6 +21,7 @@ fun cargarImagen(usuario: Usuario, imageview: ImageView, fragment: Fragment) {
 }
 
 fun cargarImagen(uri: Uri?, imageview: ImageView, requestManager: RequestManager) {
+    // TODO cargar una imagen default, el de ahora problemas en ver video
     if (uri != null) {
         requestManager
             .load(uri)

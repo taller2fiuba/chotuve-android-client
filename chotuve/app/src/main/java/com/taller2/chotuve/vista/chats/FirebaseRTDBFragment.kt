@@ -8,7 +8,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
 import com.taller2.chotuve.modelo.Modelo
 
-open class FirebaseRTDBFragment : Fragment() {
+abstract class FirebaseRTDBFragment : Fragment() {
     protected val miUsuarioId = Modelo.instance.id
     protected val RTDB_NODE = com.taller2.chotuve.BuildConfig.RTDB_NODE
     private val RTDB_NODE_CHATS = com.taller2.chotuve.BuildConfig.RTDB_NODE_CHATS

@@ -12,4 +12,11 @@ enum class EstadoContacto(val value: String) {
     }
 }
 
-class PerfilDeUsuario(val usuario: Usuario, val nombre: String?, val apellido: String?, val telefono: String?, val direccion: String?, val estadoContacto: EstadoContacto?, var solicitudId: Long?)
+class PerfilDeUsuario(val usuario: Usuario,
+                      val nombre: String?,
+                      val apellido: String?,
+                      val telefono: String?,
+                      val direccion: String?,
+                      val estadoContacto: EstadoContacto?,
+                      var solicitudId: Long?,
+                      val cantidadContactos: Long)

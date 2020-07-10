@@ -89,7 +89,8 @@ class InteractorPerfil {
             getString(data, "telefono"),
             getString(data, "direccion"),
             if (estadoContacto != null) EstadoContacto.getByValue(estadoContacto) else null,
-            null
+            null,
+            data.getLong("cantidad-contactos")
         )
     }
 

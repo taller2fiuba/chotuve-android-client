@@ -7,6 +7,6 @@ import com.taller2.chotuve.modelo.Video
 interface VistaVerVideo {
     fun mostrarVideo(video: Video)
     fun mostrarComentarios(comentarios: List<Comentario>)
-    fun agregarNuevoComentario(comentario: String, miPerfil: PerfilDeUsuario)
+    fun agregarNuevoComentario(nuevoComentario: String, miPerfil: PerfilDeUsuario)
     fun setErrorRed()
 }

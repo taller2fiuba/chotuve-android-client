@@ -16,9 +16,32 @@
             android:id="@+id/top_bar_destinatario"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            tools:title="Destinatario"
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
             style="@style/Widget.MaterialComponents.Toolbar.Primary">
+
+            <LinearLayout
+                android:id="@+id/top_bar_destinatario_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/top_bar_destinatario_foto"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_account_box_black_24dp" />
+
+                <TextView
+                    android:id="@+id/top_bar_destinatario_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline5"
+                    tools:text="Destinatario" />
+            </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -5,7 +5,6 @@ import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ComentarioData
 import com.taller2.chotuve.util.deserializarUsuario
 import com.taller2.chotuve.util.deserializarUsuarioId
-import com.taller2.chotuve.util.getString
 import com.taller2.chotuve.util.obtenerFechaDeIso8601
 import retrofit2.Callback
 import okhttp3.ResponseBody
@@ -13,7 +12,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
-import java.text.SimpleDateFormat
 
 class InteractorVerVideo {
     interface CallbackVerVideo {
@@ -43,12 +41,7 @@ class InteractorVerVideo {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 when (response.code()) {
                     200 -> {
-                        val iso8601Format =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                        val dmyFormat = SimpleDateFormat("dd/MM/yyyy")
-
                         val objeto = JSONObject(response.body()!!.string())
-                        val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
                         val autorJson = objeto.getJSONObject("autor")
                         val autor = deserializarUsuario(autorJson)
@@ -65,9 +58,10 @@ class InteractorVerVideo {
                             objeto.getString("id"),
                             objeto.getString("titulo"),
                             autor,
-                            dmyFormat.format(creacion!!),
+                            obtenerFechaDeIso8601(objeto.getString("creacion")),
                             objeto.getString("descripcion"),
                             objeto.getLong("duracion"),
+                            objeto.getLong("cantidad-comentarios"),
                             reacciones
                         ))
                     }

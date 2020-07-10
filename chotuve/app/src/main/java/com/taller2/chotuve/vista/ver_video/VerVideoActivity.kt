@@ -108,6 +108,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         }
         this.video = video
         setearReacciones(video.reacciones!!.miReaccion, null)
+        setearCantidadDeComentarios(video.cantidadComentarios)
         inicializarReproductor()
         presentador.obtenerComentarios(video.id, 0)
         // arrancar fuera de la pantalla
@@ -183,6 +184,11 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         video!!.reacciones!!.meGustas = nuevaCantidadMeGusta
         video!!.reacciones!!.noMeGustas = nuevaCantidadNoMeGusta
         video!!.reacciones!!.miReaccion = reaccionNueva
+    }
+
+    fun setearCantidadDeComentarios(cantidad: Long) {
+        cantidad_comentarios_extendido.text = cantidad.toString()
+        cantidad_comentarios.text = cantidad.toString()
     }
 
     private fun colorear(boton: ImageButton, color: Int) {
@@ -365,10 +371,11 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
 
     override fun agregarNuevoComentario(nuevoComentario: String, miPerfil: PerfilDeUsuario) {
         comentario.editText?.setText("")
+        video!!.cantidadComentarios++
+        setearCantidadDeComentarios(video!!.cantidadComentarios)
         crear_comentario_boton.visibility = View.VISIBLE
         creando_comentario_barra_progreso.visibility = View.GONE
         adapter.add(0, Comentario(miPerfil.usuario, formatearFechaSegunDia(LocalDateTime.now()), nuevoComentario))
         comentarios_recycler_view.smoothScrollToPosition(0)
-
     }
 }

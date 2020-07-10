@@ -1,7 +1,5 @@
 package com.taller2.chotuve.vista.componentes
 
-import android.media.Image
-import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView

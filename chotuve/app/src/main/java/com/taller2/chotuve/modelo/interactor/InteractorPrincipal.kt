@@ -7,6 +7,7 @@ import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.util.deserializarUsuario
 import com.taller2.chotuve.util.getString
+import com.taller2.chotuve.util.obtenerFechaDeIso8601
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import retrofit2.Call
@@ -32,14 +33,10 @@ class InteractorPrincipal {
                         200 -> {
                             val json = JSONArray(response.body()!!.string())
                             val ret = mutableListOf<Video>()
-                            val iso8601Format =
-                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                            val dmyFormat = SimpleDateFormat("dd/MM/yyyy")
+
                             for (i in 0 until json.length()) {
                                 val objeto = json.getJSONObject(i)
-                                val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
-                                // TODO codigo repetido con interactorVerVideo, ver manera de volar esto con Moshi (?)
                                 val autorJson = objeto.getJSONObject("autor")
                                 val autor = deserializarUsuario(autorJson)
 
@@ -48,7 +45,7 @@ class InteractorPrincipal {
                                     objeto.getString("id"),
                                     objeto.getString("titulo"),
                                     autor,
-                                    dmyFormat.format(creacion!!),
+                                    obtenerFechaDeIso8601(objeto.getString("creacion")),
                                     objeto.getString("descripcion"),
                                     objeto.getLong("duracion")
                                 ))

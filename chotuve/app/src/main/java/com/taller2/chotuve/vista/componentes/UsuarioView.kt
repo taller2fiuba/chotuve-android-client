@@ -7,12 +7,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.util.cargarImagen
-import kotlinx.android.synthetic.main.fragment_editar_informacion.*
 
 class UsuarioView constructor(context: Context, attrs: AttributeSet?) :  FrameLayout(context, attrs) {
     private var usuarioEmail: TextView

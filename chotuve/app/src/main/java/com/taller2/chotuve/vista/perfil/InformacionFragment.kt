@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.EstadoContacto
 import com.taller2.chotuve.modelo.PerfilDeUsuario

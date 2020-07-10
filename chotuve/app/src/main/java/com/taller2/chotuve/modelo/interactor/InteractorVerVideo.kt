@@ -3,6 +3,8 @@ package com.taller2.chotuve.modelo.interactor
 import android.util.Log
 import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ComentarioData
+import com.taller2.chotuve.util.deserializarUsuario
+import com.taller2.chotuve.util.deserializarUsuarioId
 import com.taller2.chotuve.util.getString
 import com.taller2.chotuve.util.obtenerFechaDeIso8601
 import retrofit2.Callback
@@ -49,12 +51,7 @@ class InteractorVerVideo {
                         val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
                         val autorJson = objeto.getJSONObject("autor")
-
-                        val autor = Usuario(
-                            autorJson.getLong("usuario_id"),
-                            getString(autorJson, "email")!!,
-                            getString(autorJson, "foto")
-                        )
+                        val autor = deserializarUsuario(autorJson)
 
                         val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.getByValue(objeto.getString("mi-reaccion")) else null
                         val reacciones = Reacciones(
@@ -155,11 +152,7 @@ class InteractorVerVideo {
 
             comentarios.add(
                 Comentario(
-                    Usuario(
-                        autor.getLong("id"),
-                        getString(autor, "email")!!,
-                        getString(autor, "foto")
-                    ),
+                    deserializarUsuarioId(autor),
                     obtenerFechaDeIso8601(obj.getString("fecha")),
                     obj.getString("comentario")
                 )

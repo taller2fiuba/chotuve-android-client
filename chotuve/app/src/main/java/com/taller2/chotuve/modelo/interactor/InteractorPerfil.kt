@@ -4,6 +4,7 @@ import com.taller2.chotuve.modelo.EstadoContacto
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.modelo.Usuario
+import com.taller2.chotuve.util.deserializarUsuarioId
 import com.taller2.chotuve.util.getString
 import retrofit2.Callback
 import okhttp3.ResponseBody
@@ -82,7 +83,7 @@ class InteractorPerfil {
         val data = JSONObject(body)
         val estadoContacto = getString(data, "estado-contacto")
         return PerfilDeUsuario(
-            Usuario(data.getLong("id"), getString(data, "email")!!, getString(data, "foto")),
+            deserializarUsuarioId(data),
             getString(data, "nombre"),
             getString(data, "apellido"),
             getString(data, "telefono"),

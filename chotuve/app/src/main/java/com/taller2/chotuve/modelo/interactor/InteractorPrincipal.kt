@@ -5,6 +5,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Video
+import com.taller2.chotuve.util.deserializarUsuario
 import com.taller2.chotuve.util.getString
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -40,7 +41,7 @@ class InteractorPrincipal {
 
                                 // TODO codigo repetido con interactorVerVideo, ver manera de volar esto con Moshi (?)
                                 val autorJson = objeto.getJSONObject("autor")
-                                val autor = Usuario(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"), getString(autorJson, "foto"))
+                                val autor = deserializarUsuario(autorJson)
 
                                 ret.add(Video(
                                     objeto.getString("url"),

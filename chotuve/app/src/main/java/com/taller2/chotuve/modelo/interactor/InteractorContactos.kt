@@ -5,10 +5,11 @@ import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ResponderSolicitudDeContactoData
 import com.taller2.chotuve.modelo.data.RespuestaSolicitudDeContacto
 import com.taller2.chotuve.modelo.data.SolicitudDeContactoData
+import com.taller2.chotuve.util.deserializarUsuario
+import com.taller2.chotuve.util.deserializarUsuarioId
 import retrofit2.Callback
 import okhttp3.ResponseBody
 import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -45,7 +46,7 @@ class InteractorContactos {
                             for (i in 0 until json.length()) {
                                 val objeto = json.getJSONObject(i)
 
-                                ret.add(Usuario(objeto.getString("id").toLong(), objeto.getString("email")))
+                                ret.add(deserializarUsuarioId(objeto))
                             }
                             callback.onObtenerExitoso(ret)
                         }
@@ -73,10 +74,7 @@ class InteractorContactos {
                                 ret.add(
                                     SolicitudDeContacto(
                                         objeto.getString("id").toLong(),
-                                        Usuario(
-                                            objeto.getString("usuario_id").toLong(),
-                                            objeto.getString("email")
-                                        )
+                                        deserializarUsuario(objeto)
                                     )
                                 )
                             }

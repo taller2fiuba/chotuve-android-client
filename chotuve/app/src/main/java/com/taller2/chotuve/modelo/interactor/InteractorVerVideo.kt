@@ -4,6 +4,7 @@ import android.util.Log
 import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ComentarioData
 import com.taller2.chotuve.util.getString
+import com.taller2.chotuve.util.obtenerFechaDeIso8601
 import retrofit2.Callback
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -23,7 +24,7 @@ class InteractorVerVideo {
     }
 
     interface CallbackComentar {
-        fun onComentarioCreado(comentario: String)
+        fun onComentarioCreado(comentario: String, miPerfil: PerfilDeUsuario)
         fun onErrorRed()
     }
 
@@ -33,6 +34,7 @@ class InteractorVerVideo {
     }
 
     private val chotuveClient = Modelo.instance.chotuveClient
+    private val interactorPerfil = InteractorPerfil()
 
     fun obtenerVideo(id: String, callbackVerVideo: CallbackVerVideo) {
         chotuveClient.obtenerVideo(id).enqueue(object : Callback<ResponseBody> {
@@ -47,7 +49,12 @@ class InteractorVerVideo {
                         val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
                         val autorJson = objeto.getJSONObject("autor")
-                        val autor = Usuario(autorJson.getLong("usuario_id"), getString(autorJson, "email")!!, getString(autorJson, "foto"))
+
+                        val autor = Usuario(
+                            autorJson.getLong("usuario_id"),
+                            getString(autorJson, "email")!!,
+                            getString(autorJson, "foto")
+                        )
 
                         val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.getByValue(objeto.getString("mi-reaccion")) else null
                         val reacciones = Reacciones(
@@ -98,7 +105,20 @@ class InteractorVerVideo {
                 val responseCode = response.code()
                 if (responseCode == 201) {
                     Log.d("modelo", "Comentario creado")
-                    callbackComentar.onComentarioCreado(comentario)
+                    interactorPerfil.cargarMiPerfil(object : InteractorPerfil.CallbackCargarPerfil {
+                        override fun onExito(perfilDeUsuario: PerfilDeUsuario) {
+                            callbackComentar.onComentarioCreado(comentario, perfilDeUsuario)
+                        }
+
+                        override fun onError() {
+                            Log.d("modelo", "Error al comentar")
+                        }
+
+                        override fun onErrorRed() {
+                            Log.d("modelo", "Error al comentar")
+                            callbackComentar.onErrorRed()
+                        }
+                    })
                 } else {
                     Log.d("modelo", "Error al comentar")
                     callbackComentar.onErrorRed()
@@ -123,32 +143,24 @@ class InteractorVerVideo {
                 }
             }
         )
-        // callbackVerComentarios.onExito(listOf(Comentario(Autor(1, "franco"), "16/04/2020", "hola todo bien?")))
     }
 
     private fun deserializarComentarios(jsonData: String): List<Comentario> {
-        val iso8601Format =
-            SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS")
-        val dmyFormat = SimpleDateFormat("dd/MM/yyyy")
         val data = JSONArray(jsonData)
         val comentarios = mutableListOf<Comentario>()
 
         for (i in 0 until data.length()) {
             val obj = data.getJSONObject(i)
             val autor = obj.getJSONObject("autor")
-            var fecha = obj.getString("fecha")
-            // Cortar el +00:00 que API 23 no entiende
-            fecha = fecha.substring(0, fecha.length - 6)
 
             comentarios.add(
                 Comentario(
                     Usuario(
                         autor.getLong("id"),
-                        autor.getString("email")
+                        getString(autor, "email")!!,
+                        getString(autor, "foto")
                     ),
-                    dmyFormat.format(
-                        iso8601Format.parse(obj.getString("fecha"))!!
-                    ),
+                    obtenerFechaDeIso8601(obj.getString("fecha")),
                     obj.getString("comentario")
                 )
             )

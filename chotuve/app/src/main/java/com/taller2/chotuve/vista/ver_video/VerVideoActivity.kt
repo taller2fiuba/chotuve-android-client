@@ -28,12 +28,14 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.presentador.PresentadorVerVideo
+import com.taller2.chotuve.util.formatearFechaSegunDia
 import com.taller2.chotuve.util.obtenerAltoVideo
 import com.taller2.chotuve.vista.principal.ID_KEY
 import com.taller2.chotuve.vista.scroll_infinito.ComentariosAdapter
 import com.taller2.chotuve.vista.scroll_infinito.ScrollInfinitoListener
 import kotlinx.android.synthetic.main.controles_reproductor_video.*
 import kotlinx.android.synthetic.main.ver_video.*
+import org.joda.time.LocalDateTime
 
 const val USUARIO_ID_KEY = "com.taller2.chotuve.USUARIO_ID_KEY"
 
@@ -361,12 +363,11 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         }
     }
 
-    override fun agregarNuevoComentario(nuevoComentario: String) {
+    override fun agregarNuevoComentario(nuevoComentario: String, miPerfil: PerfilDeUsuario) {
         comentario.editText?.setText("")
         crear_comentario_boton.visibility = View.VISIBLE
         creando_comentario_barra_progreso.visibility = View.GONE
-        // TODO obtener mi perfil para no poner tú de email o poner tu a todos mis comentarios
-        adapter.add(0, Comentario(Usuario(modelo.id!!, "tú"), "Ahora mismo", nuevoComentario))
+        adapter.add(0, Comentario(miPerfil.usuario, formatearFechaSegunDia(LocalDateTime.now()), nuevoComentario))
         comentarios_recycler_view.smoothScrollToPosition(0)
 
     }

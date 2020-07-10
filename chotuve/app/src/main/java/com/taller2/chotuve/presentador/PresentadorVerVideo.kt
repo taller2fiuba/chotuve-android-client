@@ -47,8 +47,8 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
                 vista.setErrorRed()
             }
 
-            override fun onComentarioCreado(comentario: String) {
-                vista.agregarNuevoComentario(comentario)
+            override fun onComentarioCreado(comentario: String, miPerfil: PerfilDeUsuario) {
+                vista.agregarNuevoComentario(comentario, miPerfil)
             }
         })
     }

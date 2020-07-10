@@ -36,8 +36,7 @@ android {
             buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
         }
 
-        dev {
-            initWith debug
+        debug {
             buildConfigField "String", "API_BASE_URL", "\"http://10.0.2.2:28080/\""
             buildConfigField "String", "RTDB_NODE", "\"app-server-dev\""
             buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS

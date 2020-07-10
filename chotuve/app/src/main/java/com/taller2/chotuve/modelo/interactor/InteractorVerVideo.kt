@@ -3,6 +3,7 @@ package com.taller2.chotuve.modelo.interactor
 import android.util.Log
 import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ComentarioData
+import com.taller2.chotuve.util.getString
 import retrofit2.Callback
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -46,7 +47,7 @@ class InteractorVerVideo {
                         val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
                         val autorJson = objeto.getJSONObject("autor")
-                        val autor = Usuario(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
+                        val autor = Usuario(autorJson.getLong("usuario_id"), getString(autorJson, "email")!!, getString(autorJson, "foto"))
 
                         val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.getByValue(objeto.getString("mi-reaccion")) else null
                         val reacciones = Reacciones(

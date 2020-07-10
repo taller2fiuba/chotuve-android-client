@@ -164,19 +164,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reacciones" />
 
-            <TextView
+            <com.taller2.chotuve.vista.componentes.UsuarioView
                 android:id="@+id/autor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="clickAutor"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/div1"
-                tools:text="autor" />
+                app:layout_constraintTop_toBottomOf="@+id/div1"/>
 
             <View
                 android:id="@+id/div2"

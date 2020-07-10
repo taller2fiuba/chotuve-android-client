@@ -15,6 +15,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.EstadoContacto
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
+import com.taller2.chotuve.util.cargarImagen
 import com.taller2.chotuve.vista.autenticacion.IniciarSesionActivity
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
@@ -68,14 +69,7 @@ class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager)
         email.text = perfilDeUsuario.usuario.email
         telefono.text = perfilDeUsuario.telefono ?: AUN_NO_COMPLETADO
         direccion.text = perfilDeUsuario.direccion ?: AUN_NO_COMPLETADO
-        if (perfilDeUsuario.usuario.fotoPerfilUri != null) {
-            Glide
-                .with(this)
-                .load(perfilDeUsuario.usuario.fotoPerfilUri)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .centerCrop()
-                .into(imagen_perfil)
-        }
+        cargarImagen(perfilDeUsuario.usuario, imagen_perfil, this)
         editar_informacion.setOnClickListener {
             irAEditarInformacion()
         }

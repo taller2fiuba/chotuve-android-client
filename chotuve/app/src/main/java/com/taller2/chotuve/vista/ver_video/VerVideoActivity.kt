@@ -77,7 +77,6 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         comentarios_recycler_view.layoutManager = linearLayoutManager
         scrollInfinitoListener = object : ScrollInfinitoListener(linearLayoutManager) {
             override fun onLoadMore(pagina: Int, cantidadDeItems: Int, view: RecyclerView?) {
-                // Se llama cuando hay que agregar nuevos videos a la vista
                 comentarios_recycler_view.post {
                     // esto hace que el cargando se ejecute justo despues de que esta funcion termine
                     // ahora no se puede agregar porque no podes agregar items al mismo tiempo que scrolleas
@@ -95,7 +94,10 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         ocultarCargando()
         titulo.text = video.titulo
         creacion.text = video.creacion
-        autor.text = video.autor.email
+        autor.setUsuario(video.autor)
+        autor.setOnClickListener {
+            clickAutor()
+        }
         if (!video.descripcion.isBlank()) {
             descripcion.text = video.descripcion
         } else {
@@ -185,7 +187,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         boton.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, color))
     }
 
-    fun clickAutor(view: View) {
+    fun clickAutor() {
         irAPerfilDeUsuario(video!!.autor.id)
     }
 

@@ -32,6 +32,10 @@ class VideosDeUnUsuarioFragment(val usuarioId: Long, fm: FragmentManager) : Vide
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == SUBIR_VIDEO_REQUEST_CODE) {
             Toast.makeText(context, "Subida Exitosa :)", Toast.LENGTH_LONG).show()
+            fragmentManager!!.beginTransaction()
+              .detach(this)
+              .attach(this)
+              .commit()
         }
     }
 }

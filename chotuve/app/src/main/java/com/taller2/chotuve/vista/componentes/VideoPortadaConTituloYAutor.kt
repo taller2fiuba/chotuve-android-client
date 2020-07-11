@@ -8,23 +8,18 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.util.cargarImagen
 
-
 class VideoPortadaConTituloYAutor(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var portada: VideoPortada = itemView.findViewById<View>(R.id.video_portada) as VideoPortada
     private var titulo: TextView = itemView.findViewById<View>(R.id.titulo) as TextView
     private var autorYCreacion: TextView = itemView.findViewById<View>(R.id.autor_y_creacion) as TextView
     private var usuarioFotoPerfil: ImageView = itemView.findViewById<View>(R.id.usuario_foto_de_perfil) as ImageView
     var id: String? = null
-    var clickListener: Clicklistener? = null
+    lateinit var clickListener: (Int) -> Unit
 
     init {
-        itemView.setOnClickListener { view ->
-            clickListener!!.onItemClick(view, adapterPosition)
+        itemView.setOnClickListener {
+            clickListener(adapterPosition)
         }
-    }
-
-    interface Clicklistener {
-        fun onItemClick(view: View?, position: Int)
     }
 
     fun setVideo(video: Video) {

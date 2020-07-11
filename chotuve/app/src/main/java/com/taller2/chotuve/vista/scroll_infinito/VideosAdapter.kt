@@ -50,10 +50,8 @@ class VideosAdapter(val fragment: MuroDeVideosFragment) : ViewHolderAdapter() {
             val portadaVideo = viewHolder as VideoPortadaConTituloYAutor
             portadaVideo.setVideo(video!!)
 
-            portadaVideo.clickListener = object : VideoPortadaConTituloYAutor.Clicklistener {
-                override fun onItemClick(view: View?, position: Int) {
-                    fragment.verVideo((getItem(position)!! as Video).id)
-                }
+            portadaVideo.clickListener = { positionClickeada: Int ->
+                fragment.verVideo((getItem(positionClickeada)!! as Video).id)
             }
         }
     }

@@ -53,14 +53,12 @@ class ComentariosAdapter(val activity: VerVideoActivity) : ViewHolderAdapter() {
             val comentarioViewHolder = viewHolder as ComentarioViewHolder
             comentarioViewHolder.setComentario(comentario!!)
 
-            comentarioViewHolder.setOnClicklistener(object : ComentarioViewHolder.ClickListener {
-                override fun onItemClick(view: View?, position: Int) {
-                    val comentarioClickeado = getItem(position)!! as Comentario
-                    if (comentarioClickeado.autor.id != activity.modelo.id) {
-                        activity.irAPerfilDeUsuario(comentarioClickeado.autor.id)
-                    }
+            comentarioViewHolder.clickListener = { positionClickeada: Int ->
+                val comentarioClickeado = getItem(positionClickeada)!! as Comentario
+                if (comentarioClickeado.autor.id != activity.modelo.id) {
+                    activity.irAPerfilDeUsuario(comentarioClickeado.autor.id)
                 }
-            })
+            }
         }
     }
 

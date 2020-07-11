@@ -31,7 +31,7 @@ class InteractorFirebase(val carpeta: String) {
                 val progress = (100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount
                 callbackSubirAFirebase.onActualizarProgreso(progress.toInt())
             }
-            .addOnFailureListener { e ->
+            .addOnFailureListener {
                 callbackSubirAFirebase.onErrorSubida()
             }
     }

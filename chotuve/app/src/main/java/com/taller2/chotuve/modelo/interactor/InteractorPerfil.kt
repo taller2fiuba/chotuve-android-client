@@ -24,6 +24,13 @@ class InteractorPerfil {
     private val chotuveClient = modelo.chotuveClient
 
     fun cargarPerfil(usuarioId: Long, callbackCargarPerfil: CallbackCargarPerfil) {
+        if (usuarioId == Modelo.instance.id)
+            cargarMiPerfil(callbackCargarPerfil)
+        else
+            cargarOtroPerfil(usuarioId, callbackCargarPerfil)
+    }
+
+    private fun cargarOtroPerfil(usuarioId: Long, callbackCargarPerfil: CallbackCargarPerfil) {
         chotuveClient.obtenerPerfilUsuario(usuarioId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 when (response.code()) {

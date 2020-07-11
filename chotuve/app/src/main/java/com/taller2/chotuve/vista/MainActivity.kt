@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val principalFragment: Fragment = SeccionFragment.principal()
     private val chatsFragment: Fragment = SeccionFragment.chats()
     private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
-    private val perfilFragment: Fragment = SeccionFragment.perfil(Modelo.instance.id!!)
+    private lateinit var perfilFragment: Fragment
     private var fragmentActivo : Fragment = principalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         else {
             setContentView(R.layout.home)
 
+            perfilFragment = SeccionFragment.perfil(Modelo.instance.id!!)
             supportFragmentManager.beginTransaction().add(R.id.container_navegacion, principalFragment, FRAGMENT_PRINCIPAL_TAG).commit()
 
             navegacion = findViewById(R.id.navegacion)

@@ -7,8 +7,6 @@ import com.taller2.chotuve.modelo.data.InfoInicioSesion
 import org.json.JSONObject;
 import com.taller2.chotuve.modelo.data.InfoRegistro
 import com.taller2.chotuve.modelo.data.Video
-import com.taller2.chotuve.modelo.interactor.InteractorPrincipal
-import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import okhttp3.ResponseBody
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,10 +33,10 @@ class Modelo private constructor() {
             chotuveClient = AppServerService.create(userToken)
         }
 
-    var id: Long? = preferences.getLong("id", 0)
+    var id: Long? = preferences.getString("id", null)?.toLong()
         set(id) {
             with (preferences.edit()) {
-                putLong("id", id!!)
+                putString("id", id.toString())
                 commit()
             }
             field = id
@@ -48,11 +46,12 @@ class Modelo private constructor() {
         private set(valor) { field = valor }
         get() { return field }
 
-    fun estaLogueado() : Boolean = userToken != null
+    fun estaLogueado() : Boolean = userToken != null && id != null
 
     fun cerrarSesion() {
         // TODO deberia avisar al server del cierre de sesion para invalidar el token
         userToken = null
+        id = null
     }
 
     fun registrarUsuario(email: String, clave: String, callbackRegistro: CallbackRegistro) {

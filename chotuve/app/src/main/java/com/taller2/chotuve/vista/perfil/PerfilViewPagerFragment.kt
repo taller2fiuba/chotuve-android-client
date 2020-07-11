@@ -22,7 +22,7 @@ class PerfilViewPagerFragment(val usuarioId: Long) : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_perfil, container, false) as View
 
-        var pager = view.findViewById(R.id.perfil_view_pager) as ViewPager
+        val pager = view.findViewById(R.id.perfil_view_pager) as ViewPager
         setupViewPager(pager)
 
         val toolbar = view.findViewById(R.id.perfil_toolbar) as TabLayout
@@ -37,7 +37,7 @@ class PerfilViewPagerFragment(val usuarioId: Long) : Fragment() {
                 childFragmentManager
             )
         viewPagerAdapter.addFragment(InformacionFragment.newInstance(usuarioId, fragmentManager!!), "información")
-        viewPagerAdapter.addFragment(VideosFragment.newInstance(usuarioId), "videos")
+        viewPagerAdapter.addFragment(VideosDeUnUsuarioFragment(usuarioId, fragmentManager!!), "videos")
         // contactos solo en mi perfil
         // TODO ver si se pueden ver contactos de contactos o de todos
         if (usuarioId == Modelo.instance.id) {

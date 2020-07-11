@@ -10,10 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.Modelo
 
-class VideosFragment(val usuarioId: Long?) : Fragment() {
+class VideosFragment(val usuarioId: Long) : Fragment() {
     companion object {
-        fun newInstance(usuarioId: Long?): VideosFragment =
+        fun newInstance(usuarioId: Long): VideosFragment =
             VideosFragment(usuarioId)
     }
 
@@ -21,13 +22,12 @@ class VideosFragment(val usuarioId: Long?) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_videos, container, false)  as View
         val fab = view.findViewById(R.id.subir_video_boton) as FloatingActionButton
-        if (usuarioId != null) {
+        if (usuarioId != Modelo.instance.id) {
             fab.visibility = View.GONE
         } else {
-            fab.setOnClickListener { view ->
+            fab.setOnClickListener {
                 startActivityForResult(Intent(activity, SubirVideoActivity::class.java), 0)
             }
         }

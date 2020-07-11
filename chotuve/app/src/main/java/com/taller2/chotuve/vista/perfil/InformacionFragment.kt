@@ -11,15 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.EstadoContacto
+import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
 import com.taller2.chotuve.util.cargarImagen
 import com.taller2.chotuve.vista.autenticacion.IniciarSesionActivity
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
-class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager) : Fragment(), VistaInformacion {
+class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) : Fragment(), VistaInformacion {
     companion object {
-        fun newInstance(usuarioId: Long?, fm: FragmentManager): InformacionFragment =
+        fun newInstance(usuarioId: Long, fm: FragmentManager): InformacionFragment =
             InformacionFragment(usuarioId, fm)
     }
 
@@ -38,8 +39,8 @@ class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mostrarCargandoPerfil()
-        if (usuarioId != null) {
-            // perfil de otro usuario
+        // perfil de otro usuario
+        if (usuarioId != Modelo.instance.id) {
             editar_informacion.visibility = View.GONE
             boton_logout.visibility = View.GONE
         } else {
@@ -72,7 +73,7 @@ class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager)
             irAEditarInformacion()
         }
         perfil_cantidad_de_contactos.text = perfilDeUsuario.cantidadContactos.toString()
-        if (usuarioId != null) {
+        if (usuarioId != Modelo.instance.id) {
             when (perfilDeUsuario.estadoContacto) {
                 EstadoContacto.ES_CONTACTO -> boton_en_contactos.visibility = View.VISIBLE
                 EstadoContacto.SOLICITUD_ENVIADA -> boton_solitud_enviada.visibility = View.VISIBLE

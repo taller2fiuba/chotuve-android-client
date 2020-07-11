@@ -103,7 +103,7 @@ class MuroDeVideosFragment : Fragment(), VistaPrincipal {
     fun verVideo(id: String) {
         val intent = Intent(context, VerVideoActivity::class.java)
         intent.putExtra(ID_KEY, id)
-        startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), 0)
+        startActivityForResult(intent, 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

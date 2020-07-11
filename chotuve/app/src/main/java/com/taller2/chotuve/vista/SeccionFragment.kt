@@ -12,7 +12,7 @@ import com.taller2.chotuve.vista.principal.MuroDeVideosFragment
 
 class SeccionFragment(val primerFragment: Fragment) : Fragment() {
     companion object {
-        fun perfil(usuarioId: Long?): SeccionFragment =
+        fun perfil(usuarioId: Long): SeccionFragment =
             SeccionFragment(PerfilViewPagerFragment(usuarioId))
 
         fun principal(): SeccionFragment =

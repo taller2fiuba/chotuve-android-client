@@ -3,13 +3,15 @@ package com.taller2.chotuve.modelo.interactor
 import android.util.Log
 import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.data.ComentarioData
+import com.taller2.chotuve.util.deserializarUsuario
+import com.taller2.chotuve.util.deserializarUsuarioId
+import com.taller2.chotuve.util.obtenerFechaDeIso8601
 import retrofit2.Callback
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
-import java.text.SimpleDateFormat
 
 class InteractorVerVideo {
     interface CallbackVerVideo {
@@ -22,7 +24,7 @@ class InteractorVerVideo {
     }
 
     interface CallbackComentar {
-        fun onComentarioCreado(comentario: String)
+        fun onComentarioCreado(comentario: String, miPerfil: PerfilDeUsuario)
         fun onErrorRed()
     }
 
@@ -32,21 +34,17 @@ class InteractorVerVideo {
     }
 
     private val chotuveClient = Modelo.instance.chotuveClient
+    private val interactorPerfil = InteractorPerfil()
 
     fun obtenerVideo(id: String, callbackVerVideo: CallbackVerVideo) {
         chotuveClient.obtenerVideo(id).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 when (response.code()) {
                     200 -> {
-                        val iso8601Format =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                        val dmyFormat = SimpleDateFormat("dd/MM/yyyy")
-
                         val objeto = JSONObject(response.body()!!.string())
-                        val creacion = iso8601Format.parse(objeto.getString("creacion"))
 
                         val autorJson = objeto.getJSONObject("autor")
-                        val autor = Usuario(autorJson.getString("usuario_id").toLong(), autorJson.getString("email"))
+                        val autor = deserializarUsuario(autorJson)
 
                         val miReaccion = if (objeto.getString("mi-reaccion") != "null") Reaccion.getByValue(objeto.getString("mi-reaccion")) else null
                         val reacciones = Reacciones(
@@ -60,9 +58,10 @@ class InteractorVerVideo {
                             objeto.getString("id"),
                             objeto.getString("titulo"),
                             autor,
-                            dmyFormat.format(creacion!!),
+                            obtenerFechaDeIso8601(objeto.getString("creacion")),
                             objeto.getString("descripcion"),
                             objeto.getLong("duracion"),
+                            objeto.getLong("cantidad-comentarios"),
                             reacciones
                         ))
                     }
@@ -97,7 +96,20 @@ class InteractorVerVideo {
                 val responseCode = response.code()
                 if (responseCode == 201) {
                     Log.d("modelo", "Comentario creado")
-                    callbackComentar.onComentarioCreado(comentario)
+                    interactorPerfil.cargarMiPerfil(object : InteractorPerfil.CallbackCargarPerfil {
+                        override fun onExito(perfilDeUsuario: PerfilDeUsuario) {
+                            callbackComentar.onComentarioCreado(comentario, perfilDeUsuario)
+                        }
+
+                        override fun onError() {
+                            Log.d("modelo", "Error al comentar")
+                        }
+
+                        override fun onErrorRed() {
+                            Log.d("modelo", "Error al comentar")
+                            callbackComentar.onErrorRed()
+                        }
+                    })
                 } else {
                     Log.d("modelo", "Error al comentar")
                     callbackComentar.onErrorRed()
@@ -122,32 +134,20 @@ class InteractorVerVideo {
                 }
             }
         )
-        // callbackVerComentarios.onExito(listOf(Comentario(Autor(1, "franco"), "16/04/2020", "hola todo bien?")))
     }
 
     private fun deserializarComentarios(jsonData: String): List<Comentario> {
-        val iso8601Format =
-            SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS")
-        val dmyFormat = SimpleDateFormat("dd/MM/yyyy")
         val data = JSONArray(jsonData)
         val comentarios = mutableListOf<Comentario>()
 
         for (i in 0 until data.length()) {
             val obj = data.getJSONObject(i)
             val autor = obj.getJSONObject("autor")
-            var fecha = obj.getString("fecha")
-            // Cortar el +00:00 que API 23 no entiende
-            fecha = fecha.substring(0, fecha.length - 6)
 
             comentarios.add(
                 Comentario(
-                    Usuario(
-                        autor.getLong("id"),
-                        autor.getString("email")
-                    ),
-                    dmyFormat.format(
-                        iso8601Format.parse(obj.getString("fecha"))!!
-                    ),
+                    deserializarUsuarioId(autor),
+                    obtenerFechaDeIso8601(obj.getString("fecha")),
                     obj.getString("comentario")
                 )
             )

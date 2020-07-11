@@ -29,11 +29,9 @@ class ChatsAdapter(val fragment: ChatsFragment, opciones: FirebaseRecyclerOption
     ) {
         fragment.chatsCargados()
         viewHolder.setChat(chat)
-        viewHolder.clickListener = object : ChatViewHolder.Clicklistener {
-            override fun onItemClick(view: View?, position: Int) {
-                val chat = getItem(position)
-                fragment.verMensajes(chat.key!!, chat.destinatario!!)
-            }
+        viewHolder.clickListener = { positionClickeada: Int ->
+            val chatClickeado = getItem(positionClickeada)
+            fragment.verMensajes(chatClickeado.key!!, chatClickeado.destinatario!!)
         }
     }
 }

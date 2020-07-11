@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Comentario
+import com.taller2.chotuve.vista.componentes.ComentarioViewHolder
 import com.taller2.chotuve.vista.ver_video.VerVideoActivity
 
 
@@ -24,8 +25,11 @@ class ComentariosAdapter(val activity: VerVideoActivity) : ViewHolderAdapter() {
         when (viewType) {
             COMENTARIO -> {
                 val viewItem: View =
-                    inflater.inflate(R.layout.comentario, parent, false)
-                viewHolder = ComentarioViewHolder(viewItem)
+                    inflater.inflate(R.layout.componente_comentario, parent, false)
+                viewHolder =
+                    ComentarioViewHolder(
+                        viewItem
+                    )
             }
             CARGANDO -> {
                 val viewLoading: View =
@@ -49,14 +53,12 @@ class ComentariosAdapter(val activity: VerVideoActivity) : ViewHolderAdapter() {
             val comentarioViewHolder = viewHolder as ComentarioViewHolder
             comentarioViewHolder.setComentario(comentario!!)
 
-            comentarioViewHolder.setOnClicklistener(object : ComentarioViewHolder.ClickListener {
-                override fun onItemClick(view: View?, position: Int) {
-                    val comentarioClickeado = getItem(position)!! as Comentario
-                    if (comentarioClickeado.autor.id != activity.modelo.id) {
-                        activity.irAPerfilDeUsuario(comentarioClickeado.autor.id)
-                    }
+            comentarioViewHolder.clickListener = { positionClickeada: Int ->
+                val comentarioClickeado = getItem(positionClickeada)!! as Comentario
+                if (comentarioClickeado.autor.id != activity.modelo.id) {
+                    activity.irAPerfilDeUsuario(comentarioClickeado.autor.id)
                 }
-            })
+            }
         }
     }
 

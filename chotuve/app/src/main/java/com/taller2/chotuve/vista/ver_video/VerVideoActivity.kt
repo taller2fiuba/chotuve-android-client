@@ -28,12 +28,14 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.presentador.PresentadorVerVideo
+import com.taller2.chotuve.util.formatearFechaSegunDia
 import com.taller2.chotuve.util.obtenerAltoVideo
 import com.taller2.chotuve.vista.principal.ID_KEY
 import com.taller2.chotuve.vista.scroll_infinito.ComentariosAdapter
 import com.taller2.chotuve.vista.scroll_infinito.ScrollInfinitoListener
 import kotlinx.android.synthetic.main.controles_reproductor_video.*
 import kotlinx.android.synthetic.main.ver_video.*
+import org.joda.time.LocalDateTime
 
 const val USUARIO_ID_KEY = "com.taller2.chotuve.USUARIO_ID_KEY"
 
@@ -77,7 +79,6 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         comentarios_recycler_view.layoutManager = linearLayoutManager
         scrollInfinitoListener = object : ScrollInfinitoListener(linearLayoutManager) {
             override fun onLoadMore(pagina: Int, cantidadDeItems: Int, view: RecyclerView?) {
-                // Se llama cuando hay que agregar nuevos videos a la vista
                 comentarios_recycler_view.post {
                     // esto hace que el cargando se ejecute justo despues de que esta funcion termine
                     // ahora no se puede agregar porque no podes agregar items al mismo tiempo que scrolleas
@@ -95,7 +96,10 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         ocultarCargando()
         titulo.text = video.titulo
         creacion.text = video.creacion
-        autor.text = video.autor.email
+        autor.setUsuario(video.autor)
+        autor.setOnClickListener {
+            clickAutor()
+        }
         if (!video.descripcion.isBlank()) {
             descripcion.text = video.descripcion
         } else {
@@ -104,6 +108,7 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         }
         this.video = video
         setearReacciones(video.reacciones!!.miReaccion, null)
+        setearCantidadDeComentarios(video.cantidadComentarios)
         inicializarReproductor()
         presentador.obtenerComentarios(video.id, 0)
         // arrancar fuera de la pantalla
@@ -181,11 +186,16 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         video!!.reacciones!!.miReaccion = reaccionNueva
     }
 
+    fun setearCantidadDeComentarios(cantidad: Long) {
+        cantidad_comentarios_extendido.text = cantidad.toString()
+        cantidad_comentarios.text = cantidad.toString()
+    }
+
     private fun colorear(boton: ImageButton, color: Int) {
         boton.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, color))
     }
 
-    fun clickAutor(view: View) {
+    fun clickAutor() {
         irAPerfilDeUsuario(video!!.autor.id)
     }
 
@@ -359,13 +369,13 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         }
     }
 
-    override fun agregarNuevoComentario(nuevoComentario: String) {
+    override fun agregarNuevoComentario(nuevoComentario: String, miPerfil: PerfilDeUsuario) {
         comentario.editText?.setText("")
+        video!!.cantidadComentarios++
+        setearCantidadDeComentarios(video!!.cantidadComentarios)
         crear_comentario_boton.visibility = View.VISIBLE
         creando_comentario_barra_progreso.visibility = View.GONE
-        // TODO obtener mi perfil para no poner tú de email o poner tu a todos mis comentarios
-        adapter.add(0, Comentario(Usuario(modelo.id!!, "tú"), "Ahora mismo", nuevoComentario))
+        adapter.add(0, Comentario(miPerfil.usuario, formatearFechaSegunDia(LocalDateTime.now()), nuevoComentario))
         comentarios_recycler_view.smoothScrollToPosition(0)
-
     }
 }

@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorEditarPerfil
+import com.taller2.chotuve.util.cargarImagen
 import kotlinx.android.synthetic.main.fragment_editar_informacion.*
 
 class EditarInformacionFragment(val perfilDeUsuario: PerfilDeUsuario) : Fragment(), VistaEditarInformacion {
@@ -38,14 +38,7 @@ class EditarInformacionFragment(val perfilDeUsuario: PerfilDeUsuario) : Fragment
         apellido.editText?.setText(perfilDeUsuario.apellido)
         telefono.editText?.setText(perfilDeUsuario.telefono)
         direccion.editText?.setText(perfilDeUsuario.direccion)
-        if (perfilDeUsuario.fotoPerfilUri != null) {
-            Glide
-                .with(this)
-                .load(perfilDeUsuario.fotoPerfilUri)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .centerCrop()
-                .into(imagen_perfil)
-        }
+        cargarImagen(perfilDeUsuario.usuario, imagen_perfil, this)
     }
 
     fun elegirFotoPerfil() {
@@ -59,12 +52,7 @@ class EditarInformacionFragment(val perfilDeUsuario: PerfilDeUsuario) : Fragment
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             val uri = data!!.data!!
-            Glide
-                .with(this)
-                .load(uri)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .centerCrop()
-                .into(imagen_perfil)
+            cargarImagen(uri, imagen_perfil, Glide.with(this))
 
             presentador.subirFotoPerfil(uri)
         }

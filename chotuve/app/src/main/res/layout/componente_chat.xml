@@ -6,37 +6,53 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/chat_usuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Pepito" />
+        <ImageView
+            android:id="@+id/destinatario_foto_de_perfil"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/logo_sin_nombre" />
 
-        <TextView
-            android:id="@+id/fecha_y_hora_ultimo_mensaje"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="17:05" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/chat_ultimo_mensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="todo bien?"
-        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"/>
+            <TextView
+                android:id="@+id/chat_usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pepito" />
+
+            <TextView
+                android:id="@+id/fecha_y_hora_ultimo_mensaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
+                app:layout_constraintBaseline_toBaselineOf="@+id/chat_usuario"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="17:05" />
+
+            <TextView
+                android:id="@+id/chat_ultimo_mensaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chat_usuario"
+                tools:text="todo bien?" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

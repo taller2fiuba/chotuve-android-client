@@ -59,7 +59,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="32dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_account_box_black_24dp"
+                        android:src="@drawable/logo_sin_nombre"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -214,10 +214,11 @@
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/perfil_cantidad_de_contactos"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
-                                android:text="Proximamente"
+                                tools:text="251"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />

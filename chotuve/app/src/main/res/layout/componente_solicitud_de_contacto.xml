@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <com.taller2.chotuve.vista.componentes.UsuarioView
         android:id="@+id/usuario_solicitud_contacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginTop="12dp"/>
 
-    <Button
-        android:id="@+id/rechazar_solicitud_contacto"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:minHeight="0dp"
-        android:text="rechazar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/usuario_solicitud_contacto"
-        app:layout_constraintEnd_toStartOf="@+id/aceptar_solicitud_contacto" />
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layoutDirection="rtl">
 
-    <Button
-        android:id="@+id/aceptar_solicitud_contacto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:minHeight="0dp"
-        android:text="aceptar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/usuario_solicitud_contacto"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/rechazar_solicitud_contacto"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="rechazar"
+            android:layout_gravity="center"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/aceptar_solicitud_contacto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="aceptar"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

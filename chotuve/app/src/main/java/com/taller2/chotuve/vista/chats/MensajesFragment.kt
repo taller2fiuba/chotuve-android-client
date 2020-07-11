@@ -17,6 +17,7 @@ import com.taller2.chotuve.modelo.Mensaje
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorMensajes
+import com.taller2.chotuve.util.cargarImagen
 import com.taller2.chotuve.vista.SeccionFragment
 import com.taller2.chotuve.vista.componentes.MensajeViewHolder
 import com.taller2.chotuve.vista.scroll_infinito.MensajesAdapter
@@ -36,10 +37,11 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : FirebaseRTDBF
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        top_bar_destinatario.title = destinario.email
-        top_bar_destinatario.setOnClickListener {
+        top_bar_destinatario_email.text = destinario.email
+        top_bar_destinatario_container.setOnClickListener {
             irAPerfilDeUsuario(destinario)
         }
+        cargarImagen(destinario, top_bar_destinatario_foto, this)
         top_bar_destinatario.setNavigationOnClickListener {
             fragmentManager!!.popBackStack()
         }

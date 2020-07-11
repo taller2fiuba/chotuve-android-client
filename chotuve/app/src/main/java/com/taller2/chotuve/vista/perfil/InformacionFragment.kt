@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.EstadoContacto
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
+import com.taller2.chotuve.util.cargarImagen
 import com.taller2.chotuve.vista.autenticacion.IniciarSesionActivity
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
@@ -68,17 +67,11 @@ class InformacionFragment(val usuarioId: Long?, private val fm: FragmentManager)
         email.text = perfilDeUsuario.usuario.email
         telefono.text = perfilDeUsuario.telefono ?: AUN_NO_COMPLETADO
         direccion.text = perfilDeUsuario.direccion ?: AUN_NO_COMPLETADO
-        if (perfilDeUsuario.fotoPerfilUri != null) {
-            Glide
-                .with(this)
-                .load(perfilDeUsuario.fotoPerfilUri)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .centerCrop()
-                .into(imagen_perfil)
-        }
+        cargarImagen(perfilDeUsuario.usuario, imagen_perfil, this)
         editar_informacion.setOnClickListener {
             irAEditarInformacion()
         }
+        perfil_cantidad_de_contactos.text = perfilDeUsuario.cantidadContactos.toString()
         if (usuarioId != null) {
             when (perfilDeUsuario.estadoContacto) {
                 EstadoContacto.ES_CONTACTO -> boton_en_contactos.visibility = View.VISIBLE

@@ -20,14 +20,26 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:background="#FF0000" />
 
+        <ImageView
+            android:id="@+id/usuario_foto_de_perfil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_sin_nombre"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_portada"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"/>
+
         <TextView
             android:id="@+id/titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/usuario_foto_de_perfil"
             app:layout_constraintTop_toBottomOf="@+id/video_portada"
             tools:text="titulo" />
 
@@ -35,12 +47,10 @@
             android:id="@+id/autor_y_creacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
+            android:layout_marginStart="8dp"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/usuario_foto_de_perfil"
             app:layout_constraintTop_toBottomOf="@+id/titulo"
             tools:text="autor 00/00/2018" />
 

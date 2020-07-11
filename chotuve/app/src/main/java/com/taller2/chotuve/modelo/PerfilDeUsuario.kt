@@ -19,4 +19,5 @@ class PerfilDeUsuario(val usuario: Usuario,
                       val direccion: String?,
                       val estadoContacto: EstadoContacto?,
                       var solicitudId: Long?,
-                      val cantidadContactos: Long)
+                      val cantidadContactos: Long,
+                      val cantidadVideos: Long)

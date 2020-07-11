@@ -73,6 +73,7 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
             irAEditarInformacion()
         }
         perfil_cantidad_de_contactos.text = perfilDeUsuario.cantidadContactos.toString()
+        perfil_cantidad_de_videos.text = perfilDeUsuario.cantidadVideos.toString()
         if (usuarioId != Modelo.instance.id) {
             when (perfilDeUsuario.estadoContacto) {
                 EstadoContacto.ES_CONTACTO -> boton_en_contactos.visibility = View.VISIBLE

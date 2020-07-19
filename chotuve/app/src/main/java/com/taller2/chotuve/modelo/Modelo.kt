@@ -20,6 +20,7 @@ class Modelo private constructor() {
 
     private val appContext = Chotuve.context
     private val preferences = appContext.getSharedPreferences(appContext.packageName, Context.MODE_PRIVATE)
+    private val firebaseMessagingService: ChotuveFirebaseMessagingService = ChotuveFirebaseMessagingService.instance
 
     private var userToken: String? = preferences.getString("token", null)
         set(token) {
@@ -49,6 +50,7 @@ class Modelo private constructor() {
     fun estaLogueado() : Boolean = userToken != null && id != null
 
     fun cerrarSesion() {
+        firebaseMessagingService.desasociarUsuarioAFMToken(id!!)
         // TODO deberia avisar al server del cierre de sesion para invalidar el token
         userToken = null
         id = null
@@ -74,6 +76,7 @@ class Modelo private constructor() {
                             Log.d("modelo", "Token obtenido")
                             userToken = json.getString("auth_token")
                             id = json.getLong("id")
+                            firebaseMessagingService.asociarUsuarioAFMToken(id!!)
                             callbackRegistro.onExito()
                         }
                     } else if (response.code() == 400) {
@@ -112,6 +115,7 @@ class Modelo private constructor() {
                             Log.d("modelo", "Token obtenido")
                             userToken = json.getString("auth_token")
                             id = json.getLong("id")
+                            firebaseMessagingService.asociarUsuarioAFMToken(id!!)
                             callbackInicioSesion.onExito()
                         }
                     } else if (response.code() == 400) {

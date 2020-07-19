@@ -15,10 +15,6 @@ class PresentadorRegistrarme(var vistaRegistrarme: VistaRegistrarme?,
         }
     }
 
-    fun onDestroy() {
-        vistaRegistrarme = null
-    }
-
     fun registrarme(usuario: String, clave: String) {
         interactorRegistrarme.registrarme(usuario, clave, object : CallbackRegistro {
             override fun onExito() {
@@ -34,7 +30,4 @@ class PresentadorRegistrarme(var vistaRegistrarme: VistaRegistrarme?,
             }
         })
     }
-
-
-
 }

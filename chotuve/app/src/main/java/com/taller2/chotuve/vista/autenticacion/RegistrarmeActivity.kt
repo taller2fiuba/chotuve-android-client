@@ -16,7 +16,7 @@ import com.taller2.chotuve.vista.MainActivity
 import kotlinx.android.synthetic.main.registro_de_usuario.*
 
 
-class RegistrarmeActivity : AppCompatActivity(), VistaRegistrarme {
+class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
     private val presentador = PresentadorRegistrarme(this, InteractorRegistrarme())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +26,11 @@ class RegistrarmeActivity : AppCompatActivity(), VistaRegistrarme {
         presentador.onCreate()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presentador.onDestroy()
-    }
-
     fun clickRegistrarse(view: View) {
+        email.error = ""
+        contraseña.error = ""
+        repetir_contraseña.error = ""
+
         val usuario = email.editText?.text?.toString()
         val clave = contraseña.editText?.text?.toString()
         val repetirClave = repetir_contraseña.editText?.text?.toString()
@@ -48,43 +47,7 @@ class RegistrarmeActivity : AppCompatActivity(), VistaRegistrarme {
         startActivity(Intent(this, IniciarSesionActivity::class.java))
     }
 
-    fun clickRegistrarseConGoogle(view: View) {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .requestId()
-                    .build()
-        val googleSignInClient = GoogleSignIn.getClient(this, gso);
-        val signInIntent: Intent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, 0)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-        try {
-            val cuentaGoogle: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
-            presentador.registrarme(cuentaGoogle.email!!, cuentaGoogle.id!!)
-        } catch (e: ApiException) {
-            Toast.makeText(this, "Se produjo un error. Intente nuevamente más tarde.",
-                Toast.LENGTH_LONG).show()
-        }
-    }
-
     override fun setUsuarioYaExiste() {
-        // TODO ver que esto tambien se llama cuando el usuario de google ya existe tambien
-        email.error = "Este e-mail ya está en uso."
-    }
-
-    override fun setErrorRed() {
-        Toast.makeText(this,
-            "Se produjo un error de red. Intente nuevamente más tarde.",
-            Toast.LENGTH_LONG).show()
-    }
-
-    override fun irAPantallaPrincipal() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+        email.error = "Este email ya está en uso."
     }
 }

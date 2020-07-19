@@ -9,9 +9,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".vista.MainActivity"
         android:focusable="false"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        tools:context=".vista.MainActivity">
 
         <ImageView
             android:id="@+id/imageView"
@@ -22,31 +22,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/registrarse_con_google"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registrate_titulo"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_google"
+            android:onClick="clickIngresarConGoogle"
+            android:text="ingresar con google"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <Button
-            android:id="@+id/registrarse_con_google"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:id="@+id/ingresar"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="clickRegistrarseConGoogle"
-            android:text="registrate con google"
+            android:drawableLeft="@drawable/ic_logo"
+            android:onClick="clickIniciarSesion"
+            android:text="ingresar con Chotuve"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            android:drawableLeft="@drawable/ic_google"/>
+            app:layout_constraintTop_toBottomOf="@+id/registrarse_con_google" />
 
         <TextView
             android:id="@+id/textCrearCuenta"
@@ -55,12 +55,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="o crea una cuenta"
+            android:text="o crea una cuenta en Chotuve"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registrarse_con_google" />
+            app:layout_constraintTop_toBottomOf="@+id/ingresar" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email"
@@ -80,9 +80,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:textColorLink="@color/colorSecondary"
-                android:inputType="textEmailAddress"/>
+                android:textColorLink="@color/colorSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -104,9 +104,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:textColorLink="@color/colorSecondary"
-                android:inputType="textPassword" />
+                android:textColorLink="@color/colorSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -128,9 +128,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:textColorLink="@color/colorSecondary"
-                android:inputType="textPassword" />
+                android:textColorLink="@color/colorSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -146,39 +146,6 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/repetir_contraseña" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/btnSiguiente"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ya_estas_registrado"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
-
-            <TextView
-                android:id="@+id/inicia_sesion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="clickIniciarSesion"
-                android:text="@string/ingresar_btn"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

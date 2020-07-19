@@ -7,11 +7,6 @@ interface CallbackInicioSesion {
     fun onExito()
 
     /**
-     * Se ejecutará si el e-mail no estaba registrado.
-     */
-    fun onEmailNoRegistrado()
-
-    /**
      * Se ejecutará si la combinación del e-mail/clave no coincide con la de ningún
      * usuario.
      */

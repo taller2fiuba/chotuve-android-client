@@ -22,7 +22,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/ic_google"
-        android:onClick="clickIniciarSesionGoogle"
+        android:onClick="clickIngresarConGoogle"
         android:text="ingresar con google"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Button"
         app:layout_constraintEnd_toEndOf="parent"

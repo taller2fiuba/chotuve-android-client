@@ -13,10 +13,6 @@ class PresentadorIniciarSesion(var vistaIniciarSesion: VistaIniciarSesion?,
             vistaIniciarSesion?.irAPantallaPrincipal()
     }
 
-    fun onDestroy() {
-        vistaIniciarSesion = null
-    }
-
     fun iniciarSesion(usuario: String, clave: String) {
         interactorIniciarSesion.iniciarSesion(usuario, clave, object : CallbackInicioSesion {
             override fun onExito() {
@@ -25,10 +21,6 @@ class PresentadorIniciarSesion(var vistaIniciarSesion: VistaIniciarSesion?,
 
             override fun onUsuarioOClaveIncorrecta() {
                 vistaIniciarSesion?.setUsuarioOClaveIncorrecta()
-            }
-
-            override fun onEmailNoRegistrado() {
-                vistaIniciarSesion?.setUsuarioInexistente()
             }
 
             override fun onErrorRed(mensaje: String?) {

@@ -1,8 +1,5 @@
 package com.taller2.chotuve.vista.autenticacion
 
-interface VistaIniciarSesion {
-    fun setUsuarioInexistente()
+interface VistaIniciarSesion : VistaGoogle {
     fun setUsuarioOClaveIncorrecta()
-    fun setErrorRed()
-    fun irAPantallaPrincipal()
 }

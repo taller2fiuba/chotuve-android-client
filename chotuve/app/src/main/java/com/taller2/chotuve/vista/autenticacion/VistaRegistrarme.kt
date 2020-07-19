@@ -1,7 +1,5 @@
 package com.taller2.chotuve.vista.autenticacion
 
-interface VistaRegistrarme {
+interface VistaRegistrarme : VistaGoogle {
     fun setUsuarioYaExiste()
-    fun irAPantallaPrincipal()
-    fun setErrorRed()
 }

@@ -3,7 +3,7 @@
     <string name="bienvenido_a_chotuve">Bienvenido a Chotuve</string>
     <string name="registrate_titulo">Registrate a la app de videos más popular de la Fiuba</string>
     <string name="ingresar_titulo">Ingresar</string>
-    <string name="ya_estas_registrado">¿Ya estas registrado en Chotuve?</string>
+    <string name="ya_estas_registrado">¿Ya creaste una cuenta?</string>
     <string name="no_tenes_cuenta">¿No tenes cuenta en Chotuve?</string>
     <string name="proximamente">Proximamente</string>
     <string name="autor_y_creacion">%1$s %2$s</string>

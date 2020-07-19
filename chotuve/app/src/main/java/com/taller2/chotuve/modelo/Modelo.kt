@@ -37,15 +37,17 @@ class Modelo private constructor() {
     var id: Long? = preferences.getString("id", null)?.toLong()
         set(id) {
             with (preferences.edit()) {
-                putString("id", id.toString())
+                if (id != null) {
+                    putString("id", id.toString())
+                } else {
+                    putString("id", null)
+                }
                 commit()
             }
             field = id
         }
 
     var chotuveClient = AppServerService.create(userToken)
-        private set(valor) { field = valor }
-        get() { return field }
 
     fun estaLogueado() : Boolean = userToken != null && id != null
 

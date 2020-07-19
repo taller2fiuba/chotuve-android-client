@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.interactor.InteractorIniciarSesion
 import com.taller2.chotuve.presentador.PresentadorIniciarSesion
@@ -29,6 +33,31 @@ class IniciarSesionActivity : AppCompatActivity(), VistaIniciarSesion {
             usuario.isNullOrEmpty() -> email.error = "No puede estar vacío"
             clave.isNullOrEmpty() -> contraseña.error = "No puede estar vacío"
             else -> presentador.iniciarSesion(usuario, clave)
+        }
+    }
+
+    fun clickIniciarSesionGoogle(view: View) {
+        // TODO codigo repetido
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestId()
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(this, gso);
+        val signInIntent: Intent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, 0)
+    }
+
+    // TODO codigo repetido
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        try {
+            val cuentaGoogle: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
+            presentador.iniciarSesion(cuentaGoogle.email!!, cuentaGoogle.id!!)
+        } catch (e: ApiException) {
+            Toast.makeText(this, "Se produjo un error. Intente nuevamente más tarde.",
+                Toast.LENGTH_LONG).show()
         }
     }
 

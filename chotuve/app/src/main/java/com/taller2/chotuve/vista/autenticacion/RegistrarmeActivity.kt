@@ -72,6 +72,7 @@ class RegistrarmeActivity : AppCompatActivity(), VistaRegistrarme {
     }
 
     override fun setUsuarioYaExiste() {
+        // TODO ver que esto tambien se llama cuando el usuario de google ya existe tambien
         email.error = "Este e-mail ya está en uso."
     }
 

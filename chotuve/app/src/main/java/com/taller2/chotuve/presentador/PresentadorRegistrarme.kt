@@ -15,8 +15,8 @@ class PresentadorRegistrarme(var vistaRegistrarme: VistaRegistrarme?,
         }
     }
 
-    fun registrarme(usuario: String, clave: String) {
-        interactorRegistrarme.registrarme(usuario, clave, object : CallbackRegistro {
+    fun registrarme(email: String, clave: String) {
+        interactorRegistrarme.registrarme(email, clave, object : CallbackRegistro {
             override fun onExito() {
                 vistaRegistrarme?.irAPantallaPrincipal()
             }

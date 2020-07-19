@@ -13,8 +13,8 @@ class PresentadorIniciarSesion(var vistaIniciarSesion: VistaIniciarSesion?,
             vistaIniciarSesion?.irAPantallaPrincipal()
     }
 
-    fun iniciarSesion(usuario: String, clave: String) {
-        interactorIniciarSesion.iniciarSesion(usuario, clave, object : CallbackInicioSesion {
+    fun iniciarSesion(email: String, clave: String) {
+        interactorIniciarSesion.iniciarSesion(email, clave, object : CallbackInicioSesion {
             override fun onExito() {
                 vistaIniciarSesion?.irAPantallaPrincipal()
             }

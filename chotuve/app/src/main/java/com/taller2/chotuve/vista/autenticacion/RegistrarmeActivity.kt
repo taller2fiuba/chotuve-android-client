@@ -2,17 +2,11 @@ package com.taller2.chotuve.vista.autenticacion
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.interactor.InteractorRegistrarme
 import com.taller2.chotuve.presentador.PresentadorRegistrarme
-import com.taller2.chotuve.vista.MainActivity
 import kotlinx.android.synthetic.main.registro_de_usuario.*
 
 
@@ -31,15 +25,16 @@ class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
         contraseña.error = ""
         repetir_contraseña.error = ""
 
-        val usuario = email.editText?.text?.toString()
+        val emailString = email.editText?.text?.toString()
         val clave = contraseña.editText?.text?.toString()
         val repetirClave = repetir_contraseña.editText?.text?.toString()
 
         when {
-            usuario.isNullOrEmpty() -> email.error = "No puede estar vacío"
+            emailString.isNullOrEmpty() -> email.error = "No puede estar vacío"
+            !Patterns.EMAIL_ADDRESS.matcher(emailString).matches() -> email.error = "Debe ser un email válido"
             clave.isNullOrEmpty() -> contraseña.error = "No puede estar vacío"
             clave != repetirClave -> repetir_contraseña.error = "Las contraseñas no coinciden"
-            else -> presentador.registrarme(usuario, clave)
+            else -> presentador.registrarme(emailString, clave)
         }
     }
 

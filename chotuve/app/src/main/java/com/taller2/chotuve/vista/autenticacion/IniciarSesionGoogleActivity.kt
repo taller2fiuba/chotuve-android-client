@@ -1,7 +1,6 @@
 package com.taller2.chotuve.vista.autenticacion
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +8,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.taller2.chotuve.R
-import com.taller2.chotuve.modelo.interactor.InteractorIniciarSesion
 import com.taller2.chotuve.presentador.PresentadorGoogle
-import com.taller2.chotuve.presentador.PresentadorIniciarSesion
 import com.taller2.chotuve.vista.MainActivity
-import kotlinx.android.synthetic.main.iniciar_sesion.*
 
 
 abstract class IniciarSesionGoogleActivity : AppCompatActivity(), VistaGoogle {

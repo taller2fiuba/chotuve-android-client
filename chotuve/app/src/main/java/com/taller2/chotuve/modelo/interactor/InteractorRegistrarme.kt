@@ -8,8 +8,8 @@ class InteractorRegistrarme {
 
     fun estaLogueado() = modelo.estaLogueado()
 
-    fun registrarme(usuario: String, clave: String, listener: CallbackRegistro) {
-        modelo.registrarUsuario(usuario, clave, listener)
+    fun registrarme(email: String, clave: String, listener: CallbackRegistro) {
+        modelo.registrarUsuario(email, clave, listener)
     }
 
 }

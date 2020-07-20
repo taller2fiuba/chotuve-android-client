@@ -30,13 +30,15 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
     }
 
     override fun mostrarSolicitudes(solicitudes: List<SolicitudDeContacto>) {
-        solicitudes.forEach { solicitud: SolicitudDeContacto ->
+        // TODO ordenando por id porque las solicitudes no tienen fecha de creacion
+        val solicitudesOrdenados = solicitudes.sortedByDescending { it.id }
+        solicitudesOrdenados.forEach { solicitud: SolicitudDeContacto ->
             val solicitudView = SolicitudDeContactoView(context!!, this, solicitud)
             solicitudes_container.addView(solicitudView)
         }
         cargando_solicitudes_barra_progreso.visibility = View.GONE
         solicitudes_container.visibility = View.VISIBLE
-        if (solicitudes.isEmpty()) {
+        if (solicitudesOrdenados.isEmpty()) {
             sin_solicitudes.visibility = View.VISIBLE
         }
     }

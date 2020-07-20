@@ -63,6 +63,9 @@ class MainActivity : AppCompatActivity() {
                     else -> false
                 }
             }
+            navegacion.setOnNavigationItemReselectedListener {
+                fragmentActivo.childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
         }
     }
 

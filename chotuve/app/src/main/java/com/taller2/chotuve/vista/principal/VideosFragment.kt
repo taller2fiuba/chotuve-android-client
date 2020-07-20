@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Video
 import com.taller2.chotuve.presentador.PresentadorVideos
@@ -21,6 +22,8 @@ import com.taller2.chotuve.vista.scroll_infinito.ScrollInfinitoListener
 import com.taller2.chotuve.vista.scroll_infinito.VideosAdapter
 import com.taller2.chotuve.vista.ver_video.USUARIO_ID_KEY
 import com.taller2.chotuve.vista.ver_video.VerVideoActivity
+import kotlinx.android.synthetic.main.fragment_videos.*
+
 
 const val ID_KEY = "com.taller2.chotuve.ID_KEY"
 const val VER_VIDEO_REQUEST_CODE = 0
@@ -42,6 +45,7 @@ abstract class VideosFragment(private val fm: FragmentManager? = null) : Fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configurarRecyclerView()
+        configurarRefreshLayout()
         mostrarCargandoVideos()
         presentador.obtenerVideos(0)
     }
@@ -66,8 +70,18 @@ abstract class VideosFragment(private val fm: FragmentManager? = null) : Fragmen
         videosView.addOnScrollListener(scrollInfinitoListener)
     }
 
+    private fun configurarRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorSecondary)
+        swipeRefreshLayout.setOnRefreshListener {
+            // Esto se ejecuta cada vez que se hace el gesto hacia arriba
+            adapter.clear() // sacar todos los videos que hay ahora
+            presentador.obtenerVideos(0) // recargar videos
+        }
+    }
+
     override fun mostrarVideos(videos: List<Video>) {
         ocultarCargandoVideos()
+        swipeRefreshLayout.isRefreshing = false
         adapter.sacarCargando()
         videosView.visibility = View.VISIBLE
         adapter.addAll(videos)

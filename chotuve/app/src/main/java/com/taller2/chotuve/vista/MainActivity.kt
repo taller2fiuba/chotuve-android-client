@@ -9,8 +9,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
-import com.taller2.chotuve.vista.chats.ChatsFragment
-import com.taller2.chotuve.vista.notificaciones.NotificacionesFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,11 +23,11 @@ class MainActivity : AppCompatActivity() {
     private val FRAGMENT_PERFIL_INDEX =  3
 
     private lateinit var navegacion : BottomNavigationView
-    private val principalFragment: Fragment = SeccionFragment.principal()
-    private val chatsFragment: Fragment = SeccionFragment.chats()
-    private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
-    private lateinit var perfilFragment: Fragment
-    private var fragmentActivo : Fragment = principalFragment
+    private val principalFragment: SeccionFragment = SeccionFragment.principal()
+    private val chatsFragment: SeccionFragment = SeccionFragment.chats()
+    private val notificacionesFragment: SeccionFragment = SeccionFragment.notificaciones()
+    private lateinit var perfilFragment: SeccionFragment
+    private var fragmentActivo : SeccionFragment = principalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +62,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             navegacion.setOnNavigationItemReselectedListener {
-                fragmentActivo.childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                fragmentActivo.reseleccionar()
             }
         }
     }
 
-    private fun openFragment(tag: String, fragment: Fragment) {
-        var fragmentoExistente = supportFragmentManager.findFragmentByTag(tag)
+    private fun openFragment(tag: String, fragment: SeccionFragment) {
+        val fragmentoExistente = supportFragmentManager.findFragmentByTag(tag)
         val transicion = supportFragmentManager.beginTransaction().hide(fragmentActivo)
         // Si es fragmento todavia no se creo crearlo
         if (fragmentoExistente == null) {
@@ -137,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFragment(tag: String?) : Fragment {
+    private fun getFragment(tag: String?) : SeccionFragment {
         return when (tag) {
             FRAGMENT_PRINCIPAL_TAG -> {
                 principalFragment

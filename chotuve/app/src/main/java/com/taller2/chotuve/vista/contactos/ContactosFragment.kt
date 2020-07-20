@@ -41,6 +41,12 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
             boton_ver_solicitudes_divider.visibility = View.GONE
             boton_ver_solicitudes.visibility = View.GONE
         }
+        configurarAdapter()
+        configurarRefreshLayout()
+        presentador.obtenerContactos()
+    }
+
+    private fun configurarAdapter() {
         adapter = UsuariosAdapter(context!!, this)
         contactos_list.adapter = adapter
         buscar_contactos.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -54,13 +60,22 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
                 return true
             }
         })
-        presentador.obtenerContactos()
     }
+
+    private fun configurarRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorSecondary)
+        swipeRefreshLayout.setOnRefreshListener {
+            adapter.clear()
+            presentador.obtenerContactos()
+        }
+    }
+
 
     override fun mostrarContactos(contactos: List<Usuario>) {
         val contactosOrdenados = contactos.sortedBy { it.email }
         adapter.setUsuarios(contactosOrdenados)
         cargando_contactos_barra_progreso.visibility = View.GONE
+        swipeRefreshLayout.isRefreshing = false
         contactos_view.visibility = View.VISIBLE
         if (contactosOrdenados.isEmpty()) {
             aun_no_tenes_contactos.visibility = View.VISIBLE

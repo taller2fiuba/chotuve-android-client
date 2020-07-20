@@ -2,21 +2,23 @@ package com.taller2.chotuve.vista.contactos
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
-import com.taller2.chotuve.vista.componentes.UsuarioView
+import com.taller2.chotuve.vista.scroll_infinito.UsuariosAdapter
 import kotlinx.android.synthetic.main.fragment_contactos.*
+
 
 class ContactosFragment(private val fm: FragmentManager, private val mostrarSolicitudes: Boolean, private val clickListener: (Usuario) -> Int) : Fragment(), VistaContactos {
     private val presentador = PresentadorContactos(this)
+    private lateinit var adapter : UsuariosAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,25 +41,25 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
             boton_ver_solicitudes_divider.visibility = View.GONE
             boton_ver_solicitudes.visibility = View.GONE
         }
+        adapter = UsuariosAdapter(context!!, this)
+        contactos_list.adapter = adapter
+        buscar_contactos.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.filter.filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
         presentador.obtenerContactos()
     }
 
     override fun mostrarContactos(contactos: List<Usuario>) {
-        val contactosOrdenados = contactos.sortedWith(compareBy { it.email })
-        contactosOrdenados.forEach { usuario: Usuario ->
-            val usuarioView = UsuarioView(context!!)
-            usuarioView.setUsuario(usuario)
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(8, 8, 0, 8)
-            usuarioView.layoutParams = params
-            usuarioView.setOnClickListener {
-                clickListener(usuario)
-            }
-            contactos_container.addView(usuarioView)
-        }
+        val contactosOrdenados = contactos.sortedBy { it.email }
+        adapter.setUsuarios(contactosOrdenados)
         cargando_contactos_barra_progreso.visibility = View.GONE
         contactos_view.visibility = View.VISIBLE
         if (contactosOrdenados.isEmpty()) {
@@ -70,4 +72,7 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
         Toast.makeText(context, "Error del server", Toast.LENGTH_LONG).show()
     }
 
+    fun clickUsuario(usuario: Usuario) {
+        clickListener(usuario)
+    }
 }

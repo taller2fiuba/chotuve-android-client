@@ -76,7 +76,7 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
 
         val options: FirebaseRecyclerOptions<Chat> =
             FirebaseRecyclerOptions.Builder<Chat>()
-                .setQuery(chatsRef.orderByChild("orden"), parser)
+                .setQuery(chatsRef.orderByChild("timestamp"), parser)
                 .build()
         firebaseAdapter = ChatsAdapter(this, options) as FirebaseRecyclerAdapter<Any?, RecyclerView.ViewHolder>
         chats_recycler_view.adapter = firebaseAdapter

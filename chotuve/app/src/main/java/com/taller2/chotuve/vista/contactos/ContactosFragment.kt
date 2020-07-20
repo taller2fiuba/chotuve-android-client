@@ -43,8 +43,8 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
     }
 
     override fun mostrarContactos(contactos: List<Usuario>) {
-        // TODO ordenar alfabeticamente
-        contactos.forEach { usuario: Usuario ->
+        val contactosOrdenados = contactos.sortedWith(compareBy { it.email })
+        contactosOrdenados.forEach { usuario: Usuario ->
             val usuarioView = UsuarioView(context!!)
             usuarioView.setUsuario(usuario)
             val params = LinearLayout.LayoutParams(
@@ -60,7 +60,7 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
         }
         cargando_contactos_barra_progreso.visibility = View.GONE
         contactos_view.visibility = View.VISIBLE
-        if (contactos.isEmpty()) {
+        if (contactosOrdenados.isEmpty()) {
             aun_no_tenes_contactos.visibility = View.VISIBLE
         }
     }

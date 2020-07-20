@@ -1,6 +1,7 @@
 package com.taller2.chotuve.presentador
 
 import android.util.Log
+import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.modelo.interactor.InteractorContactos
 import com.taller2.chotuve.modelo.interactor.InteractorPerfil
@@ -11,27 +12,22 @@ class PresentadorPerfil (private var vista: VistaInformacion) {
     private val interactor = InteractorPerfil()
     private val interactorContactos = InteractorContactos()
 
-    fun obtenerInformacion(usuarioId: Long?) {
-        val callback = object : InteractorPerfil.CallbackCargarPerfil {
+    fun obtenerInformacion(usuarioId: Long) {
+        interactor.cargarPerfil(usuarioId, object : InteractorPerfil.CallbackCargarPerfil {
             override fun onExito(perfilDeUsuario: PerfilDeUsuario) {
                 vista.mostrarPerfil(perfilDeUsuario)
             }
 
             override fun onError() {
-                // ?
-                Log.d("P/Perfil", "Error genérico")
+                Log.d("P/Perfil", "Error obteniendo perfil")
+                vista.setErrorRed()
             }
 
             override fun onErrorRed() {
-                // ?
                 Log.d("P/Perfil", "Error de red")
+                vista.setErrorRed()
             }
-        }
-
-        if (usuarioId == null)
-            interactor.cargarMiPerfil(callback)
-        else
-            interactor.cargarPerfil(usuarioId, callback)
+        })
     }
 
     fun enviarSolicitudDeContacto(usuarioId: Long) {

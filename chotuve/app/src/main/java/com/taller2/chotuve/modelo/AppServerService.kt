@@ -57,6 +57,11 @@ interface AppServerService {
     fun obtenerVideos(@Query("cantidad") cantidad: Int = 10,
                       @Query("offset") offset: Int = 0) : Call<ResponseBody>
 
+    @GET("/usuario/{id}/video")
+    fun obtenerVideosDeUsuario(@Path("id") usuarioId: Long,
+                               @Query("cantidad") cantidad: Int = 10,
+                               @Query("offset") offset: Int = 0) : Call<ResponseBody>
+
     @GET("/video/{id}")
     fun obtenerVideo(@Path("id") id: String) : Call<ResponseBody>
 

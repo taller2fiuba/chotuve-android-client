@@ -21,34 +21,33 @@
         android:layout_marginEnd="8dp"
         android:layoutDirection="rtl">
 
-        <Button
+        <ImageButton
             android:id="@+id/rechazar_solicitud_contacto"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="rechazar"
-            android:layout_gravity="center"/>
-
-        <Button
-            android:id="@+id/aceptar_solicitud_contacto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="aceptar"
-            />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:tint="@android:color/darker_gray"
+            app:srcCompat="@drawable/ic_close_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/aceptar_solicitud_contacto"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorPrimary"
+            android:elevation="5dp"
+            android:tint="@color/colorOnPrimary"
+            app:srcCompat="@drawable/ic_baseline_check_24" />
 
     </LinearLayout>
 

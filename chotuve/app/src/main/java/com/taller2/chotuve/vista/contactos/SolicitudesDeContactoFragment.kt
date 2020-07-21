@@ -26,6 +26,7 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configurarRefreshLayout()
         presentador.obtenerSolicitudes()
     }
 
@@ -37,9 +38,19 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
             solicitudes_container.addView(solicitudView)
         }
         cargando_solicitudes_barra_progreso.visibility = View.GONE
+        swipeRefreshLayout.isRefreshing = false
         solicitudes_container.visibility = View.VISIBLE
         if (solicitudesOrdenados.isEmpty()) {
             sin_solicitudes.visibility = View.VISIBLE
+        }
+    }
+
+    private fun configurarRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorSecondary)
+        swipeRefreshLayout.setOnRefreshListener {
+            sin_solicitudes.visibility = View.GONE
+            solicitudes_container.removeAllViews()
+            presentador.obtenerSolicitudes()
         }
     }
 

@@ -16,6 +16,8 @@ import com.taller2.chotuve.modelo.PerfilDeUsuario
 import com.taller2.chotuve.presentador.PresentadorPerfil
 import com.taller2.chotuve.util.cargarImagen
 import com.taller2.chotuve.vista.autenticacion.IniciarSesionActivity
+import com.taller2.chotuve.vista.chats.ChatKeyGenerator
+import com.taller2.chotuve.vista.chats.MensajesFragment
 import kotlinx.android.synthetic.main.fragment_ver_informacion.*
 
 class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) : Fragment(), VistaInformacion {
@@ -76,7 +78,16 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
         perfil_cantidad_de_videos.text = perfilDeUsuario.cantidadVideos.toString()
         if (usuarioId != Modelo.instance.id) {
             when (perfilDeUsuario.estadoContacto) {
-                EstadoContacto.ES_CONTACTO -> boton_en_contactos.visibility = View.VISIBLE
+                EstadoContacto.ES_CONTACTO -> {
+                    boton_enviar_mensaje.visibility = View.VISIBLE
+                    boton_enviar_mensaje.setOnClickListener {
+                        val newFragment = MensajesFragment(ChatKeyGenerator.instance.generarKey(perfilDeUsuario.usuario.id), perfilDeUsuario.usuario)
+                        val transaction = fm.beginTransaction()
+                        transaction.replace(R.id.fragment_container, newFragment)
+                        transaction.addToBackStack(null)
+                        transaction.commit()
+                    }
+                }
                 EstadoContacto.SOLICITUD_ENVIADA -> boton_solitud_enviada.visibility = View.VISIBLE
                 EstadoContacto.SOLICITUD_PENDIENTE -> {
                     aceptar_rechazar_container.visibility = View.VISIBLE
@@ -84,7 +95,7 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
                         presentador.aceptarSolicitudDeContacto(perfilDeUsuario.solicitudId!!)
                         boton_aceptar.visibility = View.GONE
                         boton_rechazar.visibility = View.GONE
-                        boton_en_contactos.visibility = View.VISIBLE
+                        boton_enviar_mensaje.visibility = View.VISIBLE
                     }
                     boton_rechazar.setOnClickListener {
                         presentador.rechazarSolicitudDeContacto(perfilDeUsuario.solicitudId!!)

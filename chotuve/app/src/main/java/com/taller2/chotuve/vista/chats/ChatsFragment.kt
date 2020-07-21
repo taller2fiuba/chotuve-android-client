@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_chats.*
 
 class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
     private val presentadorContactos = PresentadorContactos(this)
+    private val keyGenerator = ChatKeyGenerator.instance
 
     private lateinit var contactos: Map<Long, Usuario>
 
@@ -69,7 +70,7 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
             SnapshotParser { dataSnapshot ->
                 val chat: Chat = dataSnapshot.getValue(Chat::class.java)!!
                 val destinatarioId = dataSnapshot.key!!.toLong()
-                chat.key = generarKey(destinatarioId)
+                chat.key = keyGenerator.generarKey(destinatarioId)
                 chat.destinatario = contactos[destinatarioId]
                 chat
             }
@@ -81,14 +82,6 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
         firebaseAdapter = ChatsAdapter(this, options) as FirebaseRecyclerAdapter<Any?, RecyclerView.ViewHolder>
         chats_recycler_view.adapter = firebaseAdapter
         firebaseAdapter.startListening()
-    }
-
-    private fun generarKey(usuarioId: Long): String {
-        return if (usuarioId > miUsuarioId!!) {
-            "$miUsuarioId-$usuarioId"
-        } else {
-            "$usuarioId-$miUsuarioId"
-        }
     }
 
     fun verMensajes(key: String, destinario: Usuario) {
@@ -103,7 +96,7 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
         val contactosFragment = ContactosFragment(fragmentManager!!, false) { usuario: Usuario ->
             // cuando toco en un contacto ir a los mensajes con ese contacto
             fragmentManager!!.popBackStack()
-            val mensajesFragment = MensajesFragment(generarKey(usuario.id), usuario)
+            val mensajesFragment = MensajesFragment(keyGenerator.generarKey(usuario.id), usuario)
             val transaction = fragmentManager!!.beginTransaction().hide(this)
             transaction.add(R.id.fragment_container, mensajesFragment)
             transaction.addToBackStack(null)

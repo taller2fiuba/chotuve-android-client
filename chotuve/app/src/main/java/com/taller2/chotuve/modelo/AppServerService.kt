@@ -38,12 +38,6 @@ interface AppServerService {
         }
     }
 
-    @POST("/usuario")
-    fun registrarUsuario(@Body infoRegistro: InfoRegistro) : Call<ResponseBody>
-
-    @POST("/usuario/sesion")
-    fun iniciarSesion(@Body infoInicioSesion: InfoInicioSesion) : Call<ResponseBody>
-
     @POST("/video")
     fun crearVideo(@Body video: Video) : Call<ResponseBody>
 
@@ -56,6 +50,15 @@ interface AppServerService {
     @GET("/video")
     fun obtenerVideos(@Query("cantidad") cantidad: Int = 10,
                       @Query("offset") offset: Int = 0) : Call<ResponseBody>
+
+    @POST("/usuario")
+    fun registrarUsuario(@Body infoRegistro: InfoRegistro) : Call<ResponseBody>
+
+    @POST("/usuario/sesion")
+    fun iniciarSesion(@Body infoInicioSesion: InfoInicioSesion) : Call<ResponseBody>
+
+    @POST("/usuario/clave")
+    fun cambiarClave(@Body cambioClaveData: CambioClaveData) : Call<ResponseBody>
 
     @GET("/usuario/{id}/video")
     fun obtenerVideosDeUsuario(@Path("id") usuarioId: Long,

@@ -45,12 +45,16 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
         if (usuarioId != Modelo.instance.id) {
             editar_informacion.visibility = View.GONE
             boton_logout.visibility = View.GONE
+            boton_cambiar_contraseña.visibility = View.GONE
         } else {
             boton_logout.setOnClickListener {
                 presentador.cerrarSesion()
                 val intent = Intent(context, IniciarSesionActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
+            }
+            boton_cambiar_contraseña.setOnClickListener {
+                irACambiarContraseña()
             }
         }
         presentador.obtenerInformacion(usuarioId)
@@ -124,6 +128,14 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
 
     fun irAEditarInformacion() {
         val newFragment = EditarInformacionFragment(perfilDeUsuario!!)
+        val transaction = fm.beginTransaction()
+        transaction.replace(R.id.fragment_container, newFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun irACambiarContraseña() {
+        val newFragment = CambiarClaveFragment()
         val transaction = fm.beginTransaction()
         transaction.replace(R.id.fragment_container, newFragment)
         transaction.addToBackStack(null)

@@ -309,7 +309,7 @@
 
                 <Button
                     android:id="@+id/boton_logout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
@@ -318,6 +318,18 @@
                     android:drawableTint="@color/colorPrimary"
                     android:outlineProvider="none"
                     android:text="Cerrar sesión"
+                    android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/boton_cambiar_contraseña"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_baseline_https_24"
+                    android:drawableTint="@color/colorPrimary"
+                    android:outlineProvider="none"
+                    android:text="cambiar contraseña"
                     android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>

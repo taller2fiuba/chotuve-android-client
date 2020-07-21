@@ -34,7 +34,10 @@ class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
             !Patterns.EMAIL_ADDRESS.matcher(emailString).matches() -> email.error = "Debe ser un email válido"
             clave.isNullOrEmpty() -> contraseña.error = "No puede estar vacío"
             clave != repetirClave -> repetir_contraseña.error = "Las contraseñas no coinciden"
-            else -> presentador.registrarme(emailString, clave)
+            else -> {
+                btnSiguiente.isEnabled = false
+                presentador.registrarme(emailString, clave)
+            }
         }
     }
 
@@ -43,6 +46,7 @@ class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
     }
 
     override fun setUsuarioYaExiste() {
+        btnSiguiente.isEnabled = true
         email.error = "Este email ya está en uso."
     }
 }

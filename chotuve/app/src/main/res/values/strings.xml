@@ -33,4 +33,6 @@
     <string name="registrarme_btn"><u>Registrarme</u></string>
     <string name="ingresar_btn"><u>Ingresar</u></string>
     <string name="crear_btn">Crear</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>

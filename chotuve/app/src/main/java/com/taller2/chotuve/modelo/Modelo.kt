@@ -42,6 +42,7 @@ class Modelo private constructor() {
             }
             field = id
         }
+    var mensajesSinLeer: Int = 0
 
     var chotuveClient = AppServerService.create(userToken)
         private set(valor) { field = valor }

@@ -9,7 +9,8 @@ import com.google.firebase.database.*
 import com.taller2.chotuve.modelo.Modelo
 
 abstract class FirebaseRTDBFragment : Fragment() {
-    protected val miUsuarioId = Modelo.instance.id
+    protected val modelo = Modelo.instance
+    protected val miUsuarioId = modelo.id
     protected val RTDB_NODE = com.taller2.chotuve.BuildConfig.RTDB_NODE
     private val RTDB_NODE_CHATS = com.taller2.chotuve.BuildConfig.RTDB_NODE_CHATS
     protected val RTDB_NODE_MENSAJES = com.taller2.chotuve.BuildConfig.RTDB_NODE_MENSAJES

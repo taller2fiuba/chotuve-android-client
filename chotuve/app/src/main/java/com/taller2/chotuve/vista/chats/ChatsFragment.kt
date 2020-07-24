@@ -16,6 +16,7 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.Chat
 import com.taller2.chotuve.modelo.Usuario
 import com.taller2.chotuve.presentador.PresentadorContactos
+import com.taller2.chotuve.vista.MainActivity
 import com.taller2.chotuve.vista.contactos.ContactosFragment
 import com.taller2.chotuve.vista.contactos.VistaContactos
 import com.taller2.chotuve.vista.scroll_infinito.ChatsAdapter

@@ -26,18 +26,31 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configurarRefreshLayout()
         presentador.obtenerSolicitudes()
     }
 
     override fun mostrarSolicitudes(solicitudes: List<SolicitudDeContacto>) {
-        solicitudes.forEach { solicitud: SolicitudDeContacto ->
+        // TODO ordenando por id porque las solicitudes no tienen fecha de creacion
+        val solicitudesOrdenados = solicitudes.sortedByDescending { it.id }
+        solicitudesOrdenados.forEach { solicitud: SolicitudDeContacto ->
             val solicitudView = SolicitudDeContactoView(context!!, this, solicitud)
             solicitudes_container.addView(solicitudView)
         }
         cargando_solicitudes_barra_progreso.visibility = View.GONE
+        swipeRefreshLayout.isRefreshing = false
         solicitudes_container.visibility = View.VISIBLE
-        if (solicitudes.isEmpty()) {
+        if (solicitudesOrdenados.isEmpty()) {
             sin_solicitudes.visibility = View.VISIBLE
+        }
+    }
+
+    private fun configurarRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorSecondary)
+        swipeRefreshLayout.setOnRefreshListener {
+            sin_solicitudes.visibility = View.GONE
+            solicitudes_container.removeAllViews()
+            presentador.obtenerSolicitudes()
         }
     }
 

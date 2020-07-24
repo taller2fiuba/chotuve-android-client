@@ -1,5 +1,6 @@
 package com.taller2.chotuve.util
 
+import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
@@ -19,6 +20,10 @@ fun cargarImagen(usuario: Usuario, imageview: ImageView, view: View) {
 
 fun cargarImagen(usuario: Usuario, imageview: ImageView, fragment: Fragment) {
     cargarImagen(usuario.fotoPerfilUri, imageview, Glide.with(fragment))
+}
+
+fun cargarImagen(usuario: Usuario, imageview: ImageView, context: Context) {
+    cargarImagen(usuario.fotoPerfilUri, imageview, Glide.with(context))
 }
 
 fun cargarImagen(uri: Uri?, imageview: ImageView, requestManager: RequestManager) {

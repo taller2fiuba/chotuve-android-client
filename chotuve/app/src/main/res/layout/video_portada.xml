@@ -6,6 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/cargando_barra_progreso"
+        android:layout_width="112dp"
+        android:layout_height="73dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/portada"
+        app:layout_constraintEnd_toEndOf="@+id/portada"
+        app:layout_constraintStart_toStartOf="@+id/portada"
+        app:layout_constraintTop_toTopOf="@+id/portada" />
+
     <ImageView
         android:id="@+id/portada"
         android:layout_width="0dp"

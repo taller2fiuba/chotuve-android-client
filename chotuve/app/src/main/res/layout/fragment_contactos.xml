@@ -22,77 +22,75 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/contactos_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
         android:visibility="gone"
         tools:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/boton_ver_solicitudes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="16dp">
-
-            <LinearLayout
-                android:id="@+id/boton_ver_solicitudes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                    android:text="Solicitudes de contacto" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
-                    android:text="Aprobá o rechazá tus solicitudes" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/boton_ver_solicitudes_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-
+            android:paddingEnd="16dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
-                android:text="Todos tus contactos" />
-
-            <LinearLayout
-                android:id="@+id/contactos_container"
-                android:layout_width="match_parent"
+                android:text="Solicitudes de contacto" />
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/aun_no_tenes_contactos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
-                    android:visibility="gone"
-                    android:text="Aún no tenes contactos..."
-                    tools:visibility="visible"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
-            </LinearLayout>
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
+                android:text="Aprobá o rechazá tus solicitudes" />
         </LinearLayout>
-    </ScrollView>
+        <View
+            android:id="@+id/boton_ver_solicitudes_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+        <SearchView
+            android:id="@+id/buscar_contactos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="Buscar contacto" />
+        <TextView
+            android:id="@+id/aun_no_tenes_contactos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:visibility="gone"
+            android:text="Aún no tenes contactos..."
+            tools:visibility="visible"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/contactos_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+            </ListView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
 </FrameLayout>

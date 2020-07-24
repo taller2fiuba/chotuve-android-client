@@ -6,8 +6,8 @@ import com.taller2.chotuve.modelo.Modelo
 class InteractorIniciarSesion {
     private val modelo = Modelo.instance
 
-    fun iniciarSesion(usuario: String, clave: String, listener: CallbackInicioSesion) {
-        modelo.iniciarSesion(usuario, clave, listener)
+    fun iniciarSesion(email: String, clave: String, listener: CallbackInicioSesion) {
+        modelo.iniciarSesion(email, clave, listener)
     }
 
     fun estaLogueado() = modelo.estaLogueado()

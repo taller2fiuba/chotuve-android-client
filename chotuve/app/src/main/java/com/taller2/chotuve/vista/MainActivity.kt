@@ -15,8 +15,6 @@ import com.taller2.chotuve.R
 import com.taller2.chotuve.modelo.ChotuveFirebaseMessagingService
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
-import com.taller2.chotuve.vista.chats.ChatsFragment
-import com.taller2.chotuve.vista.notificaciones.NotificacionesFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,14 +31,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var navegacion : BottomNavigationView
-    private val principalFragment: Fragment = SeccionFragment.principal()
-    private val chatsFragment: Fragment = SeccionFragment.chats()
-    private val notificacionesFragment: Fragment = NotificacionesFragment.newInstance()
-    private lateinit var perfilFragment: Fragment
-    private var fragmentActivo : Fragment = principalFragment
+    private val principalFragment: SeccionFragment = SeccionFragment.principal()
+    private val chatsFragment: SeccionFragment = SeccionFragment.chats()
+    private val notificacionesFragment: SeccionFragment = SeccionFragment.notificaciones()
+    private lateinit var perfilFragment: SeccionFragment
+    private var fragmentActivo : SeccionFragment = principalFragment
 
     private val modelo = Modelo.instance
-    lateinit var receiver: BroadcastReceiver
+    private var receiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,12 +72,15 @@ class MainActivity : AppCompatActivity() {
                     else -> false
                 }
             }
+            navegacion.setOnNavigationItemReselectedListener {
+                fragmentActivo.reseleccionar()
+            }
             configurarReceiver()
             recargarChatsSinLeer()
         }
     }
 
-    private fun openFragment(tag: String, fragment: Fragment) {
+    private fun openFragment(tag: String, fragment: SeccionFragment) {
         val fragmentoExistente = supportFragmentManager.findFragmentByTag(tag)
         val transicion = supportFragmentManager.beginTransaction().hide(fragmentActivo)
         // Si es fragmento todavia no se creo crearlo
@@ -156,7 +157,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFragment(tag: String?) : Fragment {
+    private fun getFragment(tag: String?) : SeccionFragment {
         return when (tag) {
             FRAGMENT_PRINCIPAL_TAG -> {
                 principalFragment
@@ -202,12 +203,16 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         val filtro = IntentFilter(ChotuveFirebaseMessagingService.INTENT_ACTION_RECARGAR_CHATS_SIN_LEER)
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filtro)
-        recargarChatsSinLeer()
+        if (receiver != null) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(receiver!!, filtro)
+            recargarChatsSinLeer()
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
+        if (receiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver!!)
+        }
     }
 }

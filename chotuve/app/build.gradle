@@ -25,6 +25,7 @@ android {
             buildConfigField "String", "RTDB_NODE", "\"app-server-prod\""
             buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS
             buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
+            buildConfigField "String", "RTDB_NODE_NOTIFICACIONES", RTDB_NODE_NOTIFICACIONES
         }
 
         // esto esta mal en realidad, no deberia poder pegarle a prod desde android studio
@@ -34,6 +35,7 @@ android {
             buildConfigField "String", "RTDB_NODE", "\"app-server-prod\""
             buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS
             buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
+            buildConfigField "String", "RTDB_NODE_NOTIFICACIONES", RTDB_NODE_NOTIFICACIONES
         }
 
         debug {
@@ -41,6 +43,7 @@ android {
             buildConfigField "String", "RTDB_NODE", "\"app-server-dev\""
             buildConfigField "String", "RTDB_NODE_CHATS", RTDB_NODE_CHATS
             buildConfigField "String", "RTDB_NODE_MENSAJES", RTDB_NODE_MENSAJES
+            buildConfigField "String", "RTDB_NODE_NOTIFICACIONES", RTDB_NODE_NOTIFICACIONES
         }
     }
 
@@ -55,13 +58,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
 
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -70,7 +74,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 

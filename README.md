@@ -2,8 +2,9 @@
 
 ## Instalación de la aplicación  
 
-1. Descargar la ultima versíon apk haciendo click [aquí](https://github.com/taller2fiuba/chotuve-android-client/releases/latest)
-2. Instalar el apk descargado, puede que tengas que aceptar instalar una aplicación desde un medio no seguro (no Google Play).
+1. Descargar la ultima versíon del apk de Chotuve haciendo click [aquí](https://github.com/taller2fiuba/chotuve-android-client/releases/latest)
+2. Ubica donde esta guardado el apk en tu teléfono.
+3. Instalar el apk descargado haciendo click en él, puede que tengas que aceptar instalar una aplicación desde un medio no seguro (no Google Play).
 
 
 ## (Solo para desarrolladores) Configurar celular para probar la app localmente  

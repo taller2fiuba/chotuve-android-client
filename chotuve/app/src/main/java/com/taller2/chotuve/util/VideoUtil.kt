@@ -15,6 +15,6 @@ fun obtenerDuracionVideo(uri: Uri) : Long {
 }
 
 fun obtenerAltoVideo(context: Context) : Int {
-    return (200 * context.resources
+    return (230 * context.resources
         .displayMetrics.density).toInt()
 }

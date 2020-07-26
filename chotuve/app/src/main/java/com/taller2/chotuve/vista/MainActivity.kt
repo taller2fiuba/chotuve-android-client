@@ -1,26 +1,34 @@
 package com.taller2.chotuve.vista
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.taller2.chotuve.R
+import com.taller2.chotuve.modelo.ChotuveFirebaseMessagingService
 import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.vista.autenticacion.RegistrarmeActivity
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val FRAGMENT_PRINCIPAL_TAG =  "FRAGMENT_PRINCIPAL_TAG"
-    private val FRAGMENT_PRINCIPAL_INDEX =  0
-    private val FRAGMENT_CHATS_TAG =  "FRAGMENT_CHATS_TAG"
-    private val FRAGMENT_CHATS_INDEX =  1
-    private val FRAGMENT_NOTIFICACIONES_TAG =  "FRAGMENT_NOTIFICACIONES_TAG"
-    private val FRAGMENT_NOTIFICACIONES_INDEX =  2
-    private val FRAGMENT_PERFIL_TAG =  "FRAGMENT_PERFIL_TAG"
-    private val FRAGMENT_PERFIL_INDEX =  3
+    companion object {
+        private const val FRAGMENT_PRINCIPAL_TAG =  "FRAGMENT_PRINCIPAL_TAG"
+        private const val FRAGMENT_PRINCIPAL_INDEX =  0
+        private const val FRAGMENT_CHATS_TAG =  "FRAGMENT_CHATS_TAG"
+        private const val FRAGMENT_CHATS_INDEX =  1
+        private const val FRAGMENT_NOTIFICACIONES_TAG =  "FRAGMENT_NOTIFICACIONES_TAG"
+        private const val FRAGMENT_NOTIFICACIONES_INDEX =  2
+        private const val FRAGMENT_PERFIL_TAG =  "FRAGMENT_PERFIL_TAG"
+        private const val FRAGMENT_PERFIL_INDEX =  3
+    }
 
     private lateinit var navegacion : BottomNavigationView
     private val principalFragment: SeccionFragment = SeccionFragment.principal()
@@ -28,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     private val notificacionesFragment: SeccionFragment = SeccionFragment.notificaciones()
     private lateinit var perfilFragment: SeccionFragment
     private var fragmentActivo : SeccionFragment = principalFragment
+
+    private val modelo = Modelo.instance
+    private var receiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +75,8 @@ class MainActivity : AppCompatActivity() {
             navegacion.setOnNavigationItemReselectedListener {
                 fragmentActivo.reseleccionar()
             }
+            configurarReceiver()
+            recargarChatsSinLeer()
         }
     }
 
@@ -78,6 +91,9 @@ class MainActivity : AppCompatActivity() {
         }
         transicion.addToBackStack(tag)
         transicion.commit()
+        if (tag == FRAGMENT_CHATS_TAG) {
+            verMensajesSinLeer()
+        }
         // +1 por el que se acaba de agregar, aun no afecta
         val cantidadStack: Int = supportFragmentManager.backStackEntryCount + 1
         supportFragmentManager.addOnBackStackChangedListener(object : FragmentManager.OnBackStackChangedListener {
@@ -90,6 +106,9 @@ class MainActivity : AppCompatActivity() {
                     // seteo el icono a mostrar en la nevegacion con el index del fragment anterior
                     navegacion.menu.getItem(getIndex(tagAnterior)).isChecked = true
                     fragmentActivo = getFragment(tagAnterior)
+                    if (tagAnterior == FRAGMENT_CHATS_TAG) {
+                        verMensajesSinLeer()
+                    }
                 } else if (supportFragmentManager.backStackEntryCount == 0) {
                     // volvi al principio de todo, es la pantalla principal
                     navegacion.menu.getItem(FRAGMENT_PRINCIPAL_INDEX).isChecked = true
@@ -105,6 +124,9 @@ class MainActivity : AppCompatActivity() {
         // si ese fragment por dentro hizo cambios en el fragment entonces ir atras dentro de ese fragment
         if (childFragmentManager.backStackEntryCount > 0) {
             childFragmentManager.popBackStack()
+            if (childFragmentManager.backStackEntryCount == 1 && fragmentActivo == chatsFragment) {
+                verMensajesSinLeer()
+            }
             return
         } else {
             if (supportFragmentManager.backStackEntryCount > 0) {
@@ -150,6 +172,47 @@ class MainActivity : AppCompatActivity() {
                 perfilFragment
             }
             else -> principalFragment
+        }
+    }
+
+    private fun configurarReceiver() {
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                // estoy actualmente en la pantalla de chats
+                if (fragmentActivo == chatsFragment && fragmentActivo.childFragmentManager.backStackEntryCount == 0) {
+                    modelo.mensajesSinLeer = 0
+                }
+                recargarChatsSinLeer()
+            }
+        }
+    }
+
+    fun recargarChatsSinLeer() {
+        val iconoChats = navegacion.getOrCreateBadge(R.id.chats_menu)
+        val mensajesSinLeer = modelo.mensajesSinLeer
+        iconoChats.number = modelo.mensajesSinLeer
+        iconoChats.isVisible = mensajesSinLeer != 0
+    }
+
+    fun verMensajesSinLeer() {
+        modelo.mensajesSinLeer = 0
+        recargarChatsSinLeer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val filtro = IntentFilter(ChotuveFirebaseMessagingService.INTENT_ACTION_RECARGAR_CHATS_SIN_LEER)
+        if (receiver != null) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(receiver!!, filtro)
+            recargarChatsSinLeer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (receiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver!!)
         }
     }
 }

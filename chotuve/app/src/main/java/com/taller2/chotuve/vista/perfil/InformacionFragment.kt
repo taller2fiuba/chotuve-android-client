@@ -135,7 +135,7 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
     }
 
     fun irACambiarContraseña() {
-        val newFragment = CambiarClaveFragment()
+        val newFragment = CambiarClaveFragment(email.text.toString())
         val transaction = fm.beginTransaction()
         transaction.replace(R.id.fragment_container, newFragment)
         transaction.addToBackStack(null)

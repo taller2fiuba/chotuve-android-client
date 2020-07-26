@@ -57,7 +57,7 @@ interface AppServerService {
     @POST("/usuario/sesion")
     fun iniciarSesion(@Body infoInicioSesion: InfoInicioSesion) : Call<ResponseBody>
 
-    @POST("/usuario/clave")
+    @PUT("/usuario/clave")
     fun cambiarClave(@Body cambioClaveData: CambioClaveData) : Call<ResponseBody>
 
     @GET("/usuario/{id}/video")

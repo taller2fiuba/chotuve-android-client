@@ -1,6 +1,5 @@
 package com.taller2.chotuve.vista.perfil
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,10 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.taller2.chotuve.R
 import com.taller2.chotuve.presentador.PresentadorCambiarClave
-import com.taller2.chotuve.vista.autenticacion.IniciarSesionActivity
 import kotlinx.android.synthetic.main.fragment_cambiar_clave.*
 
-class CambiarClaveFragment : Fragment(), VistaCambiarClave {
+class CambiarClaveFragment(private val email: String) : Fragment(), VistaCambiarClave {
     private val presentador = PresentadorCambiarClave(this)
 
     override fun onCreateView(
@@ -45,7 +43,7 @@ class CambiarClaveFragment : Fragment(), VistaCambiarClave {
             nuevaClave != repetirNuevaClave -> repetir_nueva_clave.error = "Las contraseñas no coinciden"
             else -> {
                 boton_cambiar_contraseña.isEnabled = false
-                presentador.cambiarClave(claveActual, nuevaClave)
+                presentador.cambiarClave(email, claveActual, nuevaClave)
             }
         }
     }
@@ -62,9 +60,8 @@ class CambiarClaveFragment : Fragment(), VistaCambiarClave {
     }
 
     override fun onExito() {
-        val intent = Intent(context, IniciarSesionActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
+        fragmentManager!!.popBackStack()
+        Toast.makeText(context, "Bien! Contraseña actualizada", Toast.LENGTH_LONG).show()
     }
 
 }

@@ -7,8 +7,9 @@ import com.taller2.chotuve.vista.perfil.VistaCambiarClave
 class PresentadorCambiarClave(private val vista: VistaCambiarClave) {
     private val interactorCambiarClave = InteractorCambiarClave()
 
-    fun cambiarClave(claveActual: String, nuevaClave: String) {
+    fun cambiarClave(email: String, claveActual: String, nuevaClave: String) {
         interactorCambiarClave.cambiarClave(
+            email,
             claveActual,
             nuevaClave,
             object : InteractorCambiarClave.CallbackCambiarClave {

@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -17,6 +16,7 @@ class ClaveView constructor(context: Context, attrs: AttributeSet?) :  FrameLayo
     private var indicadorFuerzaClaveProgreso: ProgressBar
     private var indicadorFuerzaClaveTexto: TextView
     var clave: TextInputLayout
+    var boton: Button? = null
     private val cambioEnTextoWatcher: TextWatcher
 
     constructor(context: Context) : this(context, null)
@@ -83,6 +83,7 @@ class ClaveView constructor(context: Context, attrs: AttributeSet?) :  FrameLayo
                 COLOR_FUERZA[fuerza] ?: android.R.color.holo_red_dark
             ))
         indicadorFuerzaClaveProgreso.progress = fuerza
+        boton?.isEnabled = fuerza >= 3
     }
 
     private fun getFuerzaClave(): Int {

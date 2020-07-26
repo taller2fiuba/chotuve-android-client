@@ -18,6 +18,7 @@ class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
         setContentView(R.layout.registro_de_usuario)
 
         clave_view.setHint("contraseña")
+        clave_view.boton = btnSiguiente
         presentador.onCreate()
     }
 

@@ -24,6 +24,7 @@ class CambiarClaveFragment(private val email: String) : Fragment(), VistaCambiar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         nueva_clave.setHint("nueva contraseña")
+        nueva_clave.boton = boton_cambiar_contraseña
         boton_cambiar_contraseña.setOnClickListener {
             clickCambiar()
         }

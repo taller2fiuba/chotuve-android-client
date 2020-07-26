@@ -23,6 +23,7 @@ class CambiarClaveFragment(private val email: String) : Fragment(), VistaCambiar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        nueva_clave.setHint("nueva contraseña")
         boton_cambiar_contraseña.setOnClickListener {
             clickCambiar()
         }
@@ -30,20 +31,21 @@ class CambiarClaveFragment(private val email: String) : Fragment(), VistaCambiar
 
     fun clickCambiar() {
         clave_actual.error = ""
-        nueva_clave.error = ""
+        nueva_clave.setError("")
         repetir_nueva_clave.error = ""
 
         val claveActual = clave_actual.editText?.text?.toString()
-        val nuevaClave = nueva_clave.editText?.text?.toString()
         val repetirNuevaClave = repetir_nueva_clave.editText?.text?.toString()
 
         when {
             claveActual.isNullOrEmpty() -> clave_actual.error = "No puede estar vacío"
-            nuevaClave.isNullOrEmpty() -> nueva_clave.error = "No puede estar vacío"
-            nuevaClave != repetirNuevaClave -> repetir_nueva_clave.error = "Las contraseñas no coinciden"
+            nueva_clave.estaVacio() -> nueva_clave.setError("No puede estar vacío")
+            nueva_clave.superaLargoMaximo() -> nueva_clave.setError("No puede tener mas de 40 carácteres")
+            !nueva_clave.tieneFuerzaAceptable() -> nueva_clave.setError("Debe ser mas fuerte: usa numeros, mayusculas y minisculas")
+            !nueva_clave.coincideCon(repetirNuevaClave!!) -> repetir_nueva_clave.error = "Las contraseñas no coinciden"
             else -> {
                 boton_cambiar_contraseña.isEnabled = false
-                presentador.cambiarClave(email, claveActual, nuevaClave)
+                presentador.cambiarClave(email, claveActual, nueva_clave.getClave())
             }
         }
     }

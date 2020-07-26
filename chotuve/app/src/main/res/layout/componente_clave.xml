@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/indicador_fuerza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:weightSum="10">
+
+        <ProgressBar
+            android:id="@+id/indicador_fuerza_clave_progreso"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:layout_weight="7"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/indicador_fuerza_clave_texto"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="No ingresada"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contraseña_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1"
+            android:textColorLink="@color/colorSecondary" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

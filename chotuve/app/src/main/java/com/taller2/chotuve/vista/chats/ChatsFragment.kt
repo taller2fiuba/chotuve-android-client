@@ -36,6 +36,12 @@ class ChatsFragment : FirebaseRTDBFragment(), VistaContactos {
         return inflater.inflate(R.layout.fragment_chats, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentadorContactos.onDestroy()
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presentadorContactos.obtenerContactos()

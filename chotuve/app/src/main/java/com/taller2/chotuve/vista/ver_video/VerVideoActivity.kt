@@ -74,6 +74,11 @@ class VerVideoActivity: AppCompatActivity(), VistaVerVideo {
         presentador.obtenerVideo(id)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     fun configurarRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(this)
         comentarios_recycler_view.layoutManager = linearLayoutManager

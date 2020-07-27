@@ -27,6 +27,11 @@ class ContactosFragment(private val fm: FragmentManager, private val mostrarSoli
         return inflater.inflate(R.layout.fragment_contactos, container, false)  as View
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (mostrarSolicitudes) {

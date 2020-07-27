@@ -21,6 +21,11 @@ class CambiarClaveFragment(private val email: String) : Fragment(), VistaCambiar
         return inflater.inflate(R.layout.fragment_cambiar_clave, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         nueva_clave.setHint("nueva contraseña")

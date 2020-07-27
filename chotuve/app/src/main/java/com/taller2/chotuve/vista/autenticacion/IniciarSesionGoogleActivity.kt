@@ -15,6 +15,11 @@ import com.taller2.chotuve.vista.MainActivity
 abstract class IniciarSesionGoogleActivity : AppCompatActivity(), VistaGoogle {
     private val presentador = PresentadorGoogle(this)
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     fun clickIngresarConGoogle(view: View) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()

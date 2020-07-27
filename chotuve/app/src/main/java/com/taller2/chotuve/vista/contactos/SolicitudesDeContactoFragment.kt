@@ -24,6 +24,11 @@ class SolicitudesDeContactoFragment : Fragment(), VistaSolicitudesDeContacto {
         return inflater.inflate(R.layout.fragment_solicitudes_de_contacto, container, false)  as View
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configurarRefreshLayout()

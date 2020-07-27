@@ -6,13 +6,17 @@ import com.taller2.chotuve.modelo.*
 import com.taller2.chotuve.modelo.interactor.InteractorVerVideo
 import com.taller2.chotuve.vista.ver_video.VistaVerVideo
 
-class PresentadorVerVideo (private val vista: VistaVerVideo,
+class PresentadorVerVideo (private var vista: VistaVerVideo?,
                            private val interactor: InteractorVerVideo
 ) {
+    fun onDestroy() {
+        vista = null
+    }
+
     fun obtenerVideo(id: String) {
         interactor.obtenerVideo(id, object : InteractorVerVideo.CallbackVerVideo {
             override fun onVideoObtenido(video: Video) {
-                vista.mostrarVideo(video)
+                vista?.mostrarVideo(video)
             }
 
             override fun onError(mensaje: String) {
@@ -24,7 +28,7 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
     fun reaccionar(videoId: String, reaccion: Reaccion) {
         interactor.reaccionar(videoId, reaccion, object : InteractorVerVideo.CallbackReaccionar {
             override fun onErrorRed() {
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }
@@ -32,11 +36,11 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
     fun obtenerComentarios(videoId: String, pagina: Int) {
         interactor.obtenerComentarios(videoId, pagina, object : InteractorVerVideo.CallbackVerComentarios {
             override fun onExito(comentarios: List<Comentario>) {
-                vista.mostrarComentarios(comentarios)
+                vista?.mostrarComentarios(comentarios)
             }
 
             override fun onErrorRed() {
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }
@@ -44,11 +48,11 @@ class PresentadorVerVideo (private val vista: VistaVerVideo,
     fun crearComentario(videoId: String, comentario: String) {
         interactor.crearComentario(videoId, comentario, object : InteractorVerVideo.CallbackComentar {
             override fun onErrorRed() {
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
 
             override fun onComentarioCreado(comentario: String, miPerfil: PerfilDeUsuario) {
-                vista.agregarNuevoComentario(comentario, miPerfil)
+                vista?.agregarNuevoComentario(comentario, miPerfil)
             }
         })
     }

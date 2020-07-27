@@ -6,20 +6,25 @@ import com.taller2.chotuve.modelo.interactor.InteractorIniciarSesion
 import com.taller2.chotuve.modelo.interactor.InteractorRegistrarme
 import com.taller2.chotuve.vista.autenticacion.VistaGoogle
 
-class PresentadorGoogle(val vistaGoogle: VistaGoogle) {
+class PresentadorGoogle(private var vista: VistaGoogle?) {
     val interactorRegistrarme = InteractorRegistrarme()
     val interactorIniciarSesion = InteractorIniciarSesion()
 
     fun onCreate() {
         if (interactorRegistrarme.estaLogueado()) {
-            vistaGoogle.irAPantallaPrincipal()
+            vista?.irAPantallaPrincipal()
         }
     }
+
+    fun onDestroy() {
+        vista = null
+    }
+
 
     fun registrarme(email: String, id: String) {
         interactorRegistrarme.registrarme(email, id, object : CallbackRegistro {
             override fun onExito() {
-                vistaGoogle.irAPantallaPrincipal()
+                vista?.irAPantallaPrincipal()
             }
 
             override fun onYaEstaRegistrado() {
@@ -27,7 +32,7 @@ class PresentadorGoogle(val vistaGoogle: VistaGoogle) {
             }
 
             override fun onErrorRed(mensaje: String?) {
-                vistaGoogle.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }
@@ -35,7 +40,7 @@ class PresentadorGoogle(val vistaGoogle: VistaGoogle) {
     fun iniciarSesion(email: String, id: String) {
         interactorIniciarSesion.iniciarSesion(email, id, object : CallbackInicioSesion {
             override fun onExito() {
-                vistaGoogle.irAPantallaPrincipal()
+                vista?.irAPantallaPrincipal()
             }
 
             override fun onUsuarioOClaveIncorrecta() {
@@ -43,7 +48,7 @@ class PresentadorGoogle(val vistaGoogle: VistaGoogle) {
             }
 
             override fun onErrorRed(mensaje: String?) {
-                vistaGoogle.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }

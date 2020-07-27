@@ -26,6 +26,11 @@ class EditarInformacionFragment(val perfilDeUsuario: PerfilDeUsuario) : Fragment
         return inflater.inflate(R.layout.fragment_editar_informacion, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         boton_editar.setOnClickListener {

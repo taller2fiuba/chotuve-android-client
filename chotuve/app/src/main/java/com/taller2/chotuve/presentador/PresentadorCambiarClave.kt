@@ -4,8 +4,12 @@ import com.taller2.chotuve.modelo.interactor.InteractorCambiarClave
 import com.taller2.chotuve.vista.perfil.VistaCambiarClave
 
 
-class PresentadorCambiarClave(private val vista: VistaCambiarClave) {
+class PresentadorCambiarClave(private var vista: VistaCambiarClave?) {
     private val interactorCambiarClave = InteractorCambiarClave()
+
+    fun onDestroy() {
+        vista = null
+    }
 
     fun cambiarClave(email: String, claveActual: String, nuevaClave: String) {
         interactorCambiarClave.cambiarClave(
@@ -14,15 +18,15 @@ class PresentadorCambiarClave(private val vista: VistaCambiarClave) {
             nuevaClave,
             object : InteractorCambiarClave.CallbackCambiarClave {
                 override fun onExito() {
-                    vista.onExito()
+                    vista?.onExito()
                 }
 
                 override fun onErrorRed() {
-                    vista.setErrorRed()
+                    vista?.setErrorRed()
                 }
 
                 override fun onError() {
-                    vista.setError()
+                    vista?.setError()
                 }
             }
         )

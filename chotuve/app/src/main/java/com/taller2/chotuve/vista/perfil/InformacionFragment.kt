@@ -38,6 +38,11 @@ class InformacionFragment(val usuarioId: Long, private val fm: FragmentManager) 
         return inflater.inflate(R.layout.fragment_ver_informacion, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mostrarCargandoPerfil()

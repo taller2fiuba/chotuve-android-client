@@ -8,7 +8,7 @@ import com.taller2.chotuve.modelo.interactor.InteractorVideos
 import com.taller2.chotuve.modelo.interactor.desearilizador.DeserializadorUsuarioVideosDeUnUsuario
 import com.taller2.chotuve.vista.principal.VistaVideos
 
-class PresentadorVideosDeUnUsuario(private val usuarioId: Long, private val vista: VistaVideos) : PresentadorVideos {
+class PresentadorVideosDeUnUsuario(private val usuarioId: Long, private var vista: VistaVideos?) : PresentadorVideos {
     private val interactorPerfil = InteractorPerfil()
     private var interactor: InteractorVideos? = null
 
@@ -20,6 +20,10 @@ class PresentadorVideosDeUnUsuario(private val usuarioId: Long, private val vist
         }
     }
 
+    override fun onDestroy() {
+        vista = null
+    }
+
     private fun configurarInteractor(pagina: Int) {
         interactorPerfil.cargarPerfil(usuarioId, object : InteractorPerfil.CallbackCargarPerfil {
             override fun onExito(perfilDeUsuario: PerfilDeUsuario) {
@@ -29,12 +33,12 @@ class PresentadorVideosDeUnUsuario(private val usuarioId: Long, private val vist
 
             override fun onError() {
                 Log.d("P/Videos de un usuario", "Error obteniendo perfil")
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
 
             override fun onErrorRed() {
                 Log.d("P/Videos de un usuario", "Error de red")
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }
@@ -42,10 +46,10 @@ class PresentadorVideosDeUnUsuario(private val usuarioId: Long, private val vist
     private fun obtenerVideosInterno(pagina: Int) {
         interactor!!.obtenerVideosDeUsuario(usuarioId, pagina, object : InteractorVideos.CallbackObtenerVideo {
             override fun onObtenerExitoso(videos: List<Video>) {
-                vista.mostrarVideos(videos)
+                vista?.mostrarVideos(videos)
             }
             override fun onErrorRed(mensaje: String?) {
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }

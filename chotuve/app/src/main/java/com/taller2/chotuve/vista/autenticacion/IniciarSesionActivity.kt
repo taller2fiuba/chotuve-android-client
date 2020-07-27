@@ -20,6 +20,11 @@ class IniciarSesionActivity : IniciarSesionGoogleActivity(), VistaIniciarSesion 
         presentador.onCreate()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     fun clickIniciarSesion(view: View) {
         email.error = ""
         contraseña.error = ""
@@ -43,5 +48,10 @@ class IniciarSesionActivity : IniciarSesionGoogleActivity(), VistaIniciarSesion 
     override fun setUsuarioOClaveIncorrecta() {
         btnSiguiente.isEnabled = true
         Toast.makeText(this, "Usuario o e-mail incorrecto", Toast.LENGTH_LONG).show()
+    }
+
+    override fun setErrorRed() {
+        btnSiguiente.isEnabled = true
+        super.setErrorRed()
     }
 }

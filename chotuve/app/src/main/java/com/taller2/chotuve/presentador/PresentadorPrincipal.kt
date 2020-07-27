@@ -5,17 +5,21 @@ import com.taller2.chotuve.modelo.interactor.InteractorVideos
 import com.taller2.chotuve.modelo.interactor.desearilizador.DeserializadorUsuarioMuroDeVideos
 import com.taller2.chotuve.vista.principal.VistaVideos
 
-class PresentadorPrincipal (private val vista: VistaVideos) : PresentadorVideos {
+class PresentadorPrincipal (private var vista: VistaVideos?) : PresentadorVideos {
 
     private val interactor: InteractorVideos = InteractorVideos(DeserializadorUsuarioMuroDeVideos())
+
+    override fun onDestroy() {
+        vista = null
+    }
 
     override fun obtenerVideos(pagina: Int) {
         interactor.obtenerVideos(pagina, object : InteractorVideos.CallbackObtenerVideo {
             override fun onObtenerExitoso(videos: List<Video>) {
-                vista.mostrarVideos(videos)
+                vista?.mostrarVideos(videos)
             }
             override fun onErrorRed(mensaje: String?) {
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }

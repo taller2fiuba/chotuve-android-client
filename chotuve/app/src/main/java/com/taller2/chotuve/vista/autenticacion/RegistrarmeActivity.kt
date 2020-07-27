@@ -22,6 +22,12 @@ class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
         presentador.onCreate()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
+
     fun clickRegistrarse(view: View) {
         email.error = ""
         clave_view.setError("")

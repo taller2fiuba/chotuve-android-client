@@ -28,6 +28,11 @@ class VideosDeUnUsuarioFragment(val usuarioId: Long, fm: FragmentManager) : Vide
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == SUBIR_VIDEO_REQUEST_CODE) {

@@ -41,6 +41,11 @@ abstract class VideosFragment(private val fm: FragmentManager? = null) : Fragmen
         return inflater.inflate(R.layout.fragment_videos, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configurarRecyclerView()

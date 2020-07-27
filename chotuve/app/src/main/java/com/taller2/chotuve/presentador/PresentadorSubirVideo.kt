@@ -5,49 +5,53 @@ import com.taller2.chotuve.modelo.interactor.InteractorFirebase
 import com.taller2.chotuve.modelo.interactor.InteractorSubirVideo
 import com.taller2.chotuve.vista.perfil.VistaSubirVideo
 
-class PresentadorSubirVideo (private val vistaSubirVideo: VistaSubirVideo,
+class PresentadorSubirVideo (private var vista: VistaSubirVideo?,
                              private val interactorSubirVideo: InteractorSubirVideo
 ) {
     private val interactorFirebase: InteractorFirebase = InteractorFirebase("videos")
     private lateinit var uri: Uri
 
+    fun onDestroy() {
+        vista = null
+    }
+
     fun elegirVideo(uri: Uri) {
-        vistaSubirVideo.deshabilitarBotonSubidaAppServer()
+        vista?.deshabilitarBotonSubidaAppServer()
         this.uri = uri
         interactorFirebase.subir(uri, object : InteractorFirebase.CallbackSubir {
             override fun onSubidaExitosa() {
-                vistaSubirVideo.setProgresoSubidaFirebase(100)
-                vistaSubirVideo.habilitarBotonSubidaAppServer()
+                vista?.setProgresoSubidaFirebase(100)
+                vista?.habilitarBotonSubidaAppServer()
             }
 
             override fun onActualizarProgreso(progreso: Int) {
-                vistaSubirVideo.setProgresoSubidaFirebase(progreso)
+                vista?.setProgresoSubidaFirebase(progreso)
             }
 
             override fun onErrorSubida() {
-                vistaSubirVideo.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }
 
     fun crearVideo(titulo: String, ubicacion: String, descripcion: String?, visibilidad: String) {
-        vistaSubirVideo.deshabilitarBotonSubidaAppServer()
-        vistaSubirVideo.mostrarProgresoSubidaAppServer()
+        vista?.deshabilitarBotonSubidaAppServer()
+        vista?.mostrarProgresoSubidaAppServer()
         interactorSubirVideo.crearVideo(titulo, ubicacion, descripcion, visibilidad, uri, interactorFirebase.urlDescarga!!, object : InteractorSubirVideo.CallbackCrearVideo {
             override fun onExito() {
-                vistaSubirVideo.onSubidaAppServerExitosa()
+                vista?.onSubidaAppServerExitosa()
             }
 
             override fun onError() {
-                vistaSubirVideo.ocultarProgresoSubidaAppServer()
-                vistaSubirVideo.habilitarBotonSubidaAppServer()
-                vistaSubirVideo.setError()
+                vista?.ocultarProgresoSubidaAppServer()
+                vista?.habilitarBotonSubidaAppServer()
+                vista?.setError()
             }
 
             override fun onErrorRed() {
-                vistaSubirVideo.ocultarProgresoSubidaAppServer()
-                vistaSubirVideo.habilitarBotonSubidaAppServer()
-                vistaSubirVideo.setErrorRed()
+                vista?.ocultarProgresoSubidaAppServer()
+                vista?.habilitarBotonSubidaAppServer()
+                vista?.setErrorRed()
             }
         })
     }

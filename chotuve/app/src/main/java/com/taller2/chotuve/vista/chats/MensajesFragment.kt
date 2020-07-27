@@ -35,6 +35,11 @@ class MensajesFragment(chatKey: String, val destinario: Usuario) : FirebaseRTDBF
         return inflater.inflate(R.layout.fragment_mensajes, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         top_bar_destinatario_email.text = destinario.email

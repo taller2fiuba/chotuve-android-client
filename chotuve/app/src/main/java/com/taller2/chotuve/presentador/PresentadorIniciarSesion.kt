@@ -5,26 +5,30 @@ import com.taller2.chotuve.modelo.Modelo
 import com.taller2.chotuve.modelo.interactor.InteractorIniciarSesion
 import com.taller2.chotuve.vista.autenticacion.VistaIniciarSesion
 
-class PresentadorIniciarSesion(var vistaIniciarSesion: VistaIniciarSesion?,
+class PresentadorIniciarSesion(var vista: VistaIniciarSesion?,
                                val interactorIniciarSesion: InteractorIniciarSesion
 ) {
     fun onCreate() {
         if (interactorIniciarSesion.estaLogueado())
-            vistaIniciarSesion?.irAPantallaPrincipal()
+            vista?.irAPantallaPrincipal()
+    }
+
+    fun onDestroy() {
+        vista = null
     }
 
     fun iniciarSesion(email: String, clave: String) {
         interactorIniciarSesion.iniciarSesion(email, clave, object : CallbackInicioSesion {
             override fun onExito() {
-                vistaIniciarSesion?.irAPantallaPrincipal()
+                vista?.irAPantallaPrincipal()
             }
 
             override fun onUsuarioOClaveIncorrecta() {
-                vistaIniciarSesion?.setUsuarioOClaveIncorrecta()
+                vista?.setUsuarioOClaveIncorrecta()
             }
 
             override fun onErrorRed(mensaje: String?) {
-                vistaIniciarSesion?.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }

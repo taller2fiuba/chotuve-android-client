@@ -27,6 +27,11 @@ class SubirVideoActivity : AppCompatActivity(), VistaSubirVideo {
         startActivityForResult(Intent.createChooser(intent, "Seleccionar video"), 0)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {

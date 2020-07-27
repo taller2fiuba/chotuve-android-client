@@ -7,16 +7,20 @@ import com.taller2.chotuve.modelo.interactor.InteractorMensajes
 import com.taller2.chotuve.vista.chats.VistaMensajes
 import com.taller2.chotuve.vista.contactos.VistaContactos
 
-class PresentadorMensajes(private val vista: VistaMensajes) {
+class PresentadorMensajes(private var vista: VistaMensajes?) {
     private val interactor = InteractorMensajes()
+
+    fun onDestroy() {
+        vista = null
+    }
 
     fun enviarMensaje(destinarioId: Long, mensaje: String) {
         interactor.enviarMensaje(destinarioId, mensaje, object : InteractorMensajes.CallbackEnviarMensaje {
             override fun onObtenerExitoso() {
-                vista.mensajeEnviado()
+                vista?.mensajeEnviado()
             }
             override fun onErrorRed(mensaje: String?) {
-                vista.setErrorRed()
+                vista?.setErrorRed()
             }
         })
     }

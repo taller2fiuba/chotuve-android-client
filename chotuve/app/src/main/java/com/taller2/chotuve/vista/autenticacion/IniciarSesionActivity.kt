@@ -42,7 +42,9 @@ class IniciarSesionActivity : IniciarSesionGoogleActivity(), VistaIniciarSesion 
     }
 
     fun clickRegistrarme(view: View) {
-        startActivity(Intent(this, RegistrarmeActivity::class.java))
+        val intent = Intent(this, RegistrarmeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
     override fun setUsuarioOClaveIncorrecta() {

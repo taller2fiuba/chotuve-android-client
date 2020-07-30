@@ -51,7 +51,9 @@ class RegistrarmeActivity : IniciarSesionGoogleActivity(), VistaRegistrarme {
     }
 
     fun clickIniciarSesion(view: View) {
-        startActivity(Intent(this, IniciarSesionActivity::class.java))
+        val intent = Intent(this, IniciarSesionActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
     override fun setUsuarioYaExiste() {

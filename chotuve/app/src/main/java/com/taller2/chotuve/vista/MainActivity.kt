@@ -42,9 +42,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!Modelo.instance.estaLogueado())
-            startActivity(Intent(this, RegistrarmeActivity::class.java))
-        else {
+        if (!Modelo.instance.estaLogueado()) {
+            val intent = Intent(this, RegistrarmeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        } else {
             setContentView(R.layout.home)
 
             perfilFragment = SeccionFragment.perfil(Modelo.instance.id!!)
@@ -59,10 +61,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.chats_menu -> {
                         openFragment(FRAGMENT_CHATS_TAG, chatsFragment)
-                        true
-                    }
-                    R.id.notificaciones_menu -> {
-                        openFragment(FRAGMENT_NOTIFICACIONES_TAG, notificacionesFragment)
                         true
                     }
                     R.id.perfil_menu -> {
